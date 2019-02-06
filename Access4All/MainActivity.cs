@@ -19,7 +19,7 @@ namespace Access4All
             SetContentView(Resource.Layout.activity_main);
 
             textMessage = FindViewById<TextView>(Resource.Id.message);
-            BottomNavigationView navigation = FindViewById<BottomNavigationView>(Resource.Id.navigation);
+            BottomNavigationView navigation = (BottomNavigationView)FindViewById<BottomNavigationView>(Resource.Id.bottom_navigation);
             navigation.SetOnNavigationItemSelectedListener(this);
         }
         public bool OnNavigationItemSelected(IMenuItem item)
@@ -29,11 +29,11 @@ namespace Access4All
                 case Resource.Id.navigation_home:
                     textMessage.SetText(Resource.String.title_home);
                     return true;
-                case Resource.Id.navigation_dashboard:
-                    textMessage.SetText(Resource.String.title_dashboard);
+                case Resource.Id.navigation_search:
+                    textMessage.SetText(Resource.String.title_search);
                     return true;
                 case Resource.Id.navigation_notifications:
-                    textMessage.SetText(Resource.String.title_notifications);
+                    textMessage.SetText(Resource.String.title_filter);
                     return true;
             }
             return false;
