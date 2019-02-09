@@ -17,5 +17,5 @@
 		android:layout_alignParentBottom="true"
 		android:background="@android:color/white"
 		app:elevation="16dp"
-		app:menu="@menu/navigation" />
+		app:menu="@menu/bottom_navigation_menu" />
   </RelativeLayout>

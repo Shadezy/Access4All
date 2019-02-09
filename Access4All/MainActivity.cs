@@ -5,38 +5,48 @@ using Android.Support.Design.Widget;
 using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
+using Access4All.Fragments;
 
 namespace Access4All
 {
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true)]
     public class MainActivity : AppCompatActivity, BottomNavigationView.IOnNavigationItemSelectedListener
     {
-        TextView textMessage;
+        
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             this.SetContentView(Resource.Layout.activity_main);
-
-            textMessage = FindViewById<TextView>(Resource.Id.message);
+            
             BottomNavigationView navigation = (BottomNavigationView)FindViewById<BottomNavigationView>(Resource.Id.bottom_navigation);
             navigation.SetOnNavigationItemSelectedListener(this);
         }
+
         public bool OnNavigationItemSelected(IMenuItem item)
         {
+            Android.Support.V4.App.Fragment fragment = null;
             switch (item.ItemId)
             {
                 case Resource.Id.navigation_home:
-                    textMessage.SetText(Resource.String.title_home);
+                    fragment = homeFragment.NewInstance();
                     return true;
                 case Resource.Id.navigation_search:
-                    textMessage.SetText(Resource.String.title_search);
+                    fragment = searchFragment.NewInstance();
                     return true;
-                case Resource.Id.navigation_notifications:
-                    textMessage.SetText(Resource.String.title_filter);
+                case Resource.Id.navigation_categories:
+                    fragment = categoriesFragment.NewInstance();
                     return true;
             }
-            return false;
+
+            if (fragment == null)
+                return false;
+
+            SupportFragmentManager.BeginTransaction()
+                .Replace(Resource.Id.content_frame , fragment)
+                .Commit();
+
+            return true;
         }
     }
 }
