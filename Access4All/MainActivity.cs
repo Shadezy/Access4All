@@ -30,22 +30,35 @@ namespace Access4All
             {
                 case Resource.Id.navigation_home:
                     fragment = homeFragment.NewInstance();
+                    if (fragment == null)
+                        return false;
+                    SupportFragmentManager.BeginTransaction()
+                        .Replace(Resource.Id.content_frame, fragment)
+                        .Commit();
+
                     return true;
+
                 case Resource.Id.navigation_search:
+                    if (fragment == null)
+                        return false;
                     fragment = searchFragment.NewInstance();
+                    SupportFragmentManager.BeginTransaction()
+                        .Replace(Resource.Id.content_frame, fragment)
+                        .Commit();
+
                     return true;
+
                 case Resource.Id.navigation_categories:
                     fragment = categoriesFragment.NewInstance();
+                    if (fragment == null)
+                        return false;
+                    SupportFragmentManager.BeginTransaction()
+                        .Replace(Resource.Id.content_frame, fragment)
+                        .Commit();
+
                     return true;
+
             }
-
-            if (fragment == null)
-                return false;
-
-            SupportFragmentManager.BeginTransaction()
-                .Replace(Resource.Id.content_frame , fragment)
-                .Commit();
-
             return true;
         }
     }
