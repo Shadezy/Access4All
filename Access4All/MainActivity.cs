@@ -39,9 +39,9 @@ namespace Access4All
                     return true;
 
                 case Resource.Id.navigation_search:
+                    fragment = searchFragment.NewInstance();
                     if (fragment == null)
                         return false;
-                    fragment = searchFragment.NewInstance();
                     SupportFragmentManager.BeginTransaction()
                         .Replace(Resource.Id.content_frame, fragment)
                         .Commit();
