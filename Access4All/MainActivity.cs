@@ -21,6 +21,11 @@ namespace Access4All
             
             BottomNavigationView navigation = (BottomNavigationView)FindViewById<BottomNavigationView>(Resource.Id.bottom_navigation);
             navigation.SetOnNavigationItemSelectedListener(this);
+            Android.Support.V4.App.Fragment fragment = null;
+            fragment = homeFragment.NewInstance();
+            SupportFragmentManager.BeginTransaction()
+                .Replace(Resource.Id.content_frame, fragment)
+                .Commit();
         }
 
         public bool OnNavigationItemSelected(IMenuItem item)
