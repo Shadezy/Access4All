@@ -22,7 +22,7 @@ namespace Access4All
             BottomNavigationView navigation = (BottomNavigationView)FindViewById<BottomNavigationView>(Resource.Id.bottom_navigation);
             navigation.SetOnNavigationItemSelectedListener(this);
             Android.Support.V4.App.Fragment fragment = null;
-            fragment = homeFragment.NewInstance();
+            fragment = categoriesFragment.NewInstance();
             SupportFragmentManager.BeginTransaction()
                 .Replace(Resource.Id.content_frame, fragment)
                 .Commit();
@@ -33,15 +33,6 @@ namespace Access4All
             Android.Support.V4.App.Fragment fragment = null;
             switch (item.ItemId)
             {
-                case Resource.Id.navigation_home:
-                    fragment = homeFragment.NewInstance();
-                    if (fragment == null)
-                        return false;
-                    SupportFragmentManager.BeginTransaction()
-                        .Replace(Resource.Id.content_frame, fragment)
-                        .Commit();
-
-                    return true;
 
                 case Resource.Id.navigation_search:
                     fragment = searchFragment.NewInstance();

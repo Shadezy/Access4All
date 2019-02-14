@@ -2642,14 +2642,11 @@ namespace Access4All
 			// aapt resource value: 0x7f080028
 			public const int multiply = 2131230760;
 			
-			// aapt resource value: 0x7f0800b9
-			public const int navigation_categories = 2131230905;
+			// aapt resource value: 0x7f0800b7
+			public const int navigation_categories = 2131230903;
 			
 			// aapt resource value: 0x7f080097
 			public const int navigation_header_container = 2131230871;
-			
-			// aapt resource value: 0x7f0800b7
-			public const int navigation_home = 2131230903;
 			
 			// aapt resource value: 0x7f0800b8
 			public const int navigation_search = 2131230904;
