@@ -31,9 +31,27 @@ namespace Access4All.Fragments
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             // Use this to return your custom view for this Fragment
-            return inflater.Inflate(Resource.Layout.categoriesLayout, null);
+            View v = inflater.Inflate(Resource.Layout.categoriesLayout, null);
+            catAdapter adapter = new catAdapter(MainActivity.activity);
+            ExpandableListView e = (ExpandableListView)v.FindViewById(Resource.Id.expandableListView1);
+            e.SetAdapter(adapter);
+            e.SetOnChildClickListener(onChildClick());
+                
+
+
+            return v;
+
 
             //return base.OnCreateView(inflater, container, savedInstanceState);
+        }
+
+        public bool onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id)
+        {
+            catAdapter adapter = new catAdapter(MainActivity.activity);
+            string catName = adapter.GetChild(groupPosition, childPosition);
+            Categories temp = adapter.GetGroup(groupPosition);
+
+            return true;
         }
     }
 }
