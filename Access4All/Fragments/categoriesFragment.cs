@@ -60,10 +60,12 @@ namespace Access4All.Fragments
             // Use this to return your custom view for this Fragment
             View v = inflater.Inflate(Resource.Layout.categoriesLayout, null);
             expandableListView = v.FindViewById<ExpandableListView>(Resource.Id.expandableListView1);
-            //catAdapter adapter = new catAdapter(MainActivity.activity);
-            //ExpandableListView e = (ExpandableListView)v.FindViewById(Resource.Id.expandableListView1);
-            //e.SetAdapter(adapter);
-            //e.SetOnChildClickListener(onChildClick());
+            ExpandableListView ex = (ExpandableListView)v.FindViewById(Resource.Id.expandableListView1);
+            ex.SetAdapter(mAdapter);
+            ex.ChildClick += (s, e) =>
+            {
+                Toast.MakeText(MainActivity.activity, "Clicked: " + mAdapter.GetChild(e.GroupPosition, e.ChildPosition).ToString(), ToastLength.Short).Show();
+            };
 
 
             expandableListView.SetAdapter(mAdapter);
@@ -74,7 +76,7 @@ namespace Access4All.Fragments
             //return base.OnCreateView(inflater, container, savedInstanceState);
         }
 
-        public bool onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id)
+        public bool OnChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id)
         {
             //catAdapter adapter = new catAdapter(MainActivity.activity);
             //string catName = adapter.GetChild(groupPosition, childPosition);

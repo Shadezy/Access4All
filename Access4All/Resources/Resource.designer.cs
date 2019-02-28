@@ -2474,6 +2474,9 @@ namespace Access4All
 			// aapt resource value: 0x7f080045
 			public const int center = 2131230789;
 			
+			// aapt resource value: 0x7f0800b3
+			public const int centerShim = 2131230899;
+			
 			// aapt resource value: 0x7f080046
 			public const int center_horizontal = 2131230790;
 			
@@ -2633,14 +2636,14 @@ namespace Access4All
 			// aapt resource value: 0x7f080061
 			public const int list_item = 2131230817;
 			
-			// aapt resource value: 0x7f0800b6
-			public const int masked = 2131230902;
+			// aapt resource value: 0x7f0800b8
+			public const int masked = 2131230904;
 			
 			// aapt resource value: 0x7f0800a5
 			public const int media_actions = 2131230885;
 			
-			// aapt resource value: 0x7f0800b4
-			public const int message = 2131230900;
+			// aapt resource value: 0x7f0800b6
+			public const int message = 2131230902;
 			
 			// aapt resource value: 0x7f080031
 			public const int middle = 2131230769;
@@ -2651,14 +2654,14 @@ namespace Access4All
 			// aapt resource value: 0x7f080028
 			public const int multiply = 2131230760;
 			
-			// aapt resource value: 0x7f0800b7
-			public const int navigation_categories = 2131230903;
+			// aapt resource value: 0x7f0800b9
+			public const int navigation_categories = 2131230905;
 			
 			// aapt resource value: 0x7f080097
 			public const int navigation_header_container = 2131230871;
 			
-			// aapt resource value: 0x7f0800b8
-			public const int navigation_search = 2131230904;
+			// aapt resource value: 0x7f0800ba
+			public const int navigation_search = 2131230906;
 			
 			// aapt resource value: 0x7f08003b
 			public const int never = 2131230779;
@@ -2834,6 +2837,9 @@ namespace Access4All
 			// aapt resource value: 0x7f08001b
 			public const int text2 = 2131230747;
 			
+			// aapt resource value: 0x7f0800b5
+			public const int textSearch = 2131230901;
+			
 			// aapt resource value: 0x7f08006a
 			public const int textSpacerNoButtons = 2131230826;
 			
@@ -2897,11 +2903,11 @@ namespace Access4All
 			// aapt resource value: 0x7f080016
 			public const int view_offset_helper = 2131230742;
 			
-			// aapt resource value: 0x7f0800b5
-			public const int visible = 2131230901;
+			// aapt resource value: 0x7f0800b7
+			public const int visible = 2131230903;
 			
-			// aapt resource value: 0x7f0800b3
-			public const int voiceSearch = 2131230899;
+			// aapt resource value: 0x7f0800b4
+			public const int voiceSearch = 2131230900;
 			
 			// aapt resource value: 0x7f08003c
 			public const int withText = 2131230780;
