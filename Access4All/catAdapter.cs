@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using Access4All.Fragments;
 using Android.App;
 using Android.Content;
 using Android.OS;
@@ -16,21 +16,40 @@ namespace Access4All
     class catAdapter : BaseExpandableListAdapter
     {
         Activity activity;
-        Context context;
-        List<Categories> c;
+        List<Categories> categories;
+        private categoriesFragment categoriesFragment;
 
-        public catAdapter(Activity act)
+        public catAdapter(Activity activity, List<Categories> categories)
         {
-            this.activity = act;
+            this.activity = activity;
+            this.categories = categories;
         }
 
-        public override int GroupCount => throw new NotImplementedException();
+        public catAdapter(categoriesFragment categoriesFragment, List<Categories> group)
+        {
+            this.categoriesFragment = categoriesFragment;
+            this.categories = group;
+        }
 
-        public override bool HasStableIds => throw new NotImplementedException();
+        public override int GroupCount
+        {
+            get
+            {
+                return categories.Count;
+            }
+        }
+
+        public override bool HasStableIds
+        {
+            get
+            {
+                return false;
+            }
+        }
 
         public override Java.Lang.Object GetChild(int groupPosition, int childPosition)
         {
-            return c[groupPosition].Locations[childPosition];
+            return categories[groupPosition].Locations[childPosition];
         }
 
         public override long GetChildId(int groupPosition, int childPosition)
@@ -40,17 +59,26 @@ namespace Access4All
 
         public override int GetChildrenCount(int groupPosition)
         {
-            return c[groupPosition].locations.Count;
+            return categories[groupPosition].locations.Count;
         }
 
         public override View GetChildView(int groupPosition, int childPosition, bool isLastChild, View convertView, ViewGroup parent)
         {
-            throw new NotImplementedException();
+            if (convertView == null)
+            {
+                MainActivity act = (MainActivity)MainActivity.activity;
+                LayoutInflater inflater = (LayoutInflater)act.GetSystemService(Context.LayoutInflaterService);
+                convertView = inflater.Inflate(Resource.Layout.item_layout, null);
+            }
+            TextView textViewItem = convertView.FindViewById<TextView>(Resource.Id.item);
+            string content = (string)GetChild(groupPosition, childPosition);
+            textViewItem.Text = content;
+            return convertView;
         }
 
         public override Java.Lang.Object GetGroup(int groupPosition)
         {
-            return c[groupPosition].title;
+            return categories[groupPosition].title;
         }
 
         public override long GetGroupId(int groupPosition)
@@ -60,7 +88,16 @@ namespace Access4All
 
         public override View GetGroupView(int groupPosition, bool isExpanded, View convertView, ViewGroup parent)
         {
-            throw new NotImplementedException();
+            if (convertView == null)
+            {
+                MainActivity act = (MainActivity)MainActivity.activity;
+                LayoutInflater inflater = (LayoutInflater)act.GetSystemService(Activity.LayoutInflaterService);
+                convertView = inflater.Inflate(Resource.Layout.group_item, null);
+            }
+            string textGroup = (string)GetGroup(groupPosition);
+            TextView textViewGroup = convertView.FindViewById<TextView>(Resource.Id.group);
+            textViewGroup.Text = textGroup;
+            return convertView;
         }
 
         public override bool IsChildSelectable(int groupPosition, int childPosition)
@@ -68,3 +105,4 @@ namespace Access4All
             return true;
         }
     }
+}
