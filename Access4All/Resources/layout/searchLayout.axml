@@ -8,14 +8,39 @@
 		android:minWidth="25px"
 		android:minHeight="40px"
 		android:layout_width="match_parent"
-		android:layout_height="80dp"
+		android:layout_height="wrap_content"
 		android:layout_weight="0"
-		android:id="@+id/searchView1" />
-		<Button
-			android:text="Voice Search"
-			android:layout_width="match_parent"
-			android:layout_height="80dp"
-			android:layout_alignParentBottom="true"
-			android:gravity="center"
-			android:id="@+id/voiceSearch"/>
+		android:queryHint="Search here..."
+		android:id="@+id/searchView1"
+		android:contentDescription="Search box"
+		android:importantForAccessibility="yes" />
+	<View 
+        android:id="@+id/centerShim"
+        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:visibility="invisible"
+		android:contentDescription="Empty Shim"
+        android:layout_centerHorizontal="true"/>
+	
+	<Button
+		android:id="@+id/voiceSearch"
+		android:text="Voice Search"
+		android:layout_width="match_parent"
+		android:layout_height="60dp"
+		android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/centerShim"
+		android:contentDescription="Voice Search"
+		android:layout_alignParentBottom="true"
+		/>
+	<Button
+		android:id="@+id/textSearch"
+		android:text="Text Search"
+		android:layout_width="match_parent"
+		android:layout_height="60dp"
+		android:layout_alignParentRight="true"
+		android:contentDescription="text search"
+		android:layout_toRightOf="@+id/centerShim"
+		android:layout_alignParentBottom="true"
+		
+		/>
 </RelativeLayout>
