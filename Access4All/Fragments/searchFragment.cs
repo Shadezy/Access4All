@@ -134,7 +134,7 @@ namespace Access4All.Fragments
                 StartActivityForResult(intent, 100);
                 
 
-            }catch (ActivityNotFoundException a)
+            }catch (ActivityNotFoundException)
             {
                 Toast t = Toast.MakeText(this.Activity, "Your device doesn't support Speech to Text", ToastLength.Short);
                 t.Show();

@@ -42,9 +42,25 @@ namespace Access4All.Fragments
             groupB.Add("B-2");
             groupB.Add("B-3");
 
-            group.Add(new Categories("Auto", groupA));
-            group.Add(new Categories("Art", groupB));
-
+            group.Add(new Categories("Arts, Entertainment, Culture", groupA));
+            group.Add(new Categories("Automotive", groupB));
+            group.Add(new Categories("Business Services", groupB));
+            group.Add(new Categories("Education", groupB));
+            group.Add(new Categories("Financial Services", groupB));
+            group.Add(new Categories("Food, Groceries", groupB));
+            group.Add(new Categories("Public Services, Government", groupB));
+            group.Add(new Categories("Health, Medical, Dental, Mobility aids", groupB));
+            group.Add(new Categories("Home & Garden", groupB));
+            group.Add(new Categories("Mass Media, Printing, Publishing", groupB));
+            group.Add(new Categories("Nightlife", groupB));
+            group.Add(new Categories("Recreation, Fitness", groupB));
+            group.Add(new Categories("Personal Services", groupB));
+            group.Add(new Categories("Pets", groupB));
+            group.Add(new Categories("Professional Services", groupB));
+            group.Add(new Categories("Religious Organizations", groupB));
+            group.Add(new Categories("Restaurants, Coffee Shops", groupB));
+            group.Add(new Categories("Shopping", groupB));
+            group.Add(new Categories("Travel, Hotel, Motel", groupB));
 
 
         }
