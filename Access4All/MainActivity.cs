@@ -6,6 +6,8 @@ using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
 using Access4All.Fragments;
+using Android.Content;
+using Android.Speech;
 
 namespace Access4All
 {
@@ -27,6 +29,32 @@ namespace Access4All
             SupportFragmentManager.BeginTransaction()
                 .Replace(Resource.Id.content_frame, fragment)
                 .Commit();
+        }
+        protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
+        {
+            base.OnActivityResult(requestCode, resultCode, data);
+            if (requestCode == 100) // Voice search
+            {
+                if (resultCode == Result.Ok) 
+                {
+                    var matches = data.GetStringArrayListExtra(RecognizerIntent.ExtraResults);
+                    if (matches.Count != 0)
+                    {
+                       
+                        var voiceInput = matches[0];
+
+                        if (voiceInput.Length > 500)
+                            voiceInput = voiceInput.Substring(0, 500);
+
+                        string voiceString = voiceInput;
+
+                        SearchView searchView = (SearchView)this.FindViewById(Resource.Id.searchView1);
+                       
+                        searchView.SetQuery(voiceString, true);\
+                    }
+                }
+                
+            }
         }
 
         public bool OnNavigationItemSelected(IMenuItem item)

@@ -105,7 +105,7 @@ namespace Access4All.Fragments
             searchView.Focusable = false;
 
             //test toast to make sure we get the string we searched for
-            Toast.MakeText(this.Activity, input, ToastLength.Short).Show();
+            Toast.MakeText(this.Activity, input+ " From submitQueryListener", ToastLength.Short).Show();
         }
 
         private void searchByVoice(object sender, EventArgs e)
@@ -130,8 +130,9 @@ namespace Access4All.Fragments
                 intent.PutExtra(RecognizerIntent.ExtraLanguageModel, RecognizerIntent.LanguageModelFreeForm);
                 intent.PutExtra(RecognizerIntent.ExtraLanguage, LocaleList.Default);
                 intent.PutExtra(RecognizerIntent.ExtraPrompt, "Say Location Name");
-               // intent.SetAction(Intent.ActionGetContent);
-                StartActivityForResult(intent, 100);
+             
+                act.StartActivityForResult(intent, 100);
+                
                 
 
             }catch (ActivityNotFoundException)
@@ -141,29 +142,9 @@ namespace Access4All.Fragments
             }
             
         }
-        override
-        public void OnActivityResult(int request_code, int result_code , Intent i)
-        {
-           // base.OnActivityResult(request_code, result_code, i);
-            MainActivity act = (MainActivity)this.Activity;
-            SearchView searchView = (SearchView)act.FindViewById(Resource.Id.searchView1);
+ 
 
-
-            switch (request_code)
-            {
-                case 100: if (result_code == 100 && i != null)
-                    {
-                        ArrayList res = (ArrayList) i.GetStringArrayListExtra(RecognizerIntent.ExtraResults);
-                        
-                        searchView.SetQuery(res.ToString(), true);
-
-                        Toast t = Toast.MakeText(this.Activity, "You got this", ToastLength.Short);
-                        t.Show();
-                    }
-                    break;
-            }
-        }
-
+          
         public void OnClick(View v)
         {
             //throw new NotImplementedException();
