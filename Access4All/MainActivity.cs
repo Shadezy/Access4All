@@ -50,7 +50,7 @@ namespace Access4All
 
                         SearchView searchView = (SearchView)this.FindViewById(Resource.Id.searchView1);
                        
-                        searchView.SetQuery(voiceString, true);\
+                        searchView.SetQuery(voiceString, true);
                     }
                 }
                 
