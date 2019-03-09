@@ -60,6 +60,7 @@
     <Compile Include="detailAdapter.cs" />
     <Compile Include="Details.cs" />
     <Compile Include="Fragments\categoriesFragment.cs" />
+    <Compile Include="Fragments\detaildepthFragment.cs" />
     <Compile Include="Fragments\detailFragment.cs" />
     <Compile Include="Fragments\searchFragment.cs" />
     <Compile Include="MainActivity.cs" />
@@ -142,6 +143,11 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\item_layout.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\detail_layout.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

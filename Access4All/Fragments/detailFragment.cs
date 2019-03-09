@@ -15,7 +15,6 @@ namespace Access4All.Fragments
 {
     public class detailFragment : Android.Support.V4.App.Fragment
     {
-        ExpandableListView expandableListView;
         detailAdapter mAdapter;
         List<Details> group = new List<Details>();
 
@@ -30,17 +29,18 @@ namespace Access4All.Fragments
 
         private void setTempData()
         {
-            List<string> groupA = new List<string>();
-            groupA.Add("A-1");
-            groupA.Add("A-2");
-            groupA.Add("A-3");
 
-            List<string> groupB = new List<string>();
-            groupB.Add("B-1");
-            groupB.Add("B-2");
-            groupB.Add("B-3");
+            group.Add(new Details("Information"));
+            group.Add(new Details("Parking on street"));
+            group.Add(new Details("Access to transit"));
+            group.Add(new Details("Exterior pathway & seating"));
+            group.Add(new Details("Entrances"));
+            group.Add(new Details("Interior"));
+            group.Add(new Details("Seating"));
+            group.Add(new Details("Restroom"));
+            group.Add(new Details("Communication"));
+            group.Add(new Details("Technologies & Customer Service"));
 
-            group.Add(new Details("Arts, Entertainment, Culture", groupA));
 
 
         }
@@ -62,8 +62,8 @@ namespace Access4All.Fragments
                 Toast.MakeText(MainActivity.activity, "Clicked: " + mAdapter.GetChild(e.GroupPosition, e.ChildPosition).ToString(), ToastLength.Short).Show();
             };*/
 
-            ex.ChildClick += HandleSelect;
-
+            ex.Click += HandleSelect;
+            
 
             return v;
 
@@ -73,12 +73,12 @@ namespace Access4All.Fragments
 
         private void HandleSelect(object sender, EventArgs e)
         {
-            /*Android.Support.V4.App.Fragment fragment = null;
-            fragment = detailFragment.NewInstance();
-            FragmentTransaction ft = (FragmentTransaction)FragmentManager.BeginTransaction()
-                .Replace(Resource.Id.content_frame, fragment)
-                .Commit();
-                */
+            Android.Support.V4.App.Fragment fragment = null;
+            fragment = detaildepthFragment.NewInstance();
+            base.FragmentManager.BeginTransaction()
+                        .Replace(Resource.Id.content_frame, fragment)
+                        .Commit();
+
         }
     }
 }

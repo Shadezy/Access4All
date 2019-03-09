@@ -17,16 +17,13 @@ namespace Access4All
 
 
         private string infoTitle;
-        private List<string> info;
 
-        public Details(string intoTitle, List<string> info)
+        public Details(string infoTitle)
         {
-            this.InfoTitle = InfoTitle;
-            this.Info = info;
+            this.infoTitle = infoTitle;
         }
         
         public string InfoTitle { get => infoTitle; set => infoTitle = value; }
-        public List<string> Info { get => info; set => info = value; }
     }
 }
 

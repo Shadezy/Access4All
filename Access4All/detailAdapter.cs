@@ -48,7 +48,7 @@ namespace Access4All
 
         public override Java.Lang.Object GetChild(int groupPosition, int childPosition)
         {
-            return details[groupPosition].Info[childPosition];
+            return null;
         }
 
         public override long GetChildId(int groupPosition, int childPosition)
@@ -58,7 +58,7 @@ namespace Access4All
 
         public override int GetChildrenCount(int groupPosition)
         {
-            return details[groupPosition].Info.Count;
+            return 0;
         }
 
         public override View GetChildView(int groupPosition, int childPosition, bool isLastChild, View convertView, ViewGroup parent)
