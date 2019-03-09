@@ -16,6 +16,9 @@ using Access4All.Fragments;
 using Android.Content;
 using Android.Speech;
 using FragmentTransaction = Android.Support.V4.App.FragmentTransaction;
+using System.Net;
+using System.IO;
+using Newtonsoft.Json.Linq;
 
 namespace Access4All.Fragments
 {
@@ -38,6 +41,10 @@ namespace Access4All.Fragments
 
         private void setTempData()
         {
+            String data = GetData();
+            Toast.MakeText(this.Activity, data, ToastLength.Short).Show();
+            JToken json = JToken.Parse(data);
+
             List<string> groupA = new List<string>();
             groupA.Add("A-1");
             groupA.Add("A-2");
@@ -69,6 +76,33 @@ namespace Access4All.Fragments
             group.Add(new Categories("Travel, Hotel, Motel", groupB));
 
 
+        }
+
+        private string GetData()
+        {
+            var request = HttpWebRequest.Create(string.Format(@"http://access4allspokane.org/RESTapi/establishment"));
+            request.ContentType = "application/json";
+            request.Method = "GET";
+
+            using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
+            {
+                if (response.StatusCode != HttpStatusCode.OK)
+                    Console.Out.WriteLine("Error fetching data. Server returned status code: {0}", response.StatusCode);
+                using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+                {
+                    var content = reader.ReadToEnd();
+                    if (string.IsNullOrWhiteSpace(content))
+                    {
+                        Console.Out.WriteLine("Response contained empty body...");
+                    }
+                    else
+                    {
+                        return content;
+                        //Console.Out.WriteLine("Response Body: \r\n {0}", content);
+                    }
+                }
+            }
+            return "NULL";
         }
 
         public static categoriesFragment NewInstance()
@@ -110,6 +144,8 @@ namespace Access4All.Fragments
             //catAdapter adapter = new catAdapter(MainActivity.activity);
             //string catName = adapter.GetChild(groupPosition, childPosition);
             //Categories temp = adapter.GetGroup(groupPosition);
+
+
 
             return true;
         }

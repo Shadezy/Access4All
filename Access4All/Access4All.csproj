@@ -63,6 +63,8 @@
     <Compile Include="Fragments\detailFragment.cs" />
     <Compile Include="Fragments\searchFragment.cs" />
     <Compile Include="MainActivity.cs" />
+    <Compile Include="ObjectClasses\Category.cs" />
+    <Compile Include="ObjectClasses\Communication.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SplashActivity.cs" />
@@ -106,6 +108,9 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_launcher_round.png" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.1</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.Android.Support.Design" Version="28.0.0.1" />
   </ItemGroup>
   <ItemGroup>
