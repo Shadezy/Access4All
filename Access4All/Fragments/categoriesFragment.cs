@@ -28,38 +28,102 @@ namespace Access4All.Fragments
         private void setTempData()
         {
             String data = GetData();
-            Toast.MakeText(this.Activity, data, ToastLength.Short).Show();
-            JToken json = JToken.Parse(data);
+            //Toast.MakeText(this.Activity, data, ToastLength.Short).Show();
+            JArray jsonArray = JArray.Parse(data);
+            Toast.MakeText(this.Activity, jsonArray.ToString(), ToastLength.Short).Show();
 
-            List<string> groupA = new List<string>();
-            groupA.Add("A-1");
-            groupA.Add("A-2");
-            groupA.Add("A-3");
+            Console.WriteLine(jsonArray);
 
-            List<string> groupB = new List<string>();
-            groupB.Add("B-1");
-            groupB.Add("B-2");
-            groupB.Add("B-3");
+            List<String> arts_and_entertainment_locations = new List<String>();
+            List<String> automotive_locations = new List<String>();
+            List<String> bank_and_finance_locations = new List<String>();
+            List<String> education_locations = new List<String>();
+            List<String> food_and_drink_locations = new List<String>();
+            List<String> government_and_community_locations = new List<String>();
+            List<String> healthcare_locations = new List<String>();
+            List<String> news_and_media_locations = new List<String>();
+            List<String> professional_services_locations = new List<String>();
+            List<String> real_estate_locations = new List<String>();
+            List<String> religion_locations = new List<String>();
+            List<String> retail_locations = new List<String>();
+            List<String> sports_and_recreation_locations = new List<String>();
+            List<String> travel_locations = new List<String>();
+            List<String> utilities_locations = new List<String>();
+            List<String> other_locations = new List<String>();
 
-            group.Add(new Categories("Arts, Entertainment, Culture", groupA));
-            group.Add(new Categories("Automotive", groupB));
-            group.Add(new Categories("Business Services", groupB));
-            group.Add(new Categories("Education", groupB));
-            group.Add(new Categories("Financial Services", groupB));
-            group.Add(new Categories("Food, Groceries", groupB));
-            group.Add(new Categories("Public Services, Government", groupB));
-            group.Add(new Categories("Health, Medical, Dental, Mobility aids", groupB));
-            group.Add(new Categories("Home & Garden", groupB));
-            group.Add(new Categories("Mass Media, Printing, Publishing", groupB));
-            group.Add(new Categories("Nightlife", groupB));
-            group.Add(new Categories("Recreation, Fitness", groupB));
-            group.Add(new Categories("Personal Services", groupB));
-            group.Add(new Categories("Pets", groupB));
-            group.Add(new Categories("Professional Services", groupB));
-            group.Add(new Categories("Religious Organizations", groupB));
-            group.Add(new Categories("Restaurants, Coffee Shops", groupB));
-            group.Add(new Categories("Shopping", groupB));
-            group.Add(new Categories("Travel, Hotel, Motel", groupB));
+            /** these don't appear in the db, but they are on the website **/
+            List<String> business_locations = new List<String>();
+            List<String> home_and_garden_locations = new List<String>();
+            List<String> nightlife_locations = new List<String>();
+            List<String> personal_services_locations = new List<String>();
+            List<String> pet_locations = new List<String>();
+            List<String> restaurant_and_coffee_shop_locations = new List<String>();
+            business_locations.Add("not in db");
+            home_and_garden_locations.Add("not in db");
+            nightlife_locations.Add("not in db");
+            personal_services_locations.Add("not in db");
+            pet_locations.Add("not in db");
+            restaurant_and_coffee_shop_locations.Add("not in db");
+
+
+
+            for (int i = 0; i < jsonArray.Count; i++)
+            {
+                JToken json = jsonArray[i];
+
+                if ((int)json["cat_id"] == 1)
+                    arts_and_entertainment_locations.Add((String)json["name"]);
+                else if ((int)json["cat_id"] == 2)
+                    automotive_locations.Add((String)json["name"]);
+                else if ((int)json["cat_id"] == 3)
+                    bank_and_finance_locations.Add((String)json["name"]);
+                else if ((int)json["cat_id"] == 4)
+                    education_locations.Add((String)json["name"]);
+                else if ((int)json["cat_id"] == 5)
+                    food_and_drink_locations.Add((String)json["name"]);
+                else if ((int)json["cat_id"] == 6)
+                    government_and_community_locations.Add((String)json["name"]);
+                else if ((int)json["cat_id"] == 7)
+                    healthcare_locations.Add((String)json["name"]);
+                else if ((int)json["cat_id"] == 8)
+                    news_and_media_locations.Add((String)json["name"]);
+                else if ((int)json["cat_id"] == 9)
+                    professional_services_locations.Add((String)json["name"]);
+                else if ((int)json["cat_id"] == 10)
+                    real_estate_locations.Add((String)json["name"]);
+                else if ((int)json["cat_id"] == 11)
+                    religion_locations.Add((String)json["name"]);
+                else if ((int)json["cat_id"] == 12)
+                    retail_locations.Add((String)json["name"]);
+                else if ((int)json["cat_id"] == 13)
+                    sports_and_recreation_locations.Add((String)json["name"]);
+                else if ((int)json["cat_id"] == 14)
+                    travel_locations.Add((String)json["name"]);
+                else if ((int)json["cat_id"] == 15)
+                    utilities_locations.Add((String)json["name"]);
+                else if ((int)json["cat_id"] == 16)
+                    other_locations.Add((String)json["name"]);
+            }
+
+            group.Add(new Categories("Arts, Entertainment, Culture", arts_and_entertainment_locations));
+            group.Add(new Categories("Automotive", automotive_locations));
+            group.Add(new Categories("Business Services", business_locations));//not in db
+            group.Add(new Categories("Education", education_locations));
+            group.Add(new Categories("Financial Services", bank_and_finance_locations));
+            group.Add(new Categories("Food, Groceries", food_and_drink_locations));
+            group.Add(new Categories("Public Services, Government", government_and_community_locations));
+            group.Add(new Categories("Health, Medical, Dental, Mobility aids", healthcare_locations));
+            group.Add(new Categories("Home & Garden", home_and_garden_locations));//not in db
+            group.Add(new Categories("Mass Media, Printing, Publishing", news_and_media_locations));
+            group.Add(new Categories("Nightlife", nightlife_locations));//not in db
+            group.Add(new Categories("Recreation, Fitness", sports_and_recreation_locations));
+            group.Add(new Categories("Personal Services", personal_services_locations));//not in db
+            group.Add(new Categories("Pets", pet_locations));//not in db
+            group.Add(new Categories("Professional Services", professional_services_locations));
+            group.Add(new Categories("Religious Organizations", religion_locations));
+            group.Add(new Categories("Restaurants, Coffee Shops", restaurant_and_coffee_shop_locations));//conflicts with food & grocery/ not in db
+            group.Add(new Categories("Shopping", retail_locations));//probably
+            group.Add(new Categories("Travel, Hotel, Motel", travel_locations));
 
 
         }
@@ -83,8 +147,8 @@ namespace Access4All.Fragments
                     }
                     else
                     {
-                        return content;
                         //Console.Out.WriteLine("Response Body: \r\n {0}", content);
+                        return content;
                     }
                 }
             }
