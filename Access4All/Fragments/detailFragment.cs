@@ -62,8 +62,8 @@ namespace Access4All.Fragments
                 Toast.MakeText(MainActivity.activity, "Clicked: " + mAdapter.GetChild(e.GroupPosition, e.ChildPosition).ToString(), ToastLength.Short).Show();
             };*/
 
-            ex.Click += HandleSelect;
-            
+            //ex.Click += HandleSelect;
+            ex.GroupClick += HandleSelect;
 
             return v;
 
