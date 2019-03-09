@@ -13,33 +13,72 @@ using Android.Widget;
 
 namespace Access4All.Fragments
 {
-    public class detailFragment : Fragment
+    public class detailFragment : Android.Support.V4.App.Fragment
     {
         ExpandableListView expandableListView;
-        catAdapter mAdapter;
+        detailAdapter mAdapter;
+        List<Details> group = new List<Details>();
+
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+            setTempData();
 
-            // Create your fragment here
+
+            mAdapter = new detailAdapter(this, group);
+        }
+
+        private void setTempData()
+        {
+            List<string> groupA = new List<string>();
+            groupA.Add("A-1");
+            groupA.Add("A-2");
+            groupA.Add("A-3");
+
+            List<string> groupB = new List<string>();
+            groupB.Add("B-1");
+            groupB.Add("B-2");
+            groupB.Add("B-3");
+
+            group.Add(new Details("Arts, Entertainment, Culture", groupA));
+
+
+        }
+
+        public static detailFragment NewInstance()
+        {
+            var detailfrag = new detailFragment { Arguments = new Bundle() };
+            return detailfrag;
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             // Use this to return your custom view for this Fragment
             View v = inflater.Inflate(Resource.Layout.categoriesLayout, null);
-            expandableListView = v.FindViewById<ExpandableListView>(Resource.Id.expandableListView1);
             ExpandableListView ex = (ExpandableListView)v.FindViewById(Resource.Id.expandableListView1);
             ex.SetAdapter(mAdapter);
-            ex.ChildClick += (s, e) =>
+            /*ex.ChildClick += (s, e) =>
             {
                 Toast.MakeText(MainActivity.activity, "Clicked: " + mAdapter.GetChild(e.GroupPosition, e.ChildPosition).ToString(), ToastLength.Short).Show();
-            };
+            };*/
 
+            ex.ChildClick += HandleSelect;
 
-            expandableListView.SetAdapter(mAdapter);
 
             return v;
+
+
+            //return base.OnCreateView(inflater, container, savedInstanceState);
+        }
+
+        private void HandleSelect(object sender, EventArgs e)
+        {
+            /*Android.Support.V4.App.Fragment fragment = null;
+            fragment = detailFragment.NewInstance();
+            FragmentTransaction ft = (FragmentTransaction)FragmentManager.BeginTransaction()
+                .Replace(Resource.Id.content_frame, fragment)
+                .Commit();
+                */
         }
     }
 }
