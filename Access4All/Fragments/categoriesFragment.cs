@@ -1,21 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
 using Android.OS;
-using Android.Runtime;
-using Android.Util;
 using Android.Views;
 using Android.Widget;
-using Android.Support.Design.Widget;
-using Android.Support.V4.App;
-using Access4All.Fragments;
-using Android.Content;
-using Android.Speech;
-using FragmentTransaction = Android.Support.V4.App.FragmentTransaction;
 using System.Net;
 using System.IO;
 using Newtonsoft.Json.Linq;
@@ -25,7 +12,6 @@ namespace Access4All.Fragments
     public class categoriesFragment : Android.Support.V4.App.Fragment
     {
         catAdapter mAdapter;
-        ExpandableListView expandableListView;
         List<Categories> group = new List<Categories>();
 
         public override void OnCreate(Bundle savedInstanceState)
@@ -134,9 +120,10 @@ namespace Access4All.Fragments
         {
             Android.Support.V4.App.Fragment fragment = null;
             fragment = detailFragment.NewInstance();
-            FragmentTransaction ft = (FragmentTransaction)FragmentManager.BeginTransaction()
-                .Replace(Resource.Id.content_frame, fragment)
-                .Commit();
+            base.FragmentManager.BeginTransaction()
+                        .Replace(Resource.Id.content_frame, fragment)
+                        .Commit();
+            
         }
 
         public bool OnChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id)
