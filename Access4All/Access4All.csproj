@@ -64,6 +64,7 @@
     <Compile Include="Fragments\detaildepthFragment.cs" />
     <Compile Include="Fragments\detailFragment.cs" />
     <Compile Include="Fragments\searchFragment.cs" />
+    <Compile Include="Location.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="ObjectClasses\Category.cs" />
     <Compile Include="ObjectClasses\Communication.cs" />
