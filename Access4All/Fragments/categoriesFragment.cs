@@ -30,7 +30,7 @@ namespace Access4All.Fragments
             String data = GetData();
             //Toast.MakeText(this.Activity, data, ToastLength.Short).Show();
             JArray jsonArray = JArray.Parse(data);
-            Toast.MakeText(this.Activity, jsonArray.ToString(), ToastLength.Short).Show();
+            //Toast.MakeText(this.Activity, jsonArray.ToString(), ToastLength.Short).Show();
 
             Console.WriteLine(jsonArray);
 
