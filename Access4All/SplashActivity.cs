@@ -114,7 +114,7 @@ namespace Access4All
                     government_and_community_locations.Add((String)json["name"]);
                 else if ((int)json["cat_id"] == 7)
                     healthcare_locations.Add((String)json["name"]);
-                else if ((int)json["cat_id"] == 8)
+                else if ((int)json["cat_id"] == 8)//j
                     news_and_media_locations.Add((String)json["name"]);
                 else if ((int)json["cat_id"] == 9)
                     professional_services_locations.Add((String)json["name"]);
