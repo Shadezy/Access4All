@@ -59,11 +59,11 @@ namespace Access4All
             this.user_id = user_id;
             this.website = website;
             this.zip = zip;
-
+            
         }
 
         //getters and setters
-
+        
         public string est_id { get; set; }
         public string name { get; set; }
         public string website { get; set; }
@@ -83,6 +83,6 @@ namespace Access4All
         public string cat_id { get; set; }
         public string config_id { get; set; }
         public string config_comment { get; set; }
-
+        
     }
 }

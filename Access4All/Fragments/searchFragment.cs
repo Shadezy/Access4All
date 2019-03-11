@@ -14,9 +14,6 @@ using Android.Widget;
 using Android.Views.InputMethods;
 using static Access4All.Resource;
 using Android.Speech;
-using System.Net;
-using System.IO;
-using Newtonsoft.Json.Linq;
 
 namespace Access4All.Fragments
 {
@@ -102,42 +99,13 @@ namespace Access4All.Fragments
             SearchView searchView = (SearchView)act.FindViewById(Resource.Id.searchView1);
             string input = e.Query;
 
-            TextView text = (TextView)act.FindViewById(Resource.Id.searchResults);
-
             //close keyboard and lose focus
             searchView.SetIconifiedByDefault(true);
             searchView.OnActionViewCollapsed();
             searchView.Focusable = false;
 
-            //Ping database by name
-            string data = GetData();
-            
-            JArray jsonArray = JArray.Parse(data);
-            List<string> searched_Loc = new List<string>();
-
-            string debugMe = "";
-
-            for (int i = 0; i < jsonArray.Count; i++)
-            {
-                JToken json = jsonArray[i];
-                if (((string)json["name"]).Equals(input, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    //Toast.MakeText(this.Activity, "We have a match for " + input, ToastLength.Short).Show();
-                    searched_Loc.Add(((string)json["name"]) + " " + ((string)json["street"]) + " " + ((string)json["city"]) + " " + ((string)json["state"]));
-                    
-                }
-            }
-            //debug
-            for(int j = 0; j < searched_Loc.Count; j++)
-            {
-                debugMe += searched_Loc[j];
-                debugMe += "\n";
-            }
-            // Toast.MakeText(this.Activity,"Found match for "+ debugMe, ToastLength.Short).Show();
-            text.Text = debugMe;
-            //call for search result TO DO
-
-
+            //test toast to make sure we get the string we searched for
+            Toast.MakeText(this.Activity, input+ " From submitQueryListener", ToastLength.Short).Show();
         }
 
         private void searchByVoice(object sender, EventArgs e)
@@ -174,36 +142,9 @@ namespace Access4All.Fragments
             }
             
         }
+ 
 
-        private string GetData()
-        {
-            var request = HttpWebRequest.Create(string.Format(@"http://access4allspokane.org/RESTapi/establishment"));
-            request.ContentType = "application/json";
-            request.Method = "GET";
-
-            using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
-            {
-                if (response.StatusCode != HttpStatusCode.OK)
-                    Console.Out.WriteLine("Error fetching data. Server returned status code: {0}", response.StatusCode);
-                using (StreamReader reader = new StreamReader(response.GetResponseStream()))
-                {
-                    var content = reader.ReadToEnd();
-                    if (string.IsNullOrWhiteSpace(content))
-                    {
-                        Console.Out.WriteLine("Response contained empty body...");
-                    }
-                    else
-                    {
-                        //Console.Out.WriteLine("Response Body: \r\n {0}", content);
-                        return content;
-                    }
-                }
-            }
-            return "NULL";
-        }
-
-
-
+          
         public void OnClick(View v)
         {
             //throw new NotImplementedException();

@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="catAdapter.cs" />
     <Compile Include="Categories.cs" />
+    <Compile Include="Location.cs" />
     <Compile Include="detailAdapter.cs" />
     <Compile Include="Details.cs" />
     <Compile Include="Fragments\categoriesFragment.cs" />
