@@ -15,8 +15,14 @@ namespace Access4All.Fragments
 {
     public class detaildepthFragment : Android.Support.V4.App.Fragment, MainActivity.IBackButtonListener
     {
+        string curLocation;
+        string selection;
         public override void OnCreate(Bundle savedInstanceState)
         {
+            Bundle b = Arguments;
+            curLocation = b.GetString("location");
+            selection = b.GetString("selection");
+            Toast.MakeText(MainActivity.activity, curLocation + selection, ToastLength.Short).Show();
             base.OnCreate(savedInstanceState);
             // Create your fragment here
         }
