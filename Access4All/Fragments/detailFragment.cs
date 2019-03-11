@@ -13,13 +13,17 @@ using Android.Widget;
 
 namespace Access4All.Fragments
 {
-    public class detailFragment : Android.Support.V4.App.Fragment
+    public class detailFragment : Android.Support.V4.App.Fragment, MainActivity.IBackButtonListener
     {
         detailAdapter mAdapter;
         List<Details> group = new List<Details>();
+        string curLocation;
 
         public override void OnCreate(Bundle savedInstanceState)
         {
+            Bundle b = Arguments;
+            curLocation = b.GetString("location");
+            Toast.MakeText(MainActivity.activity, curLocation, ToastLength.Short).Show();
             base.OnCreate(savedInstanceState);
             setTempData();
 
@@ -71,14 +75,30 @@ namespace Access4All.Fragments
             //return base.OnCreateView(inflater, container, savedInstanceState);
         }
 
-        private void HandleSelect(object sender, EventArgs e)
+        private void HandleSelect(object sender, ExpandableListView.GroupClickEventArgs e)
         {
+            //Get which object was selected
+            string value;
+            value = mAdapter.GetGroup(e.GroupPosition).ToString();
             Android.Support.V4.App.Fragment fragment = null;
+            Bundle args = new Bundle();
+            args.PutString("location", curLocation);
+            args.PutString("selection", value);
             fragment = detaildepthFragment.NewInstance();
+            fragment.Arguments = args; fragment = detaildepthFragment.NewInstance();
             base.FragmentManager.BeginTransaction()
                         .Replace(Resource.Id.content_frame, fragment)
                         .Commit();
 
+        }
+
+        public void OnBackPressed()
+        {
+            Android.Support.V4.App.Fragment fragment = null;
+            fragment = categoriesFragment.NewInstance();
+            base.FragmentManager.BeginTransaction()
+                        .Replace(Resource.Id.content_frame, fragment)
+                        .Commit();
         }
     }
 }
