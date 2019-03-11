@@ -25,7 +25,8 @@ namespace Access4All.Fragments
             Bundle b = Arguments;
             curLocation = b.GetString("location");
             selection = b.GetString("selection");
-            Toast.MakeText(MainActivity.activity, curLocation + selection, ToastLength.Short).Show();
+            string test = curLocation + " " + selection;
+            Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
             base.OnCreate(savedInstanceState);
             // Create your fragment here
         }
@@ -49,8 +50,13 @@ namespace Access4All.Fragments
 
         public void OnBackPressed()
         {
+            //Get which object was selected
             Android.Support.V4.App.Fragment fragment = null;
+            Bundle args = new Bundle();
+            args.PutString("location", curLocation);
+            args.PutString("selection", selection);
             fragment = detailFragment.NewInstance();
+            fragment.Arguments = args;
             base.FragmentManager.BeginTransaction()
                         .Replace(Resource.Id.content_frame, fragment)
                         .Commit();

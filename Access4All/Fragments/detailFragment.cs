@@ -86,7 +86,6 @@ namespace Access4All.Fragments
             args.PutString("selection", value);
             fragment = detaildepthFragment.NewInstance();
             fragment.Arguments = args;
-            fragment = detaildepthFragment.NewInstance();
             base.FragmentManager.BeginTransaction()
                         .Replace(Resource.Id.content_frame, fragment)
                         .Commit();
@@ -95,7 +94,10 @@ namespace Access4All.Fragments
 
         public void OnBackPressed()
         {
+            //Get which object was selected
             Android.Support.V4.App.Fragment fragment = null;
+            Bundle args = new Bundle();
+            args.PutString("location", curLocation);
             fragment = categoriesFragment.NewInstance();
             base.FragmentManager.BeginTransaction()
                         .Replace(Resource.Id.content_frame, fragment)
