@@ -18,6 +18,8 @@ namespace Access4All.Fragments
 {
     public class detaildepthFragment : Android.Support.V4.App.Fragment, MainActivity.IBackButtonListener
     {
+        string curLocation;
+        string selection;
         public override void OnCreate(Bundle savedInstanceState)
         {
             Bundle b = Arguments;
@@ -43,6 +45,15 @@ namespace Access4All.Fragments
 
             return v;
             
+        }
+
+        public void OnBackPressed()
+        {
+            Android.Support.V4.App.Fragment fragment = null;
+            fragment = detailFragment.NewInstance();
+            base.FragmentManager.BeginTransaction()
+                        .Replace(Resource.Id.content_frame, fragment)
+                        .Commit();
         }
     }
 }

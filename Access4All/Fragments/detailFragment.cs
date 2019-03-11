@@ -85,7 +85,8 @@ namespace Access4All.Fragments
             args.PutString("location", curLocation);
             args.PutString("selection", value);
             fragment = detaildepthFragment.NewInstance();
-            fragment.Arguments = args; fragment = detaildepthFragment.NewInstance();
+            fragment.Arguments = args;
+            fragment = detaildepthFragment.NewInstance();
             base.FragmentManager.BeginTransaction()
                         .Replace(Resource.Id.content_frame, fragment)
                         .Commit();
