@@ -16,6 +16,24 @@ namespace Access4All
     {
         public static Activity activity;
 
+        public interface IBackButtonListener
+        {
+            void OnBackPressed();
+        }
+
+        public override void OnBackPressed()
+        {
+            // Ignoring stuff about DrawerLayout, etc for demo purposes.
+            var currentFragment = SupportFragmentManager.FindFragmentById(Resource.Id.content_frame);
+            var listener = currentFragment as IBackButtonListener;
+            if (listener != null)
+            {
+                listener.OnBackPressed();
+                return;
+            }
+            base.OnBackPressed();
+        }
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);

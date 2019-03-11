@@ -13,7 +13,7 @@ using Android.Widget;
 
 namespace Access4All.Fragments
 {
-    public class detailFragment : Android.Support.V4.App.Fragment
+    public class detailFragment : Android.Support.V4.App.Fragment, MainActivity.IBackButtonListener
     {
         detailAdapter mAdapter;
         List<Details> group = new List<Details>();
@@ -79,6 +79,15 @@ namespace Access4All.Fragments
                         .Replace(Resource.Id.content_frame, fragment)
                         .Commit();
 
+        }
+
+        public void OnBackPressed()
+        {
+            Android.Support.V4.App.Fragment fragment = null;
+            fragment = categoriesFragment.NewInstance();
+            base.FragmentManager.BeginTransaction()
+                        .Replace(Resource.Id.content_frame, fragment)
+                        .Commit();
         }
     }
 }

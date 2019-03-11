@@ -180,10 +180,16 @@ namespace Access4All.Fragments
             //return base.OnCreateView(inflater, container, savedInstanceState);
         }
 
-        private void HandleSelect(object sender, EventArgs e)
+        private void HandleSelect(object sender, ExpandableListView.ChildClickEventArgs e)
         {
+            //Get which object was selected
+            string value;
+            value = mAdapter.GetChild(e.GroupPosition, e.ChildPosition).ToString();
             Android.Support.V4.App.Fragment fragment = null;
+            Bundle args = new Bundle();
+            args.PutString("location", value);
             fragment = detailFragment.NewInstance();
+            fragment.Arguments = args;
             base.FragmentManager.BeginTransaction()
                         .Replace(Resource.Id.content_frame, fragment)
                         .Commit();

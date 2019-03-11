@@ -13,7 +13,7 @@ using Android.Widget;
 
 namespace Access4All.Fragments
 {
-    public class detaildepthFragment : Android.Support.V4.App.Fragment
+    public class detaildepthFragment : Android.Support.V4.App.Fragment, MainActivity.IBackButtonListener
     {
         public override void OnCreate(Bundle savedInstanceState)
         {
@@ -36,6 +36,28 @@ namespace Access4All.Fragments
 
             return v;
             
+        }
+
+        void MainActivity.IBackButtonListener.OnBackPressed()
+        {
+            /*if (this.Detail.GetType().ToString() == "Klaim.HomePage")
+            {
+                Task<bool> action = DisplayAlert("Quitter?", "Voulez-vous quitter l'application?", "Oui", "Non");
+                action.ContinueWith(task =>
+                {
+                    if (task.Result)
+                        DisplayAlert("debugvalue", "TRUE", "ok");
+                });
+            }
+            else
+            {
+                ViewModel.NavigateTo(new HomePage(new HomeViewModel()));
+            }*/
+            Android.Support.V4.App.Fragment fragment = null;
+            fragment = detailFragment.NewInstance();
+            base.FragmentManager.BeginTransaction()
+                        .Replace(Resource.Id.content_frame, fragment)
+                        .Commit();
         }
     }
 }
