@@ -22,7 +22,7 @@ namespace Access4All.Fragments
         string selection;
         List<Categories> group = new List<Categories>();
         string data;
-        string table = "establishment";
+        string table = "establishment";//change this later cuz parking dont work
 
         public override void OnCreate(Bundle savedInstanceState)
         {
@@ -46,7 +46,8 @@ namespace Access4All.Fragments
             // Use this to return your custom view for this Fragment
             View v = inflater.Inflate(Resource.Layout.detail_layout, null);
             TextView t = (TextView)v.FindViewById(Resource.Id.textView1);
-            t.Text = "This is some example text";
+            setTempData();
+            t.Text = data;
 
             return v;
             
