@@ -2636,14 +2636,14 @@ namespace Access4All
 			// aapt resource value: 0x7f080061
 			public const int list_item = 2131230817;
 			
-			// aapt resource value: 0x7f0800b9
-			public const int masked = 2131230905;
+			// aapt resource value: 0x7f0800ba
+			public const int masked = 2131230906;
 			
 			// aapt resource value: 0x7f0800a6
 			public const int media_actions = 2131230886;
 			
-			// aapt resource value: 0x7f0800b7
-			public const int message = 2131230903;
+			// aapt resource value: 0x7f0800b8
+			public const int message = 2131230904;
 			
 			// aapt resource value: 0x7f080031
 			public const int middle = 2131230769;
@@ -2654,14 +2654,14 @@ namespace Access4All
 			// aapt resource value: 0x7f080028
 			public const int multiply = 2131230760;
 			
-			// aapt resource value: 0x7f0800ba
-			public const int navigation_categories = 2131230906;
+			// aapt resource value: 0x7f0800bb
+			public const int navigation_categories = 2131230907;
 			
 			// aapt resource value: 0x7f080097
 			public const int navigation_header_container = 2131230871;
 			
-			// aapt resource value: 0x7f0800bb
-			public const int navigation_search = 2131230907;
+			// aapt resource value: 0x7f0800bc
+			public const int navigation_search = 2131230908;
 			
 			// aapt resource value: 0x7f08003b
 			public const int never = 2131230779;
@@ -2737,6 +2737,9 @@ namespace Access4All
 			
 			// aapt resource value: 0x7f080055
 			public const int scrollable = 2131230805;
+			
+			// aapt resource value: 0x7f0800b7
+			public const int searchResults = 2131230903;
 			
 			// aapt resource value: 0x7f0800b3
 			public const int searchView1 = 2131230899;
@@ -2906,8 +2909,8 @@ namespace Access4All
 			// aapt resource value: 0x7f080016
 			public const int view_offset_helper = 2131230742;
 			
-			// aapt resource value: 0x7f0800b8
-			public const int visible = 2131230904;
+			// aapt resource value: 0x7f0800b9
+			public const int visible = 2131230905;
 			
 			// aapt resource value: 0x7f0800b5
 			public const int voiceSearch = 2131230901;
