@@ -17,11 +17,15 @@ using Android.Speech;
 using System.Net;
 using System.IO;
 using Newtonsoft.Json.Linq;
+using Android.Text;
+using Android.Text.Style;
+using Android.Text.Method;
 
 namespace Access4All.Fragments
 {
     public class searchFragment : Fragment, View.IOnClickListener
     {
+        ListView mTv;
         bool flagSearch = false;
         
         public override void OnCreate(Bundle savedInstanceState)
@@ -78,7 +82,9 @@ namespace Access4All.Fragments
             Button textButton = view.FindViewById<Button>(Resource.Id.textSearch);
             Button voiceButton = view.FindViewById<Button>(Resource.Id.voiceSearch);
             SearchView searchV = view.FindViewById<SearchView>(Resource.Id.searchView1);
-            
+
+            mTv = view.FindViewById<ListView>(Resource.Id.searchResults);
+
             //set up listeners
 
             textButton.Click += searchByText;
@@ -86,6 +92,8 @@ namespace Access4All.Fragments
             voiceButton.Click += searchByVoice;
 
             searchV.QueryTextSubmit += submitQueryListener;
+
+
             
             
         
@@ -96,13 +104,14 @@ namespace Access4All.Fragments
             //return base.OnCreateView(inflater, container, savedInstanceState);
         }
 
+
         private void submitQueryListener(object sender, SearchView.QueryTextSubmitEventArgs e)
         {
             MainActivity act = (MainActivity)this.Activity;
             SearchView searchView = (SearchView)act.FindViewById(Resource.Id.searchView1);
             string input = e.Query;
 
-            TextView text = (TextView)act.FindViewById(Resource.Id.searchResults);
+           // TextView text = (TextView)act.FindViewById(Resource.Id.searchResults);
 
             //close keyboard and lose focus
             searchView.SetIconifiedByDefault(true);
@@ -133,11 +142,33 @@ namespace Access4All.Fragments
                 debugMe += searched_Loc[j];
                 debugMe += "\n";
             }
-            // Toast.MakeText(this.Activity,"Found match for "+ debugMe, ToastLength.Short).Show();
-            text.Text = debugMe;
-            //call for search result TO DO
+            //build spannable string
 
+            /* I doubt this will work anymore. Keeping in case, but will try to find a better solution later 
+             * 
+             *
+            SpannableString mySpan = new SpannableString(debugMe);
+            var clickSpan = new MyClickableSpan();
+            clickSpan.Click += v => StartActivity(new Intent(act, typeof(MainActivity)));//need to point to detail depth
+            int StartCount = 0;
+            int StopCount = 0;
+            for (int x = 0; x < searched_Loc.Count; x++) {
+                StopCount += (searched_Loc.ElementAt(x).Length);
 
+                mySpan.SetSpan(clickSpan, StartCount, StopCount, SpanTypes.ExclusiveExclusive);
+
+                StartCount += (searched_Loc.ElementAt(x).Length);
+            }
+            text.TextFormatted = mySpan;
+            text.MovementMethod = new LinkMovementMethod();
+            */
+            //Listview stuff
+            mTv = act.FindViewById<ListView>(Resource.Id.searchResults);
+            ArrayAdapter<string> arrayAdapter = new ArrayAdapter<string>(act, Android.Resource.Layout.SimpleListItem1, searched_Loc);
+
+            mTv.Adapter = arrayAdapter;
+
+            
         }
 
         private void searchByVoice(object sender, EventArgs e)
@@ -208,5 +239,6 @@ namespace Access4All.Fragments
         {
             //throw new NotImplementedException();
         }
+       
     }
 }
