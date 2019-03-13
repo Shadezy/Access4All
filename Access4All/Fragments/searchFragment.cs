@@ -93,7 +93,7 @@ namespace Access4All.Fragments
 
             searchV.QueryTextSubmit += submitQueryListener;
 
-
+            mTv.ItemClick += MTv_ItemClick;
             
             
         
@@ -104,6 +104,20 @@ namespace Access4All.Fragments
             //return base.OnCreateView(inflater, container, savedInstanceState);
         }
 
+        private void MTv_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
+        {
+            string location;
+            location = (string)mTv.GetItemAtPosition(e.Position);
+            Android.Support.V4.App.Fragment fragment = null;
+            Bundle args = new Bundle();
+            args.PutString("location", location);
+            args.PutString("prevView", "search");
+            fragment = detailFragment.NewInstance();
+            fragment.Arguments = args;
+            base.FragmentManager.BeginTransaction()
+                        .Replace(Resource.Id.content_frame, fragment)
+                        .Commit();
+        }
 
         private void submitQueryListener(object sender, SearchView.QueryTextSubmitEventArgs e)
         {
@@ -233,12 +247,9 @@ namespace Access4All.Fragments
             return "NULL";
         }
 
-
-
         public void OnClick(View v)
         {
             //throw new NotImplementedException();
         }
-       
     }
 }

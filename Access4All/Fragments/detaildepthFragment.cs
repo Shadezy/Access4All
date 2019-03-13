@@ -20,6 +20,7 @@ namespace Access4All.Fragments
     {
         string curLocation;
         string selection;
+        string prevView;
         List<Categories> group = new List<Categories>();
         string data;
         string table = "establishment";//change this later cuz parking dont work
@@ -29,6 +30,7 @@ namespace Access4All.Fragments
             Bundle b = Arguments;
             curLocation = b.GetString("location");
             selection = b.GetString("selection");
+            prevView = b.GetString("prevView");
             string test = curLocation + " " + selection;
             Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
             base.OnCreate(savedInstanceState);
@@ -60,6 +62,7 @@ namespace Access4All.Fragments
             Bundle args = new Bundle();
             args.PutString("location", curLocation);
             args.PutString("selection", selection);
+            args.PutString("prevView", prevView);
             fragment = detailFragment.NewInstance();
             fragment.Arguments = args;
             base.FragmentManager.BeginTransaction()

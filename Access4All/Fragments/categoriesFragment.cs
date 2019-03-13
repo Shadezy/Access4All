@@ -186,6 +186,7 @@ namespace Access4All.Fragments
             Android.Support.V4.App.Fragment fragment = null;
             Bundle args = new Bundle();
             args.PutString("location", value);
+            args.PutString("prevView", "categories");
             fragment = detailFragment.NewInstance();
             fragment.Arguments = args;
             base.FragmentManager.BeginTransaction()
