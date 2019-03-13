@@ -9,10 +9,12 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
+using Android.Text;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
 using Newtonsoft.Json.Linq;
+using Environment = System.Environment;
 
 namespace Access4All.Fragments
 {
@@ -22,7 +24,8 @@ namespace Access4All.Fragments
         string selection;
         List<Categories> group = new List<Categories>();
         string data;
-        string table = "establishment";//change this later cuz parking dont work
+        TextView myTextTest;
+        string table; //= "establishment";//change this later cuz parking dont work
 
         public override void OnCreate(Bundle savedInstanceState)
         {
@@ -30,7 +33,9 @@ namespace Access4All.Fragments
             curLocation = b.GetString("location");
             selection = b.GetString("selection");
             string test = curLocation + " " + selection;
-            Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
+            //Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
+
+           
             base.OnCreate(savedInstanceState);
             // Create your fragment here
         }
@@ -46,11 +51,107 @@ namespace Access4All.Fragments
             // Use this to return your custom view for this Fragment
             View v = inflater.Inflate(Resource.Layout.detail_layout, null);
             TextView t = (TextView)v.FindViewById(Resource.Id.textView1);
-            setTempData();
-            t.Text = data;
+            myTextTest = (TextView)v.FindViewById(Resource.Id.textView1);
+            //setTempData();
+            //t.Text = data;
+
+            string unparsedData,parsedData;
+            Bundle b = Arguments;
+            curLocation = b.GetString("location");
+            selection = b.GetString("selection");
+            string test = curLocation + " " + selection;
+            //Cam's code
+            switch (selection)
+            {
+                case "Information":
+                    //Console.WriteLine("Case 1");
+                    Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
+                    this.table = "establishment";
+                    unparsedData = GetData();//getGeneralInformation(curLocation);
+                    parsedData = parseGeneralInformation(unparsedData, curLocation);
+                    t.Text = parsedData;
+                    break;
+                case "Parking on street":
+                    Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
+                    break;
+                case "Access to transit":
+                    Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
+                    unparsedData = getTransitData(curLocation);
+                    parsedData = parseTransitData(unparsedData);
+                    t.Text = parsedData;
+                    break;
+                case "Exterior pathway & seating":
+                    Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
+                    break;
+                case "Entrances":
+                    Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
+                    break;
+                case "Interior":
+                    Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
+                    break;
+                case "Seating":
+                    Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
+                    break;
+                case "Restroom":
+                    Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
+                    break;
+                case "Communication":
+                    Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
+                    break;
+                case "Technologies & Customer Service":
+                    Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
+                    break;
+                default:
+                    Toast.MakeText(MainActivity.activity, "Made to defualt, opps", ToastLength.Short).Show();
+                    break;
+            }
 
             return v;
             
+        }
+
+        private string parseGeneralInformation(string unparsedData, string loc)
+        {
+            JArray jsonArray = JArray.Parse(unparsedData);
+            string text = loc + Environment.NewLine;
+            
+            string website;
+            for (int i = 0; i < jsonArray.Count; i++)
+            {
+                JToken json = jsonArray[i];
+
+                if (((string)json["name"]).Equals(loc))
+                {
+                    website = ((string)json["website"]); 
+                    loc += Environment.NewLine;
+                    loc += (((string)json["street"]) +" "+ ((string)json["city"]) +", " +((string)json["state"])+" "+ ((string)json["zip"]) + Environment.NewLine);
+                    loc += Environment.NewLine;
+                    loc += (website + Environment.NewLine);
+                    loc += Environment.NewLine;
+                    loc += ((string)json["phone"]);
+                }
+                    
+            }
+           // Toast.MakeText(MainActivity.activity, id, ToastLength.Short).Show();
+            return loc;
+        }
+
+       
+
+        private string parseTransitData(string unparsedData)
+        {
+            //throw new NotImplementedException();
+            string parsedData = null;
+
+            return parsedData;
+        }
+
+        private string getTransitData(string curLocation)
+        {
+            //throw new NotImplementedException();
+            string myData = null;
+
+            return myData;
         }
 
         public void OnBackPressed()
@@ -194,4 +295,5 @@ namespace Access4All.Fragments
             return "NULL";
         }
     }
+
 }
