@@ -18,11 +18,13 @@ namespace Access4All.Fragments
         detailAdapter mAdapter;
         List<Details> group = new List<Details>();
         string curLocation;
+        string prevView;
 
         public override void OnCreate(Bundle savedInstanceState)
         {
             Bundle b = Arguments;
             curLocation = b.GetString("location");
+            prevView = b.GetString("prevView");
             Toast.MakeText(MainActivity.activity, curLocation, ToastLength.Short).Show();
             base.OnCreate(savedInstanceState);
             setTempData();
@@ -84,6 +86,7 @@ namespace Access4All.Fragments
             Bundle args = new Bundle();
             args.PutString("location", curLocation);
             args.PutString("selection", value);
+            args.PutString("prevView", prevView);
             fragment = detaildepthFragment.NewInstance();
             fragment.Arguments = args;
             base.FragmentManager.BeginTransaction()
@@ -98,7 +101,14 @@ namespace Access4All.Fragments
             Android.Support.V4.App.Fragment fragment = null;
             Bundle args = new Bundle();
             args.PutString("location", curLocation);
-            fragment = categoriesFragment.NewInstance();
+            if(prevView.Equals("search"))
+            {
+                fragment = searchFragment.NewInstance();
+            }
+            if (prevView.Equals("categories"))
+            {
+                fragment = categoriesFragment.NewInstance();
+            }
             base.FragmentManager.BeginTransaction()
                         .Replace(Resource.Id.content_frame, fragment)
                         .Commit();
