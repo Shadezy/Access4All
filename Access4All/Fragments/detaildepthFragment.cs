@@ -62,54 +62,70 @@ namespace Access4All.Fragments
             curLocation = b.GetString("location");
             selection = b.GetString("selection");
             string test = curLocation + " " + selection;
-            //Cam's code
-            switch (selection)
+
+            //Cam's code made better by Travis
+            if (selection.CompareTo("Information") == 0)
             {
-                case "Information":
-                    //Console.WriteLine("Case 1");
-                    Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
-                    this.table = "establishment";
-                    unparsedData = GetData();//getGeneralInformation(curLocation);
-                    parsedData = parseGeneralInformation(unparsedData, curLocation);
-                    t.Text = parsedData;
-                    break;
-                case "Parking on street":
-                    Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
-                    break;
-                case "Access to transit":
-                    Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
-                    unparsedData = getTransitData(curLocation);
-                    parsedData = parseTransitData(unparsedData);
-                    t.Text = parsedData;
-                    break;
-                case "Exterior pathway & seating":
-                    Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
-                    break;
-                case "Entrances":
-                    Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
-                    break;
-                case "Interior":
-                    Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
-                    break;
-                case "Seating":
-                    Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
-                    break;
-                case "Restroom":
-                    Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
-                    break;
-                case "Communication":
-                    Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
-                    break;
-                case "Technologies & Customer Service":
-                    Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
-                    break;
-                default:
-                    Toast.MakeText(MainActivity.activity, "Made to defualt, opps", ToastLength.Short).Show();
-                    break;
+                Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
+                this.table = "establishment";
+                unparsedData = GetData();//getGeneralInformation(curLocation);
+                parsedData = parseGeneralInformation(unparsedData, curLocation);
+                t.Text = parsedData;
             }
 
-            return v;
-            
+            else if (selection.CompareTo("Parking on street") == 0)
+            {
+                Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
+            }
+
+            else if (selection.CompareTo("Access to transit") == 0)
+            {
+                Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
+                unparsedData = getTransitData(curLocation);
+                parsedData = parseTransitData(unparsedData);
+                t.Text = parsedData;
+            }
+
+            else if (selection.CompareTo("Exterior pathway & seating") == 0)
+            {
+                Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
+            }
+
+            else if (selection.CompareTo("Entrances") == 0)
+            {
+                Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
+            }
+
+            else if (selection.CompareTo("Interior") == 0)
+            {
+                Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
+            }
+
+            else if (selection.CompareTo("Seating") == 0)
+            {
+                Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
+            }
+
+            else if (selection.CompareTo("Restroom") == 0)
+            {
+                Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
+            }
+
+            else if (selection.CompareTo("Communication") == 0)
+            {
+                Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
+            }
+
+            else if (selection.CompareTo("Technologies & Customer Service") == 0)
+            {
+                Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
+            }
+
+            else
+            {
+                Toast.MakeText(MainActivity.activity, "Made to defualt, opps", ToastLength.Short).Show();
+            }
+            return v;   
         }
 
         private string parseGeneralInformation(string unparsedData, string loc)
