@@ -107,10 +107,13 @@ namespace Access4All.Fragments
         private void MTv_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
             string location;
+            string name;
             location = (string)mTv.GetItemAtPosition(e.Position);
+            string[] stringArray = location.Split(": ");
+            name = stringArray[0];
             Android.Support.V4.App.Fragment fragment = null;
             Bundle args = new Bundle();
-            args.PutString("location", location);
+            args.PutString("location", name);
             args.PutString("prevView", "search");
             fragment = detailFragment.NewInstance();
             fragment.Arguments = args;
@@ -146,7 +149,7 @@ namespace Access4All.Fragments
                 if (((string)json["name"]).Equals(input, StringComparison.InvariantCultureIgnoreCase))
                 {
                     //Toast.MakeText(this.Activity, "We have a match for " + input, ToastLength.Short).Show();
-                    searched_Loc.Add(((string)json["name"]) + " " + ((string)json["street"]) + " " + ((string)json["city"]) + " " + ((string)json["state"]));
+                    searched_Loc.Add(((string)json["name"]) + ": " + ((string)json["street"]) + " " + ((string)json["city"]) + " " + ((string)json["state"]));
                     
                 }
             }
