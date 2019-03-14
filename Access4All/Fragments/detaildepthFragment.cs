@@ -7,14 +7,18 @@ using System.Text;
 
 using Android.App;
 using Android.Content;
+using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
 using Android.Text;
+using Android.Text.Style;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
 using Newtonsoft.Json.Linq;
 using Environment = System.Environment;
+
+//HTML.FromHtml is deprecated,so it might stop being supported soonish
 
 namespace Access4All.Fragments
 {
@@ -24,7 +28,6 @@ namespace Access4All.Fragments
         string selection;
         string prevView;
         List<Categories> group = new List<Categories>();
-        string data;
         TextView myTextTest;
         string table; //= "establishment";//change this later cuz parking dont work
         int est_id;
@@ -58,7 +61,12 @@ namespace Access4All.Fragments
             //setTempData();
             //t.Text = data;
 
+            /*var htmlCode = "<ul><li>Item 1</li><li>Item 2</li></ul>";
+            var myTextView = FindViewById<TextView>(Resource.Id.myTextView);
+            myTextView.TextFormatted = Android.Text.Html.FromHtml(htmlCode);*/
+
             string unparsedData,parsedData;
+            SpannableString parsed;
             Bundle b = Arguments;
             curLocation = b.GetString("location");
             selection = b.GetString("selection");
@@ -73,10 +81,10 @@ namespace Access4All.Fragments
             //Cam's code made better by Travis
             if (selection.CompareTo("Information") == 0)
             {
-                Toast.MakeText(MainActivity.activity, est_id.ToString(), ToastLength.Long).Show();
+                Toast.MakeText(this.Activity, est_id.ToString(), ToastLength.Long).Show();
                 //Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
                 table = "establishment";
-                unparsedData = GetData();//getGeneralInformation(curLocation);
+                unparsedData = GetData("");//getGeneralInformation(curLocation);
                 parsedData = parseGeneralInformation(unparsedData, curLocation);
                 t.Text = parsedData;
             }
@@ -84,9 +92,12 @@ namespace Access4All.Fragments
             else if (selection.CompareTo("Parking on street") == 0)
             {
                 table = "parking";
-                unparsedData = GetData();
+                unparsedData = GetData(est_id.ToString());
+                //parsed = parseParkingInformation(unparsedData, curLocation);
+                //t.TextFormatted = parsed;
                 parsedData = parseParkingInformation(unparsedData, curLocation);
-                Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
+                //t.TextFormatted = Html.FromHtml(parsedData);
+                t.Text = parsedData;
             }
 
             else if (selection.CompareTo("Access to transit") == 0)
@@ -142,27 +153,70 @@ namespace Access4All.Fragments
         private string parseParkingInformation(string unparsedData, string loc)
         {
             JArray jsonArray = JArray.Parse(unparsedData);
-            string text = loc + Environment.NewLine;
+            string data = "";
 
-            string website;
-            for (int i = 0; i < jsonArray.Count; i++)
+            SpannableString result;
+
+            int park_id;
+            string lot_type;
+            string street_metered;
+            string parking_type;
+            string total_spaces;
+            string reserved_spaces;
+            string general_accessible_spaces;
+            string van_accessible_spaces;
+            string reserve_space_sign;
+            string reserve_space_obstacles;
+            string comment;
+            string recommendations;
+
+            for (int i = 0; i < jsonArray.Count; i++)//this should only ever be one, but keep it here in case something goes wrong?
             {
                 JToken json = jsonArray[i];
 
-                if (((string)json["name"]).Equals(loc))
+                if (((int)json["est_id"]) == est_id)
                 {
-                    website = ((string)json["website"]);
-                    loc += Environment.NewLine;
-                    loc += (((string)json["street"]) + " " + ((string)json["city"]) + ", " + ((string)json["state"]) + " " + ((string)json["zip"]) + Environment.NewLine);
-                    loc += Environment.NewLine;
-                    loc += (website + Environment.NewLine);
-                    loc += Environment.NewLine;
-                    loc += ((string)json["phone"]);
-                }
+                    park_id = (int)json["park_id"];
+                    lot_type = ((string)json["lot_free"]).ToLower();
+                    street_metered = ((string)json["street_metered"]).ToLower();
+                    parking_type = ((string)json["parking_type"]).ToLower();//if "other" then ignore
+                    total_spaces = ((string)json["total_num_spaces"]).ToLower();
+                    reserved_spaces = ((string)json["num_reserved_spaces"]).ToLower();
+                    general_accessible_spaces = ((string)json["num_accessable_space"]).ToLower();//and so it begins
+                    van_accessible_spaces = ((string)json["num_van_accessible"]).ToLower();
+                    reserve_space_sign = ((string)json["reserve_space_sign"]).ToLower();
+                    reserve_space_obstacles = ((string)json["reserve_space_obstacles"]).ToLower();
+                    comment = ((string)json["comment"]).ToLower();
+                    recommendations = ((string)json["recommendations"]).ToLower();
 
+                    if (street_metered.CompareTo("not metered") == 0)//• = alt + 7 on numpad
+                        street_metered = "free";
+
+                    data += "• This establishment has the following types of parking: " + lot_type + " lot, " + street_metered + " street\n\r";
+                    data += "• There are a total of " + total_spaces + " on the premises\n\r";
+
+                    if (parking_type.CompareTo("other") != 0)
+                        data += "• This establishment has " + parking_type + " parking\n\r";
+
+                    data += "• " + general_accessible_spaces + " accessible parking spaces have 5’ access aisle\n\r";
+
+                    /*if (street_metered.CompareTo("not metered") == 0)
+                        street_metered = "free";
+
+                    data += "<ul>This establishment has the following types of parking: " + lot_type + " lot, " + street_metered + " street\n\r";
+                    data += "<li>There are a total of " + total_spaces + " on the premises</li>";
+
+                    if (parking_type.CompareTo("other") != 0)
+                        data += "<li>This establishment has " + parking_type + " parking</li>";
+
+                    data += "<li>" + general_accessible_spaces + " accessible parking spaces have 5’ access aisle</li>";*/
+                }
             }
-            // Toast.MakeText(MainActivity.activity, id, ToastLength.Short).Show();
-            return loc;
+
+            //result = new SpannableString("Parking:\n•this is a test");
+            //result.SetSpan(new BulletSpan(40, Color.Aqua), 10, 22, SpanTypes.ExclusiveExclusive);
+            return data; //+"</ul>";
+            //return result;
         }
 
         private string parseGeneralInformation(string unparsedData, string loc)
@@ -226,7 +280,7 @@ namespace Access4All.Fragments
 
         private void setTempData()
         {
-            data = GetData();
+            /*data = GetData("");
             JArray jsonArray = JArray.Parse(data);
 
             Console.WriteLine(jsonArray);
@@ -248,7 +302,6 @@ namespace Access4All.Fragments
             List<string> utilities_locations = new List<string>();
             List<string> other_locations = new List<string>();
 
-            /** these don't appear in the db, but they are on the website **/
             List<string> business_locations = new List<string>();
             List<string> home_and_garden_locations = new List<string>();
             List<string> nightlife_locations = new List<string>();
@@ -335,13 +388,13 @@ namespace Access4All.Fragments
             group.Add(new Categories("Religious Organizations", SplashActivity.religion_locations));
             group.Add(new Categories("Restaurants, Coffee Shops", SplashActivity.restaurant_and_coffee_shop_locations));//conflicts with food & grocery/ not in db
             group.Add(new Categories("Shopping", SplashActivity.retail_locations));//probably
-            group.Add(new Categories("Travel, Hotel, Motel", SplashActivity.travel_locations));
-
+            group.Add(new Categories("Travel, Hotel, Motel", SplashActivity.travel_locations));*/
         }
-        private string GetData()
+
+        private string GetData(string search_specifics)
         {
 
-            var request = HttpWebRequest.Create(String.Format(@"http://access4allspokane.org/RESTapi/" + table));
+            var request = HttpWebRequest.Create(String.Format(@"http://access4allspokane.org/RESTapi/" + table + "/?" + search_specifics));
             request.ContentType = "application/json";
             request.Method = "GET";
 
