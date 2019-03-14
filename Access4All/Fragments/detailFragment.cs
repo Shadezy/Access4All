@@ -69,6 +69,7 @@ namespace Access4All.Fragments
             };*/
 
             //ex.Click += HandleSelect;
+            ex.SetGroupIndicator(null);
             ex.GroupClick += HandleSelect;
 
             return v;

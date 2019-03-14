@@ -20,6 +20,7 @@ using Newtonsoft.Json.Linq;
 using Android.Text;
 using Android.Text.Style;
 using Android.Text.Method;
+using System.Text.RegularExpressions;
 
 namespace Access4All.Fragments
 {
@@ -142,11 +143,18 @@ namespace Access4All.Fragments
             List<string> searched_Loc = new List<string>();
 
             string debugMe = "";
+            string tempinput = input;
+            tempinput = RemoveSpecialCharacters(tempinput);
+            tempinput = tempinput.Replace(" ", System.String.Empty);
+            Toast.MakeText(this.Activity, tempinput, ToastLength.Short).Show();
 
             for (int i = 0; i < jsonArray.Count; i++)
             {
                 JToken json = jsonArray[i];
-                if (((string)json["name"]).Equals(input, StringComparison.InvariantCultureIgnoreCase))
+                string temp = (string)json["name"];
+                temp = RemoveSpecialCharacters(temp);
+                temp = temp.Replace(" ", System.String.Empty);
+                if (((string)json["name"]).Equals(input, StringComparison.InvariantCultureIgnoreCase) || temp.Equals(tempinput, StringComparison.InvariantCultureIgnoreCase))
                 {
                     //Toast.MakeText(this.Activity, "We have a match for " + input, ToastLength.Short).Show();
                     searched_Loc.Add(((string)json["name"]) + ": " + ((string)json["street"]) + " " + ((string)json["city"]) + " " + ((string)json["state"]));
@@ -184,7 +192,9 @@ namespace Access4All.Fragments
             ArrayAdapter<string> arrayAdapter = new ArrayAdapter<string>(act, Android.Resource.Layout.SimpleListItem1, searched_Loc);
 
             mTv.Adapter = arrayAdapter;
-
+            mTv.SetFooterDividersEnabled(true);
+            mTv.SetHeaderDividersEnabled(true);
+            
             
         }
 
@@ -253,6 +263,18 @@ namespace Access4All.Fragments
         public void OnClick(View v)
         {
             //throw new NotImplementedException();
+        }
+        public string RemoveSpecialCharacters(string str)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (char c in str)
+            {
+                if ((c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || c == '.' || c == '_')
+                {
+                    sb.Append(c);
+                }
+            }
+            return sb.ToString();
         }
     }
 }
