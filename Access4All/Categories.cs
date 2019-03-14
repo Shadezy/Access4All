@@ -16,9 +16,9 @@ namespace Access4All
     class Categories
     {
         public string title;
-        public List<string> locations;
+        public List<Location> locations;
 
-        public Categories(string title, List<string> locations)
+        public Categories(string title, List<Location> locations)
         {
             this.title = title;
             this.locations = locations;
@@ -36,7 +36,7 @@ namespace Access4All
             }
         }
 
-        public List<string> Locations
+        public List<Location> Locations
         {
             get
             {
@@ -46,6 +46,14 @@ namespace Access4All
             {
                 this.locations = value;
             }
+        }
+        public override string ToString()
+        {
+            string data = "";
+            for (int i = 0; i < locations.Count; i++)
+                data += locations.ToString() + ", ";
+
+            return data;
         }
     }
 }

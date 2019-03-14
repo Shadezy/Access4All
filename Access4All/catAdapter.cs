@@ -49,7 +49,7 @@ namespace Access4All
 
         public override Java.Lang.Object GetChild(int groupPosition, int childPosition)
         {
-            return categories[groupPosition].Locations[childPosition];
+            return categories[groupPosition].Locations[childPosition].ToString();
         }
 
         public override long GetChildId(int groupPosition, int childPosition)

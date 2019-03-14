@@ -27,6 +27,7 @@ namespace Access4All.Fragments
         string data;
         TextView myTextTest;
         string table; //= "establishment";//change this later cuz parking dont work
+        int est_id;
 
         public override void OnCreate(Bundle savedInstanceState)
         {
@@ -62,12 +63,19 @@ namespace Access4All.Fragments
             curLocation = b.GetString("location");
             selection = b.GetString("selection");
             string test = curLocation + " " + selection;
+            
+            for (int i = 0; i < SplashActivity.ALL_LOCATIONS.Count; i++)
+            {
+                if (curLocation.CompareTo(SplashActivity.ALL_LOCATIONS[i].name) == 0)
+                    est_id = SplashActivity.ALL_LOCATIONS[i].est_id;
+            }
 
             //Cam's code made better by Travis
             if (selection.CompareTo("Information") == 0)
             {
-                Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
-                this.table = "establishment";
+                Toast.MakeText(MainActivity.activity, est_id.ToString(), ToastLength.Long).Show();
+                //Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
+                table = "establishment";
                 unparsedData = GetData();//getGeneralInformation(curLocation);
                 parsedData = parseGeneralInformation(unparsedData, curLocation);
                 t.Text = parsedData;
@@ -75,6 +83,9 @@ namespace Access4All.Fragments
 
             else if (selection.CompareTo("Parking on street") == 0)
             {
+                table = "parking";
+                unparsedData = GetData();
+                parsedData = parseParkingInformation(unparsedData, curLocation);
                 Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
             }
 
@@ -123,9 +134,35 @@ namespace Access4All.Fragments
 
             else
             {
-                Toast.MakeText(MainActivity.activity, "Made to defualt, opps", ToastLength.Short).Show();
+                Toast.MakeText(MainActivity.activity, "Cameron sucks", ToastLength.Short).Show();
             }
             return v;   
+        }
+
+        private string parseParkingInformation(string unparsedData, string loc)
+        {
+            JArray jsonArray = JArray.Parse(unparsedData);
+            string text = loc + Environment.NewLine;
+
+            string website;
+            for (int i = 0; i < jsonArray.Count; i++)
+            {
+                JToken json = jsonArray[i];
+
+                if (((string)json["name"]).Equals(loc))
+                {
+                    website = ((string)json["website"]);
+                    loc += Environment.NewLine;
+                    loc += (((string)json["street"]) + " " + ((string)json["city"]) + ", " + ((string)json["state"]) + " " + ((string)json["zip"]) + Environment.NewLine);
+                    loc += Environment.NewLine;
+                    loc += (website + Environment.NewLine);
+                    loc += Environment.NewLine;
+                    loc += ((string)json["phone"]);
+                }
+
+            }
+            // Toast.MakeText(MainActivity.activity, id, ToastLength.Short).Show();
+            return loc;
         }
 
         private string parseGeneralInformation(string unparsedData, string loc)
@@ -233,34 +270,49 @@ namespace Access4All.Fragments
 
                 if ((int)json["cat_id"] == 1)
                     arts_and_entertainment_locations.Add((string)json["name"]);
+
                 else if ((int)json["cat_id"] == 2)
                     automotive_locations.Add((string)json["name"]);
+
                 else if ((int)json["cat_id"] == 3)
                     bank_and_finance_locations.Add((string)json["name"]);
+
                 else if ((int)json["cat_id"] == 4)
                     education_locations.Add((string)json["name"]);
+
                 else if ((int)json["cat_id"] == 5)
                     food_and_drink_locations.Add((string)json["name"]);
+
                 else if ((int)json["cat_id"] == 6)
                     government_and_community_locations.Add((string)json["name"]);
+
                 else if ((int)json["cat_id"] == 7)
                     healthcare_locations.Add((string)json["name"]);
+
                 else if ((int)json["cat_id"] == 8)
                     news_and_media_locations.Add((string)json["name"]);
+
                 else if ((int)json["cat_id"] == 9)
                     professional_services_locations.Add((string)json["name"]);
+
                 else if ((int)json["cat_id"] == 10)
                     real_estate_locations.Add((string)json["name"]);
+
                 else if ((int)json["cat_id"] == 11)
                     religion_locations.Add((string)json["name"]);
+
                 else if ((int)json["cat_id"] == 12)
                     retail_locations.Add((string)json["name"]);
+
                 else if ((int)json["cat_id"] == 13)
                     sports_and_recreation_locations.Add((string)json["name"]);
+
                 else if ((int)json["cat_id"] == 14)
                     travel_locations.Add((string)json["name"]);
+
                 else if ((int)json["cat_id"] == 15)
                     utilities_locations.Add((string)json["name"]);
+
                 else if ((int)json["cat_id"] == 16)
                     other_locations.Add((string)json["name"]);
             }

@@ -23,30 +23,32 @@ namespace Access4All
     {
         List<Categories> group = new List<Categories>();
 
-        public static List<String> arts_and_entertainment_locations = new List<String>();
-        public static List<String> automotive_locations = new List<String>();
-        public static List<String> bank_and_finance_locations = new List<String>();
-        public static List<String> education_locations = new List<String>();
-        public static List<String> food_and_drink_locations = new List<String>();
-        public static List<String> government_and_community_locations = new List<String>();
-        public static List<String> healthcare_locations = new List<String>();
-        public static List<String> news_and_media_locations = new List<String>();
-        public static List<String> professional_services_locations = new List<String>();
-        public static List<String> real_estate_locations = new List<String>();
-        public static List<String> religion_locations = new List<String>();
-        public static List<String> retail_locations = new List<String>();
-        public static List<String> sports_and_recreation_locations = new List<String>();
-        public static List<String> travel_locations = new List<String>();
-        public static List<String> utilities_locations = new List<String>();
-        public static List<String> other_locations = new List<String>();
+        public static List<Location> ALL_LOCATIONS = new List<Location>();
+
+        public static List<Location> arts_and_entertainment_locations = new List<Location>();
+        public static List<Location> automotive_locations = new List<Location>();
+        public static List<Location> bank_and_finance_locations = new List<Location>();
+        public static List<Location> education_locations = new List<Location>();
+        public static List<Location> food_and_drink_locations = new List<Location>();
+        public static List<Location> government_and_community_locations = new List<Location>();
+        public static List<Location> healthcare_locations = new List<Location>();
+        public static List<Location> news_and_media_locations = new List<Location>();
+        public static List<Location> professional_services_locations = new List<Location>();
+        public static List<Location> real_estate_locations = new List<Location>();
+        public static List<Location> religion_locations = new List<Location>();
+        public static List<Location> retail_locations = new List<Location>();
+        public static List<Location> sports_and_recreation_locations = new List<Location>();
+        public static List<Location> travel_locations = new List<Location>();
+        public static List<Location> utilities_locations = new List<Location>();
+        public static List<Location> other_locations = new List<Location>();
 
         /** these don't appear in the db, but they are on the website **/
-        public static List<String> business_locations = new List<String>();
-        public static List<String> home_and_garden_locations = new List<String>();
-        public static List<String> nightlife_locations = new List<String>();
-        public static List<String> personal_services_locations = new List<String>();
-        public static List<String> pet_locations = new List<String>();
-        public static List<String> restaurant_and_coffee_shop_locations = new List<String>();
+        public static List<Location> business_locations = new List<Location>();
+        public static List<Location> home_and_garden_locations = new List<Location>();
+        public static List<Location> nightlife_locations = new List<Location>();
+        public static List<Location> personal_services_locations = new List<Location>();
+        public static List<Location> pet_locations = new List<Location>();
+        public static List<Location> restaurant_and_coffee_shop_locations = new List<Location>();
         //static readonly string TAG = "X:" + typeof(SplashActivity).Name;
 
         public override void OnCreate(Bundle savedInstanceState, PersistableBundle persistentState)
@@ -87,51 +89,70 @@ namespace Access4All
 
             Console.WriteLine(jsonArray);
 
-            business_locations.Add("not in db");
-            home_and_garden_locations.Add("not in db");
-            nightlife_locations.Add("not in db");
-            personal_services_locations.Add("not in db");
-            pet_locations.Add("not in db");
-            restaurant_and_coffee_shop_locations.Add("not in db");
-
-
+            business_locations.Add(new Location());
+            home_and_garden_locations.Add(new Location());
+            nightlife_locations.Add(new Location());
+            personal_services_locations.Add(new Location());
+            pet_locations.Add(new Location());
+            restaurant_and_coffee_shop_locations.Add(new Location());
 
             for (int i = 0; i < jsonArray.Count; i++)
             {
                 JToken json = jsonArray[i];
+                Location loc = new Location();
+                loc.est_id = (int)json["est_id"];
+                loc.website = (string)json["website"];
+                loc.subtype = (string)json["subtype"];
+                loc.name = (string)json["name"];
+                loc.state = (string)json["state"];
+                loc.date = (string)json["date"];
+                loc.street = (string)json["street"];
+                loc.city = (string)json["city"];
+                loc.zip = (string)json["zip"];
+                loc.phone = (string)json["phone"];
+                loc.tty = (string)json["tty"];
+                loc.contact_fname = (string)json["contact_fname"];
+                loc.contact_lname = (string)json["contact_lname"];
+                loc.contact_title = (string)json["contact_title"];
+                loc.contact_email = (string)json["contact_email"];
+                loc.user_id = (int)json["user_id"];
+                loc.cat_id = (int)json["cat_id"];
+                loc.config_id = (int)json["config_id"];
+                loc.config_comment = (string)json["config_comment"];
+                ALL_LOCATIONS.Add(loc);
 
                 if ((int)json["cat_id"] == 1)
-                    arts_and_entertainment_locations.Add((String)json["name"]);
+                    arts_and_entertainment_locations.Add(loc);
                 else if ((int)json["cat_id"] == 2)
-                    automotive_locations.Add((String)json["name"]);
+                    automotive_locations.Add(loc);
                 else if ((int)json["cat_id"] == 3)
-                    bank_and_finance_locations.Add((String)json["name"]);
+                    bank_and_finance_locations.Add(loc);
                 else if ((int)json["cat_id"] == 4)
-                    education_locations.Add((String)json["name"]);
+                    education_locations.Add(loc);
                 else if ((int)json["cat_id"] == 5)
-                    food_and_drink_locations.Add((String)json["name"]);
+                    food_and_drink_locations.Add(loc);
                 else if ((int)json["cat_id"] == 6)
-                    government_and_community_locations.Add((String)json["name"]);
+                    government_and_community_locations.Add(loc);
                 else if ((int)json["cat_id"] == 7)
-                    healthcare_locations.Add((String)json["name"]);
-                else if ((int)json["cat_id"] == 8)//j
-                    news_and_media_locations.Add((String)json["name"]);
+                    healthcare_locations.Add(loc);
+                else if ((int)json["cat_id"] == 8)
+                    news_and_media_locations.Add(loc);
                 else if ((int)json["cat_id"] == 9)
-                    professional_services_locations.Add((String)json["name"]);
+                    professional_services_locations.Add(loc);
                 else if ((int)json["cat_id"] == 10)
-                    real_estate_locations.Add((String)json["name"]);
+                    real_estate_locations.Add(loc);
                 else if ((int)json["cat_id"] == 11)
-                    religion_locations.Add((String)json["name"]);
+                    religion_locations.Add(loc);
                 else if ((int)json["cat_id"] == 12)
-                    retail_locations.Add((String)json["name"]);
+                    retail_locations.Add(loc);
                 else if ((int)json["cat_id"] == 13)
-                    sports_and_recreation_locations.Add((String)json["name"]);
+                    sports_and_recreation_locations.Add(loc);
                 else if ((int)json["cat_id"] == 14)
-                    travel_locations.Add((String)json["name"]);
+                    travel_locations.Add(loc);
                 else if ((int)json["cat_id"] == 15)
-                    utilities_locations.Add((String)json["name"]);
+                    utilities_locations.Add(loc);
                 else if ((int)json["cat_id"] == 16)
-                    other_locations.Add((String)json["name"]);
+                    other_locations.Add(loc);
             }
 
             group.Add(new Categories("Arts, Entertainment, Culture", arts_and_entertainment_locations));

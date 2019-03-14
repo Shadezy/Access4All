@@ -12,7 +12,7 @@ using Android.Widget;
 
 namespace Access4All
 {
-    class Location
+    public class Location : Java.Lang.Object
     {
         /*
         private string est_id;
@@ -37,8 +37,12 @@ namespace Access4All
         */
 
         //constructor
-        public Location(string est_id, string name, string website, string subtrype, string date, string street, string city, string zip, string phone, string tty, string contact_fname,
-                        string contact_lname, string contact_title, string contact_email, string user_id, string cat_id, string config_id, string config_comment)
+        public Location()
+        {
+
+        }
+
+        public Location(int est_id, string name, string website, string subtype, string state, string date, string street, string city, string zip, string phone, string tty, string contact_fname,string contact_lname, string contact_title, string contact_email, int user_id, int cat_id, int config_id, string config_comment)
         {
             this.cat_id = cat_id;
             this.city = city;
@@ -62,9 +66,13 @@ namespace Access4All
 
         }
 
+        public override string ToString()
+        {
+            return name;
+        }
         //getters and setters
 
-        public string est_id { get; set; }
+        public int est_id { get; set; }
         public string name { get; set; }
         public string website { get; set; }
         public string subtype { get; set; }
@@ -79,9 +87,9 @@ namespace Access4All
         public string contact_lname { get; set; }
         public string contact_title { get; set; }
         public string contact_email { get; set; }
-        public string user_id { get; set; }
-        public string cat_id { get; set; }
-        public string config_id { get; set; }
+        public int user_id { get; set; }
+        public int cat_id { get; set; }
+        public int config_id { get; set; }
         public string config_comment { get; set; }
 
     }
