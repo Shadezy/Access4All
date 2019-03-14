@@ -198,7 +198,18 @@ namespace Access4All.Fragments
                     if (parking_type.CompareTo("other") != 0)
                         data += "• This establishment has " + parking_type + " parking\n\r";
 
-                    data += "• " + general_accessible_spaces + " accessible parking spaces have 5’ access aisle\n\r";
+                    data += "• " + general_accessible_spaces + " accessible parking spaces have a 5 foot loading aisle\n\r";
+                    data += "• " + van_accessible_spaces + " ‘van accessible’ parking spaces have an 8 foot loading aisle\n\r";
+
+                    if (reserve_space_sign.CompareTo("yes") == 0)
+                        data += "• " + "Accessible parking spaces have signs that are not obstructed when a vehicle is parked there\n\r";
+
+                    if (reserve_space_obstacles.CompareTo("no") == 0)//means free of obstacles, bad variable name  ->last team<-
+                        data += "• Surface is not level, unbroken, firm, slip resistant, or free of obstacles\n\r";
+                    else
+                        data += "• Surface is level, unbroken, firm, slip resistant, and free of obstacles\n\r";
+
+                    /**TODO: passenger_loading and route_from_parking**/
 
                     /*if (street_metered.CompareTo("not metered") == 0)
                         street_metered = "free";
