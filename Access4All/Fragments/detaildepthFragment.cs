@@ -78,7 +78,7 @@ namespace Access4All.Fragments
                     est_id = SplashActivity.ALL_LOCATIONS[i].est_id;
             }
 
-            //Cam's code made better by Travis
+            
             if (selection.CompareTo("Information") == 0)
             {
                 Toast.MakeText(this.Activity, est_id.ToString(), ToastLength.Long).Show();
@@ -115,6 +115,10 @@ namespace Access4All.Fragments
 
             else if (selection.CompareTo("Entrances") == 0)
             {
+                table = "main_entrance";
+                unparsedData = GetData(curLocation);
+                parsedData = parseMainEnterance(unparsedData, curLocation);
+                t.Text = parsedData;
                 Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
             }
 
@@ -145,9 +149,70 @@ namespace Access4All.Fragments
 
             else
             {
-                Toast.MakeText(MainActivity.activity, "Cameron sucks", ToastLength.Short).Show();
+               
             }
             return v;   
+        }
+
+        private string parseMainEnterance(string unparsedData, string curLocation)
+        {
+            JArray jsonArray = JArray.Parse(unparsedData);
+            string data = "";
+
+            int main_ent_id;
+            int total_num_public_entrances;
+            string main_ent_accessible;
+            string alt_ent_accessible;
+            string accessable_signage;
+            string ground_level;
+            string threshold_level;
+            string threshold_beveled;
+            string beveled_height;
+            string door_action;
+            string door_open_clearance;
+            double door_open_force;
+            string door_use_with_fist;
+            string door_auto_open;
+            string second_door_inside;
+            string min_dist_between_doors;
+            string lighting;
+            string lighting_option;
+            string comment;
+            string recommendations; //currently all items are empty
+
+
+            for (int i = 0; i < jsonArray.Count; i++)//this should only ever be one, but keep it here in case something goes wrong?
+            {
+                JToken json = jsonArray[i];
+
+                if (((int)json["est_id"]) == est_id)
+                {
+                    main_ent_id = (int)json["main_ent_id"];
+                    total_num_public_entrances = ((int)json["total_num_public_entrances"]);
+                    main_ent_accessible = ((string)json["main_ent_accessible"]).ToLower();
+                    alt_ent_accessible = ((string)json["alt_ent_accessible"]).ToLower();
+                    accessable_signage = ((string)json["accessable_signage"]).ToLower();
+                    ground_level = ((string)json["ground_level"]).ToLower();
+                    threshold_level = ((string)json["threshold_level"]).ToLower();
+                    threshold_beveled = ((string)json["threshold_beveled"]).ToLower();
+                    beveled_height = ((string)json["beveled_height"]).ToLower();
+                    door_open_clearance = ((string)json["door_open_clearance"]).ToLower();
+                    door_action = ((string)json["door_action"]).ToLower();
+                    door_open_force = ((double)json["door_open_force"]);
+                    door_use_with_fist = ((string)json["door_use_with_fist"]).ToLower();
+                    door_auto_open = ((string)json["door_auto_open"]).ToLower();
+                    second_door_inside = ((string)json["second_door_inside"]).ToLower();
+                    min_dist_between_doors = ((string)json["min_dist_between_doors"]).ToLower();
+                    lighting = ((string)json["lighting"]).ToLower();
+                    lighting_option = ((string)json["lighting_option"]).ToLower();
+                    comment = ((string)json["comment"]).ToLower();
+                    recommendations = ((string)json["recommendations"]).ToLower();
+
+                    data += ("• "+ "The establishment has " + total_num_public_entrances + " public entrances.\n\r");
+                }
+            }
+
+            return data;
         }
 
         private string parseParkingInformation(string unparsedData, string loc)
@@ -188,8 +253,8 @@ namespace Access4All.Fragments
                     reserve_space_obstacles = ((string)json["reserve_space_obstacles"]).ToLower();
                     comment = ((string)json["comment"]).ToLower();
                     recommendations = ((string)json["recommendations"]).ToLower();
-
-                    if (street_metered.CompareTo("not metered") == 0)//• = alt + 7 on numpad
+                    
+                    if (street_metered.CompareTo("not metered") == 0)//• = alt + 7 on numpad 
                         street_metered = "free";
 
                     data += "• This establishment has the following types of parking: " + lot_type + " lot, " + street_metered + " street\n\r";
