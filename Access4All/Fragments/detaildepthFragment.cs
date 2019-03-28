@@ -78,7 +78,7 @@ namespace Access4All.Fragments
                     est_id = SplashActivity.ALL_LOCATIONS[i].est_id;
             }
 
-            //Cam's code made better by Travis
+            
             if (selection.CompareTo("Information") == 0)
             {
                 Toast.MakeText(this.Activity, est_id.ToString(), ToastLength.Long).Show();
@@ -119,6 +119,10 @@ namespace Access4All.Fragments
 
             else if (selection.CompareTo("Entrances") == 0)
             {
+                table = "main_entrance";
+                unparsedData = GetData(curLocation);
+                parsedData = parseMainEnterance(unparsedData, curLocation);
+                t.Text = parsedData;
                 Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
             }
 
@@ -149,7 +153,7 @@ namespace Access4All.Fragments
 
             else
             {
-                Toast.MakeText(MainActivity.activity, "Cameron sucks", ToastLength.Short).Show();
+               
             }
             return v;   
         }
@@ -272,8 +276,8 @@ namespace Access4All.Fragments
                     reserve_space_obstacles = ((string)json["reserve_space_obstacles"]).ToLower();
                     comment = ((string)json["comment"]).ToLower();
                     recommendations = ((string)json["recommendations"]).ToLower();
-
-                    if (street_metered.CompareTo("not metered") == 0)//• = alt + 7 on numpad
+                    
+                    if (street_metered.CompareTo("not metered") == 0)//• = alt + 7 on numpad 
                         street_metered = "free";
 
                     data += "• This establishment has the following types of parking: " + lot_type + " lot, " + street_metered + " street\n\r";
