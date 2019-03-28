@@ -111,6 +111,10 @@ namespace Access4All.Fragments
             else if (selection.CompareTo("Exterior pathway & seating") == 0)
             {
                 Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
+                table = "exterior_pathways";
+                unparsedData = GetData(table);
+                parsedData = parseExteriorData(unparsedData);
+                t.Text = parsedData;
             }
 
             else if (selection.CompareTo("Entrances") == 0)
@@ -148,6 +152,86 @@ namespace Access4All.Fragments
                 Toast.MakeText(MainActivity.activity, "Cameron sucks", ToastLength.Short).Show();
             }
             return v;   
+        }
+
+        private string parseExteriorData(string unparsedData)
+        {
+            JArray jsonArray = JArray.Parse(unparsedData);
+            string data = "";
+
+            SpannableString result;
+
+            int ext_path_id;
+            string service_animal;
+            string service_animal_location;
+            string has_exterior_path;
+            string min_width;
+            string pathway_surface;
+            string pathway_curbs;
+            string tactile_warning;
+            string slope;
+            string lighting;
+            string lighting_option;
+            string lighting_type;
+            string comment;
+            string recommendations;
+
+            for (int i = 0; i < jsonArray.Count; i++)//this should only ever be one, but keep it here in case something goes wrong?
+            {
+                JToken json = jsonArray[i];
+
+                if (((int)json["est_id"]) == est_id)
+                {
+                    service_animal = (string)json["service_animal"];
+                    service_animal_location = (string)json["service_animal_location"];
+                    has_exterior_path = (string)json["has_exterior_path"];
+                    min_width = (string)json["min_width"];
+                    pathway_surface = (string)json["pathway_surface"];
+                    pathway_curbs = (string)json["pathway_curbs"];
+                    tactile_warning = (string)json["tactile_warning"];
+                    slope = (string)json["slope"];
+                    lighting = (string)json["lighting"];
+                    lighting_option = (string)json["lighting_option"];
+                    lighting_type = (string)json["lighting_type"];
+                    comment = (string)json["comment"];
+                    recommendations = (string)json["recommendations"];
+
+                    if (has_exterior_path.ToLower().CompareTo("yes") == 0)
+                        data += "• This establishment has exterior pathway";
+
+                    if (min_width.ToLower().CompareTo("yes")==0)
+                        data += "• Sidewalk pathway is minimum 44 inches wide" + "\n\r";
+
+                    if (pathway_curbs.ToLower().CompareTo("yes") == 0)
+                        data += "• Pathway has curb ramps and curb cuts where needed" + "\n\r";
+
+                    if (pathway_surface.ToLower().CompareTo("yes") == 0)
+                        data += "• Surface is slip resistant, free of obstacles" + "\n\r";
+
+                    if (tactile_warning.ToLower().CompareTo("yes") == 0)
+                        data += "• There are tactile warning strips or high contrast paint at curb ramps, stairwells, building entrances, parking areas and pedestrian crossings" + "\n\r";
+
+                    /*if(slope.ToLower().CompareTo("yes")==0)
+                    {
+                        data += "• Exterior has a ramp to enter the establishment" + "\n\r";
+                        data += "• Ramp is at least 36 inches wide between handrails" + "\n\r";
+                        data += "• For each section of the ramp, the running slope is no greater than 1:12, i.e. for every inch of height change there are at least 12 inches of ramp run. (actual 13” height & 204” length)" + "\n\r";
+                        data += "• There is a level landing that is at least 60 inches long and at least as wide as the ramp at top of ramp" + "\n\r";
+                        data += "• The ramp is clear of obstacles and protrusions of 4 inches or more from the sides" + "\n\r";
+                        data += "• Ramp surface is firm, slip-resistant, and unbroken" + "\n\r";
+                    }*/
+                    //This section needs to be parsed in the ramp section
+
+                    if (service_animal.ToLower().CompareTo("yes")==0)
+                        data += "• Service animal relief area at " + service_animal_location + "\n\r";
+
+                    if(lighting.ToLower().CompareTo("yes")==0)
+                    {
+                        data += "• Lighting level is " + lighting_type + " in " + lighting_option + ", and is adequate for mobility and reading signs" + "\n\r";
+                    }
+                }
+            }
+            return data;
         }
 
         private string parseParkingInformation(string unparsedData, string loc)
