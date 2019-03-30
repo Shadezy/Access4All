@@ -294,11 +294,14 @@ namespace Access4All.Fragments
             string ground_level;
             string threshold_level;
             string threshold_beveled;
-            string beveled_height;
+            double beveled_height;
             string door_action;
+            double opening_measurement;
             string door_open_clearance;
             double door_open_force;
+            string door_easy_open;
             string door_use_with_fist;
+            string lighting_type;
             string door_auto_open;
             string second_door_inside;
             string min_dist_between_doors;
@@ -322,20 +325,72 @@ namespace Access4All.Fragments
                     ground_level = ((string)json["ground_level"]).ToLower();
                     threshold_level = ((string)json["threshold_level"]).ToLower();
                     threshold_beveled = ((string)json["threshold_beveled"]).ToLower();
-                    beveled_height = ((string)json["beveled_height"]).ToLower();
+                    beveled_height = ((double)json["beveled_height"]);
                     door_open_clearance = ((string)json["door_open_clearance"]).ToLower();
                     door_action = ((string)json["door_action"]).ToLower();
                     door_open_force = ((double)json["door_open_force"]);
+                    door_easy_open = ((string)json["door_easy_open"]).ToLower();
                     door_use_with_fist = ((string)json["door_use_with_fist"]).ToLower();
                     door_auto_open = ((string)json["door_auto_open"]).ToLower();
                     second_door_inside = ((string)json["second_door_inside"]).ToLower();
                     min_dist_between_doors = ((string)json["min_dist_between_doors"]).ToLower();
                     lighting = ((string)json["lighting"]).ToLower();
+                    opening_measurement = ((double)json["opening_measurement"]);
+                    lighting_type = ((string)json["lighting_type"]).ToLower();
                     lighting_option = ((string)json["lighting_option"]).ToLower();
                     comment = ((string)json["comment"]).ToLower();
                     recommendations = ((string)json["recommendations"]).ToLower();
 
                     data += ("• " + "The establishment has " + total_num_public_entrances + " public entrances.\n\r");
+
+                    if (main_ent_accessible.ToLower().CompareTo("yes") == 0)
+                        data += ("• The main entrance is wheelchair accessible. \n\r");
+
+
+                    if (ground_level.ToLower().CompareTo("yes") == 0)
+                        data += ("• Ground floor is level inside and outside entrance door. \n\r");
+                    else
+                        data += ("• Ground floor is not level inside and outside entrance door. \n\r");
+
+
+                    if (threshold_level.ToLower().CompareTo("yes") == 0)
+                        data += ("• Threshold of door is level. \n\r");
+                    else
+                        data += ("• Threshold of door is not level. \n\r");
+
+                    if (threshold_beveled.ToLower().CompareTo("yes") == 0)
+                    {
+                        if (beveled_height <= 0.5)
+                            data += ("• Door threshold is no more than ½” high. \n\r");
+                        else
+                            data += ("• Door threshold is more than ½” high. (actual "+beveled_height+" of an inch). \n\r");
+                    }
+
+
+                    if (door_action.ToLower().CompareTo("open in") == 0)
+                        data += ("• As you enter, door opens away from you. \n\r");
+                    else if(door_action.ToLower().CompareTo("open out") == 0)
+                        data += ("• As you enter, door opens toward you. \n\r");
+                    else
+                        data += ("• As you enter, door slides to the side. \n\r");
+
+                    if (opening_measurement > 0.00)
+                        data += ("• Door has at least "+opening_measurement+"” clearance when door is open 90 degrees. \n\r");
+
+                    if (door_easy_open.ToLower().CompareTo("yes") == 0)
+                        data += ("• Door is easy to open, requiring 10 lbs or less of force ("+ door_open_force + " lbs). \n\r");
+                    else
+                        data += ("• Door is hard to open, requiring 10 lbs or more of force (" + door_open_force + " lbs). \n\r");
+
+                    if (door_use_with_fist.ToLower().CompareTo("yes") == 0)
+                        data += ("• Door handles can be operated with closed fist. \n\r");
+                    else
+                        data += ("• Door handles can not be operated with closed fist. \n\r");
+
+                    if (lighting.ToLower().CompareTo("yes") == 0)
+                        data += ("• Lighting level is"+lighting_type+" in "+lighting_option+"time, and is adequate for mobility and reading signs. \n\r");
+                    else
+                        data += ("• Lighting level is poor. \n\r");
                 }
             }
 
