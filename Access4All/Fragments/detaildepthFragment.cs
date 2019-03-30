@@ -623,7 +623,6 @@ namespace Access4All.Fragments
                     lighting_type = ((string)json["lighting_type"]).ToLower();
                     lighting_option = ((string)json["lighting_option"]).ToLower();
                     comment = ((string)json["comment"]).ToLower();
-                    recommendations = ((string)json["recommendations"]).ToLower();
 
                     data += ("• " + "The establishment has " + total_num_public_entrances + " public entrances.\n\r");
 
