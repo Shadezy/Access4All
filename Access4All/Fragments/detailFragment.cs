@@ -41,10 +41,11 @@ namespace Access4All.Fragments
             group.Add(new Details("Access to transit"));
             group.Add(new Details("Exterior pathway & seating"));
             group.Add(new Details("Entrances"));
+            group.Add(new Details("Elevators"));
             group.Add(new Details("Interior"));
             group.Add(new Details("Seating"));
             group.Add(new Details("Restroom"));
-            group.Add(new Details("Communication, Technologies & Customer Service"));
+            group.Add(new Details("Communication, Technologies & Cust. Svc."));
 
 
 

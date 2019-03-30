@@ -126,6 +126,15 @@ namespace Access4All.Fragments
                 Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
             }
 
+            else if (selection.CompareTo("Elevators") == 0)
+            {
+                table = "elevators";
+                unparsedData = GetData(curLocation);
+                parsedData = parseElevators(unparsedData);
+                t.Text = parsedData;
+                Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
+            }
+
             else if (selection.CompareTo("Interior") == 0)
             {
                 table = "interior";
@@ -159,6 +168,89 @@ namespace Access4All.Fragments
                
             }
             return v;   
+        }
+
+        private string parseElevators(string unparsedData)
+        {
+            JArray jsonArray = JArray.Parse(unparsedData);
+            string data = "";
+
+            string is_elevator;
+            string location;
+            string works;
+            string no_assist;
+            string button_height;
+            string outside_btn_height;
+            string inside_btn_height;
+            string button_use_fist;
+            string braille;
+            string audible_tones;
+            string lighting;
+            string lighting_type;
+            string elevator_depth;
+            string comment;
+
+            for (int i = 0; i < jsonArray.Count; i++)//this should only ever be one, but keep it here in case something goes wrong?
+            {
+                JToken json = jsonArray[i];
+
+                if (((int)json["est_id"]) == est_id)
+                {
+                    is_elevator = (string)json["is_elevator"];
+                    location = (string)json["location"];
+                    works = (string)json["works"];
+                    no_assist = (string)json["no_assist"];
+                    button_height = (string)json["button_height"];
+                    outside_btn_height = (string)json["outside_btn_height"];
+                    inside_btn_height = (string)json["inside_btn_height"];
+                    button_use_fist = (string)json["button_use_fist"];
+                    braille = (string)json["braille"];
+                    audible_tones = (string)json["audible_tones"];
+                    lighting = (string)json["lighting"];
+                    lighting_type = (string)json["lighting_type"];
+                    elevator_depth = (string)json["elevator_depth"];
+                    comment = (string)json["comment"];
+
+                    if(is_elevator.ToLower().CompareTo("yes")==0)
+                    {
+                        data += "• There is an elevator at this establishment located at " + location + " and it " + works + "\n\r";
+                    }
+                    if(no_assist.ToLower().CompareTo("yes")==0)
+                    {
+                        data += "• No assistance is provided for the elevator(s)" + "\n\r";
+                    }
+                    if(button_height.ToLower().CompareTo("yes")==0)
+                    {
+                        data += "• The outside button height is " + outside_btn_height + " inches, the inside button height is " + " inches, and the buttons are able to be pushed with a closed fist: " + button_use_fist + "\n\r";
+                    }
+                    if(braille.ToLower().CompareTo("yes")==0)
+                    {
+                        data += "• There is braille information for the elevator" + "\n\r";
+                    }
+                    if(audible_tones.ToLower().CompareTo("yes")==0)
+                    {
+                        data += "• There are audible tones in the elevator" + "\n\r";
+                    }
+                    if(lighting.ToLower().CompareTo("yes")==0)
+                    {
+                        data += "• Lighting level is " + lighting_type + " in daytime, and is adequate for mobility and reading signs" + "\n\r";
+                    }
+                    if(elevator_depth.ToLower().CompareTo("yes")==0)
+                    {
+                        data += "• Elevator depth is at least 51 inches" + "\n\r";
+                    }
+                    if(comment.CompareTo("")==0)
+                    {
+                        data += "• " + comment + "\n\r";
+                    }
+                }
+            }
+
+            if (data.CompareTo("")==0)
+            {
+                data = "No elevator or lift is needed as this business is on the ground level";
+            }
+            return data;
         }
 
         private string parseCommunication(string unparsedData)
@@ -204,7 +296,6 @@ namespace Access4All.Fragments
             string senior_age;
             string annual_A4A_review;
             string comment;
-            string recommendations;
 
             for (int i = 0; i < jsonArray.Count; i++)//this should only ever be one, but keep it here in case something goes wrong?
             {
@@ -250,7 +341,6 @@ namespace Access4All.Fragments
                     senior_age = (string)json["senior_age"];
                     annual_A4A_review = (string)json["annual_A4A_review"];
                     comment = (string)json["comment"];
-                    recommendations = (string)json["recommendations"];
 
 
                     if(public_phone.ToLower().CompareTo("yes")==0)
@@ -383,7 +473,6 @@ namespace Access4All.Fragments
             double writing_surface_height;
             string drinking_fountain;
             string comment;
-            string recommendations;
 
 
             for (int i = 0; i < jsonArray.Count; i++)//this should only ever be one, but keep it here in case something goes wrong?
@@ -411,7 +500,6 @@ namespace Access4All.Fragments
                     writing_surface_height = (double)json["writing_surface_height"]; 
                     drinking_fountain = (string)json["drinking_fountain"];
                     comment = (string)json["comment"];
-                    recommendations = (string)json["recommendations"];
 
 
                     if(int_door_open_clearance.ToLower().CompareTo("yes")==0)
@@ -505,7 +593,6 @@ namespace Access4All.Fragments
             string lighting;
             string lighting_option;
             string comment;
-            string recommendations; //currently all items are empty
 
 
             for (int i = 0; i < jsonArray.Count; i++)//this should only ever be one, but keep it here in case something goes wrong?
@@ -614,7 +701,6 @@ namespace Access4All.Fragments
             string lighting_option;
             string lighting_type;
             string comment;
-            string recommendations;
 
             for (int i = 0; i < jsonArray.Count; i++)//this should only ever be one, but keep it here in case something goes wrong?
             {
@@ -634,7 +720,6 @@ namespace Access4All.Fragments
                     lighting_option = (string)json["lighting_option"];
                     lighting_type = (string)json["lighting_type"];
                     comment = (string)json["comment"];
-                    recommendations = (string)json["recommendations"];
 
                     if (has_exterior_path.ToLower().CompareTo("yes") == 0)
                         data += "• This establishment has exterior pathway";
@@ -711,7 +796,6 @@ namespace Access4All.Fragments
                     reserve_space_sign = ((string)json["reserve_space_sign"]).ToLower();
                     reserve_space_obstacles = ((string)json["reserve_space_obstacles"]).ToLower();
                     comment = ((string)json["comment"]).ToLower();
-                    recommendations = ((string)json["recommendations"]).ToLower();
 
                     if (street_metered.CompareTo("not metered") == 0)//• = alt + 7 on numpad
                         street_metered = "free";
