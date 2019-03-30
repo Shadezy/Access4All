@@ -66,7 +66,7 @@ namespace Access4All.Fragments
             myTextView.TextFormatted = Android.Text.Html.FromHtml(htmlCode);*/
 
             string unparsedData,parsedData;
-            SpannableString parsed;
+            //SpannableString parsed;
             Bundle b = Arguments;
             curLocation = b.GetString("location");
             selection = b.GetString("selection");
@@ -121,13 +121,17 @@ namespace Access4All.Fragments
             {
                 table = "main_entrance";
                 unparsedData = GetData(curLocation);
-                parsedData = parseMainEnterance(unparsedData, curLocation);
+                parsedData = parseMainEntrance(unparsedData, curLocation);
                 t.Text = parsedData;
                 Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
             }
 
             else if (selection.CompareTo("Interior") == 0)
             {
+                table = "interior";
+                unparsedData = GetData(table);
+                parsedData = parseInterior(unparsedData);
+                t.Text = parsedData;
                 Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
             }
 
@@ -158,7 +162,126 @@ namespace Access4All.Fragments
             return v;   
         }
 
-        private string parseMainEnterance(string unparsedData, string curLocation)
+        private string parseInterior(string unparsedData)
+        {
+            JArray jsonArray = JArray.Parse(unparsedData);
+            string data = "";
+
+            int interior_id;
+            string int_door_open_clearance;
+            double int_opening_measurement;
+            string int_door_easy_open;
+            double int_door_open_force;
+            string int_door_use_with_fist;
+            string five_second_close;
+            string hallway_width;
+            double narrowest_width;
+            string wheelchair_turnaround;
+            string hallway_obstacles;
+            string hallway_clear;
+            string lighting;
+            string lighting_type;
+            string service_counter;
+            double counter_height;
+            double writing_surface_height;
+            string drinking_fountain;
+            string comment;
+            string recommendations;
+
+
+            for (int i = 0; i < jsonArray.Count; i++)//this should only ever be one, but keep it here in case something goes wrong?
+            {
+                JToken json = jsonArray[i];
+
+                if (((int)json["est_id"]) == est_id)
+                {
+                    interior_id = (int)json["interior_id"];
+                    int_door_open_clearance = (string)json["int_door_open_clearance"];
+                    int_opening_measurement = (double)json["int_opening_measurement"]; 
+                    int_door_easy_open = (string)json["int_door_easy_open"]; 
+                    int_door_open_force = (double)json["int_door_open_force"];
+                    int_door_use_with_fist = (string)json["int_door_use_with_fist"];
+                    five_second_close = (string)json["five_second_close"];
+                    hallway_width = (string)json["hallway_width"];
+                    narrowest_width = (double)json["narrowest_width"];
+                    wheelchair_turnaround = (string)json["wheelchair_turnaround"];
+                    hallway_obstacles = (string)json["hallway_obstacles"];
+                    hallway_clear = (string)json["hallway_clear"];
+                    lighting = (string)json["lighting"];
+                    lighting_type = (string)json["lighting_type"]; 
+                    service_counter = (string)json["service_counter"]; 
+                    counter_height = (double)json["counter_height"]; 
+                    writing_surface_height = (double)json["writing_surface_height"]; 
+                    drinking_fountain = (string)json["drinking_fountain"];
+                    comment = (string)json["comment"];
+                    recommendations = (string)json["recommendations"];
+
+
+                    if(int_door_open_clearance.ToLower().CompareTo("yes")==0)
+                    {
+                        data += "• Interior doors (aside from restrooms) have at least 32” clearance when the door is open at 90 degrees" + "\n\r";
+                    }
+
+                    if(int_opening_measurement > 0)
+                    {
+                        data += "• Interior door is "+ int_opening_measurement + " inches wide\n\r";
+                    }
+
+                    if(int_door_easy_open.ToLower().CompareTo("yes")==0)
+                    {
+                        data += "• Interior doors are easy to open, requiring 5 lbs. or less of force(" + int_opening_measurement + " lbs)\n\r";
+                    }
+
+                    if(int_door_use_with_fist.ToLower().CompareTo("yes")==0)
+                    {
+                        data += "• Door handles can be operated with a closed fist" + "\n\r";
+                    }
+
+                    if(five_second_close.ToLower().CompareTo("yes")==0)
+                    {
+                        data += "• Doors stay open for at least five seconds" + "\n\r";
+                    }
+
+                    if(hallway_width.ToLower().CompareTo("yes")==0)
+                    {
+                        data += "• Hallways and aisles are at least 36 inches wide, or not less than " + narrowest_width + " inches for four foot intervals\n\r";
+                    }
+
+                    if(wheelchair_turnaround.ToLower().CompareTo("yes")==0)
+                    {
+                        data += "• There are locations that allow 60” space for a wheelchair to turn around" + "\n\r";
+                    }
+
+                    if(hallway_obstacles.ToLower().CompareTo("yes")==0)
+                    {
+                        data += "• Hallways and aisles are clear of obstacles, tripping hazards, objects protruding more than 4 inches or lower than 80 inches" + "\n\r";
+                    }
+
+                    if(lighting.ToLower().CompareTo("yes")==0)
+                    {
+                        data += "• Lighting level is " + lighting_type + " in daytime, and is adequate for mobility and reading signs" + "\n\r";
+                    }
+
+                    if(service_counter.ToLower().CompareTo("yes")==0)
+                    {
+                        data += "• Lowest service counter is no higher than " + counter_height + " inches with a clear view from a sitting position and a check writing surface is no higher than " + writing_surface_height + " inches\n\r";
+                    }
+
+                    if(drinking_fountain.ToLower().CompareTo("yes")==0)
+                    {
+                        data += "• Accessible drinking fountain has spout no higher than 36 inches from floor and easy to operate controls" + "\n\r";
+                    }
+
+                    if(comment.CompareTo("")!=0)
+                    {
+                        data += "• " + comment + "\n\r";
+                    }
+                }
+            }
+            return data;
+        }
+
+        private string parseMainEntrance(string unparsedData, string curLocation)
         {
             JArray jsonArray = JArray.Parse(unparsedData);
             string data = "";
@@ -226,7 +349,7 @@ namespace Access4All.Fragments
 
             SpannableString result;
 
-            int ext_path_id;
+            //int ext_path_id;
             string service_animal;
             string service_animal_location;
             string has_exterior_path;
