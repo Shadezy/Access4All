@@ -44,8 +44,7 @@ namespace Access4All.Fragments
             group.Add(new Details("Interior"));
             group.Add(new Details("Seating"));
             group.Add(new Details("Restroom"));
-            group.Add(new Details("Communication"));
-            group.Add(new Details("Technologies & Customer Service"));
+            group.Add(new Details("Communication, Technologies & Customer Service"));
 
 
 

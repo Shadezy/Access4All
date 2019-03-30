@@ -145,13 +145,12 @@ namespace Access4All.Fragments
                 Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
             }
 
-            else if (selection.CompareTo("Communication") == 0)
+            else if (selection.CompareTo("Communication, Technologies & Customer Service") == 0)
             {
-                Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
-            }
-
-            else if (selection.CompareTo("Technologies & Customer Service") == 0)
-            {
+                table = "communication";
+                unparsedData = GetData(table);
+                parsedData = parseCommunication(unparsedData);
+                t.Text = parsedData;
                 Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
             }
 
@@ -160,6 +159,204 @@ namespace Access4All.Fragments
                
             }
             return v;   
+        }
+
+        private string parseCommunication(string unparsedData)
+        {
+            JArray jsonArray = JArray.Parse(unparsedData);
+            string data = "";
+
+            string public_phone;
+            string phone_clearance;
+            string num_phone;
+            string tty;
+            string staff_tty;
+            string assisted_listening;
+            string assisted_listen_type;
+            string assisted_listen_receiver;
+            string listening_signage;
+            string staff_listening;
+            string acoustics;
+            string acoustics_level;
+            string alt_comm_methods;
+            string alt_comm_type;
+            string staff_ASL;
+            string captioning_default;
+            string theater_captioning;
+            string theater_capt_type;
+            string auditory_info_visual;
+            string visual_info_auditory;
+            string website_text_reader;
+            string alt_contact;
+            string alt_contact_type;
+            string shopping_assist;
+            string assist_service;
+            string assist_fee;
+            string store_scooter;
+            string scooter_fee;
+            string scooter_location;
+            string restaurant_allergies;
+            string staff_disable_trained;
+            string staff_disable_trained_desc;
+            string items_reach;
+            string service_alt_manner;
+            string senior_discount;
+            string senior_age;
+            string annual_A4A_review;
+            string comment;
+            string recommendations;
+
+            for (int i = 0; i < jsonArray.Count; i++)//this should only ever be one, but keep it here in case something goes wrong?
+            {
+                JToken json = jsonArray[i];
+
+                if (((int)json["est_id"]) == est_id)
+                {
+                    public_phone = (string)json["public_phone"];
+                    phone_clearance = (string)json["phone_clearance"];
+                    num_phone = (string)json["num_phone"];
+                    tty = (string)json["tty"];
+                    staff_tty = (string)json["staff_tty"];
+                    assisted_listening = (string)json["assisted_listening"];
+                    assisted_listen_type = (string)json["assisted_listen_type"];
+                    assisted_listen_receiver = (string)json["assisted_listen_receiver"];
+                    listening_signage = (string)json["listening_signage"];
+                    staff_listening = (string)json["staff_listening"];
+                    acoustics = (string)json["acoustics"];
+                    acoustics_level = (string)json["acoustics_level"];
+                    alt_comm_methods = (string)json["alt_comm_methods"];
+                    alt_comm_type = (string)json["alt_comm_type"];
+                    staff_ASL = (string)json["staff_ASL"];
+                    captioning_default = (string)json["captioning_default"];
+                    theater_captioning = (string)json["theater_captioning"];
+                    theater_capt_type = (string)json["theater_capt_type"];
+                    auditory_info_visual = (string)json["auditory_info_visual"];
+                    visual_info_auditory = (string)json["visual_info_auditory"];
+                    website_text_reader = (string)json["website_text_reader"];
+                    alt_contact = (string)json["alt_contact"];
+                    alt_contact_type = (string)json["alt_contact_type"];
+                    shopping_assist = (string)json["shopping_assist"];
+                    assist_service = (string)json["assist_service"];
+                    assist_fee = (string)json["assist_fee"];
+                    store_scooter = (string)json["store_scooter"];
+                    scooter_fee = (string)json["scooter_fee"];
+                    scooter_location = (string)json["scooter_location"];
+                    restaurant_allergies = (string)json["restaurant_allergies"];
+                    staff_disable_trained = (string)json["staff_disable_trained"];
+                    staff_disable_trained_desc = (string)json["staff_disable_trained_desc"];
+                    items_reach = (string)json["items_reach"];
+                    service_alt_manner = (string)json["service_alt_manner"];
+                    senior_discount = (string)json["senior_discount"];
+                    senior_age = (string)json["senior_age"];
+                    annual_A4A_review = (string)json["annual_A4A_review"];
+                    comment = (string)json["comment"];
+                    recommendations = (string)json["recommendations"];
+
+
+                    if(public_phone.ToLower().CompareTo("yes")==0)
+                    {
+                        data += "• One or more public phones are available w/adjustable volume control" + "\n\r";
+                    }
+                    if(phone_clearance.ToLower().CompareTo("yes")==0)
+                    {
+                        data += "• Public phones have controls min 48 inches from floor, protruding < 4 inches from wall" + "\n\r";
+                    }
+                    if(tty.ToLower().CompareTo("yes")==0)
+                    {
+                        data += "• TTY is available" + "\n\r";
+                    }
+                    if(staff_tty.ToLower().CompareTo("yes")==0)
+                    {
+                        data += "• TTY assistance from staff is available" + "\n\r";
+                    }
+                    if(assisted_listening.ToLower().CompareTo("yes")==0)
+                    {
+                        data += "• Assisted listening is available of type" + assisted_listen_type + " with assisted listen receiver " + assisted_listen_receiver + "\n\r";
+                    }
+                    if(listening_signage.ToLower().CompareTo("yes")==0)
+                    {
+                        data += "• Listening signage is available" + "\n\r";
+                    }
+                    if(staff_listening.ToLower().CompareTo("yes")==0)
+                    {
+                        data += "• Staff listening is available" + "\n\r";
+                    }
+                    if(acoustics.ToLower().CompareTo("yes")==0)
+                    {
+                        data += "• Acoustics are comfortable (no echoing, loud music, etc). Noise level = " + acoustics_level + "\n\r";
+                    }
+                    if(alt_comm_methods.ToLower().CompareTo("yes")==0)
+                    {
+                        data += "• If a customer is unable to hear, other forms of communication include: " + alt_comm_type + "\n\r";
+                    }
+                    if(staff_ASL.ToLower().CompareTo("yes")==0)
+                    {
+                        data += "• Some or all of the staff are proficient with sign language" + "\n\r";
+                    }
+                    if(captioning_default.ToLower().CompareTo("yes")==0)
+                    {
+                        data += "• By default, captioning is available" + "\n\r";
+                    }
+                    if(theater_captioning.ToLower().CompareTo("yes")==0)
+                    {
+                        data += "• Theater captioning is available of type " + theater_capt_type + "\n\r";
+                    }
+                    if(auditory_info_visual.ToLower().CompareTo("yes") == 0)
+                    {
+                        data += "• Auditory information is presented visually (special of the day written down)" + "\n\r";
+                    }
+                    if(visual_info_auditory.ToLower().CompareTo("yes")==0)
+                    {
+                        data += "• Visual information is presented audibly (employees will read information out load, etc.)" + "\n\r";
+                    }
+                    if(website_text_reader.ToLower().CompareTo("yes")==0)
+                    {
+                        data += "• The establishment’s website is accessible to users of screen text readers" + "\n\r";
+                    }
+                    if(alt_contact.ToLower().CompareTo("yes")==0)
+                    {
+                        data += "• The following alternate means are available for patrons to order, contact, or schedule: " + alt_contact_type + "\n\r";
+                    }
+                    if(shopping_assist.ToLower().CompareTo("yes")==0)
+                    {
+                        data += "• The establishment offers shopping assistance or delivery on a case-by-case basis" + "\n\r";
+                    }
+                    if(assist_service.ToLower().CompareTo("yes")==0)
+                    {
+                        data += "• Assistance services are available at a cost of $" + assist_fee + "\n\r";
+                    }
+                    if(store_scooter.ToLower().CompareTo("yes")==0)
+                    {
+                        data += "• The establishment provides scooters at a cost of $" + scooter_fee + " and are located at " + scooter_location + "\n\r";
+                    }
+                    if(restaurant_allergies.ToLower().CompareTo("yes")==0)
+                    {
+                        data += "• Information on food allergies sensitivities are available" + "\n\r";
+                    }
+                    if(staff_disable_trained.ToLower().CompareTo("yes")==0)
+                    {
+                        data += "• The staff are disability trained in: " + staff_disable_trained_desc + "\n\r";
+                    }
+                    if(items_reach.ToLower().CompareTo("yes")==0)
+                    {
+                        data += "• All items are within reach or assistance is offered to reach them" + "\n\r";
+                    }
+                    if(service_alt_manner.ToLower().CompareTo("yes")==0)
+                    {
+                        data += "• If goods and services are not accessible they are provided in alternative manner" + "\n\r";
+                    }
+                    if(senior_discount.ToLower().CompareTo("yes")==0)
+                    {
+                        data += "• The establishment offers a senior discount, beginning at age " + senior_age + "\n\r";
+                    }
+                    if(comment.CompareTo("")!=0)
+                    {
+                        data += "• " + comment + "\n\r";
+                    }
+
+                }
+            }
+            return data;
         }
 
         private string parseInterior(string unparsedData)
@@ -219,7 +416,7 @@ namespace Access4All.Fragments
 
                     if(int_door_open_clearance.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• Interior doors (aside from restrooms) have at least 32” clearance when the door is open at 90 degrees" + "\n\r";
+                        data += "• Interior doors (aside from restrooms) have at least 32 inches clearance when the door is open at 90 degrees" + "\n\r";
                     }
 
                     if(int_opening_measurement > 0)
@@ -249,7 +446,7 @@ namespace Access4All.Fragments
 
                     if(wheelchair_turnaround.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• There are locations that allow 60” space for a wheelchair to turn around" + "\n\r";
+                        data += "• There are locations that allow 60 inches space for a wheelchair to turn around" + "\n\r";
                     }
 
                     if(hallway_obstacles.ToLower().CompareTo("yes")==0)
@@ -361,9 +558,9 @@ namespace Access4All.Fragments
                     if (threshold_beveled.ToLower().CompareTo("yes") == 0)
                     {
                         if (beveled_height <= 0.5)
-                            data += ("• Door threshold is no more than ½” high. \n\r");
+                            data += ("• Door threshold is no more than ½ inch high. \n\r");
                         else
-                            data += ("• Door threshold is more than ½” high. (actual "+beveled_height+" of an inch). \n\r");
+                            data += ("• Door threshold is more than ½ inch high. (actual "+beveled_height+" of an inch). \n\r");
                     }
 
 
@@ -375,7 +572,7 @@ namespace Access4All.Fragments
                         data += ("• As you enter, door slides to the side. \n\r");
 
                     if (opening_measurement > 0.00)
-                        data += ("• Door has at least "+opening_measurement+"” clearance when door is open 90 degrees. \n\r");
+                        data += ("• Door has at least "+opening_measurement+" inch clearance when door is open 90 degrees. \n\r");
 
                     if (door_easy_open.ToLower().CompareTo("yes") == 0)
                         data += ("• Door is easy to open, requiring 10 lbs or less of force ("+ door_open_force + " lbs). \n\r");
@@ -458,7 +655,7 @@ namespace Access4All.Fragments
                     {
                         data += "• Exterior has a ramp to enter the establishment" + "\n\r";
                         data += "• Ramp is at least 36 inches wide between handrails" + "\n\r";
-                        data += "• For each section of the ramp, the running slope is no greater than 1:12, i.e. for every inch of height change there are at least 12 inches of ramp run. (actual 13” height & 204” length)" + "\n\r";
+                        data += "• For each section of the ramp, the running slope is no greater than 1:12, i.e. for every inch of height change there are at least 12 inches of ramp run. (actual 13 inches height & 204 inches length)" + "\n\r";
                         data += "• There is a level landing that is at least 60 inches long and at least as wide as the ramp at top of ramp" + "\n\r";
                         data += "• The ramp is clear of obstacles and protrusions of 4 inches or more from the sides" + "\n\r";
                         data += "• Ramp surface is firm, slip-resistant, and unbroken" + "\n\r";
