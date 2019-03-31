@@ -128,7 +128,7 @@ namespace Access4All.Fragments
 
             else if (selection.CompareTo("Elevators") == 0)
             {
-                table = "elevators";
+                table = "elevator";
                 unparsedData = GetData(curLocation);
                 parsedData = parseElevators(unparsedData);
                 t.Text = parsedData;
@@ -215,7 +215,9 @@ namespace Access4All.Fragments
                     {
                         data += "• There is an elevator at this establishment located at " + location + " and it " + works + "\n\r";
                     }
-                    if(no_assist.ToLower().CompareTo("yes")==0)
+                    
+
+                    if (no_assist.ToLower().CompareTo("yes")==0)
                     {
                         data += "• No assistance is provided for the elevator(s)" + "\n\r";
                     }
@@ -239,16 +241,16 @@ namespace Access4All.Fragments
                     {
                         data += "• Elevator depth is at least 51 inches" + "\n\r";
                     }
-                    if(comment.CompareTo("")==0)
+                    if(comment.CompareTo("")!=0)
                     {
-                        data += "• " + comment + "\n\r";
+                        data += "• " + comment + "\n\r"; 
                     }
                 }
             }
 
             if (data.CompareTo("")==0)
             {
-                data = "No elevator or lift is needed as this business is on the ground level";
+                data = "• No elevator or lift is needed as this business is on the ground level";
             }
             return data;
         }
