@@ -81,8 +81,7 @@ namespace Access4All.Fragments
             
             if (selection.CompareTo("Information") == 0)
             {
-                Toast.MakeText(this.Activity, est_id.ToString(), ToastLength.Long).Show();
-                //Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
+                
                 table = "establishment";
                 unparsedData = GetData("");//getGeneralInformation(curLocation);
                 parsedData = parseGeneralInformation(unparsedData, curLocation);
@@ -102,7 +101,7 @@ namespace Access4All.Fragments
 
             else if (selection.CompareTo("Access to transit") == 0)
             {
-                Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
+               
                 unparsedData = getTransitData(curLocation);
                 parsedData = parseTransitData(unparsedData);
                 t.Text = parsedData;
@@ -110,7 +109,7 @@ namespace Access4All.Fragments
 
             else if (selection.CompareTo("Exterior pathway & seating") == 0)
             {
-                Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
+                
                 table = "exterior_pathways";
                 unparsedData = GetData(table);
                 parsedData = parseExteriorData(unparsedData);
@@ -132,7 +131,6 @@ namespace Access4All.Fragments
                 unparsedData = GetData(curLocation);
                 parsedData = parseElevators(unparsedData);
                 t.Text = parsedData;
-                Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
             }
 
             else if (selection.CompareTo("Interior") == 0)
@@ -141,12 +139,15 @@ namespace Access4All.Fragments
                 unparsedData = GetData(table);
                 parsedData = parseInterior(unparsedData);
                 t.Text = parsedData;
-                Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
+                
             }
 
             else if (selection.CompareTo("Seating") == 0)
             {
-                Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
+                table = "seating";
+                unparsedData = GetData(table);
+                parsedData = parseSeating(unparsedData);
+                t.Text = parsedData;
             }
 
             else if (selection.CompareTo("Restroom") == 0)
@@ -168,6 +169,167 @@ namespace Access4All.Fragments
                
             }
             return v;   
+        }
+
+        private string parseSeating(string unparsedData)
+        {
+            JArray jsonArray = JArray.Parse(unparsedData);
+            string data = "";
+
+            int seating_id;
+            string seating_no_step;
+            string table_aisles;
+            string legroom;
+            string num_legroom; // some entries are empty and parsing int will break
+            string rearranged;
+            string num_table_rearranged; // string because it can be "all" in database
+            string num_chair_rearranged; //same as above
+            string round_tables;
+            int num_round_tables;
+            string lighting;
+            string lighting_option;
+            string lighting_type;
+            string adjustible_lighting;
+            string low_visual_slim;
+            string quiet_table;
+            string low_sound;
+            string designated_space;
+            int num_desig_space;
+            string companion_space;
+            string comment;
+
+            for (int i = 0; i < jsonArray.Count; i++)//this should only ever be one, but keep it here in case something goes wrong?
+            {
+                JToken json = jsonArray[i];
+
+                if (((int)json["est_id"]) == est_id)
+                {
+                    seating_id = (int)json["seating_id"];
+                    seating_no_step = (string)json["seating_no_step"];
+                    table_aisles = (string)json["table_aisles"];
+                    legroom = (string)json["legroom"];
+                    num_legroom = (string)json["num_legroom"];
+                    num_table_rearranged = (string)json["num_table_rearranged"];
+                    num_chair_rearranged = (string)json["num_chair_rearranged"];
+                    rearranged = (string)json["rearranged"];
+                    round_tables = (string)json["round_tables"];
+                    num_round_tables = (int)json["num_round_tables"];
+                    lighting = (string)json["lighting"];
+                    lighting_type = (string)json["lighting_type"];
+                    lighting_option = (string)json["lighting_option"];
+                    adjustible_lighting = (string)json["adjustible_lighting"];
+                    low_visual_slim = (string)json["low_visual_slim"];
+                    quiet_table = (string)json["quiet_table"];
+                    low_sound = (string)json["low_sound"];
+                    designated_space = (string)json["designated_space"];
+                    num_desig_space = (int)json["num_desig_space"];
+                    companion_space = (string)json["companion_space"];
+                    comment = (string)json["comment"];
+
+                    if (seating_no_step.ToLower().CompareTo("yes") == 0)
+                    {
+                        data += "• One or more seating areas in the common area can be accessed without steps. \n\r";
+                    }
+                    else
+                        data += "• One or more seating areas in the common area requires steps. \n\r";
+
+                    if (table_aisles.ToLower().CompareTo("yes") == 0)
+                    {
+                        data += "• Customers can maneuver between tables without bumping into chairs.  \n\r";
+                    }
+                    else if(table_aisles.ToLower().CompareTo("no") == 0)
+                        data += "• Customers can't maneuver between tables without bumping into chairs.  \n\r";
+
+                    if (legroom.ToLower().CompareTo("yes") == 0)
+                    {
+                        data += "• There are tables with legroom for wheelchair users.";
+                        if (num_legroom.ToLower().CompareTo("") != 0)
+                            data += " (" + num_legroom + ")";
+
+                        data += "\n\r";
+
+
+                    }
+                    else if (legroom.ToLower().CompareTo("no") == 0)
+                        data += "• There are not tables with legroom for wheelchair users.  \n\r";
+                    if (rearranged != null)
+                    {
+                        if (rearranged.ToLower().CompareTo("yes") == 0)
+                        {
+                            if (num_table_rearranged.ToLower().CompareTo("all") == 0)
+                                data += "• All tables can be moved or rearranged.  \n\r";
+                            else
+                                data += "• " + num_table_rearranged + " tables can be moved or rearranged.  \n\r";
+                            if (num_chair_rearranged.ToLower().CompareTo("all") == 0)
+                                data += "• All chairs can be moved or rearranged.  \n\r";
+                            else
+                                data += "• " + num_chair_rearranged + " chairs can be moved or rearranged.  \n\r";
+
+                        }
+                    }
+                    else if (table_aisles.ToLower().CompareTo("no") == 0)
+                        data += "• Some or none of the tables and chairs can be moved or rearranged.  \n\r";
+
+                    if (lighting != null)
+                    {
+                        if (lighting.ToLower().CompareTo("yes") == 0)
+                        {
+                            if (lighting_option.ToLower().CompareTo("day") == 0)
+                                data += "• Lighting level is " + lighting_type + " in daytime, and is adequate for mobility and reading menu / program \n\r";
+                            else if (lighting_option.ToLower().CompareTo("night") == 0)
+                                data += "• Lighting level is " + lighting_type + " in daytime, and is adequate for mobility and reading menu / program \n\r";
+                            else //else it's N/A
+                                data += "• Lighting level is " + lighting_type + ", and is adequate for mobility and reading menu / program \n\r";
+                        }
+                    }
+                    if (adjustible_lighting != null)
+                    {
+                        if (adjustible_lighting.ToLower().CompareTo("yes") == 0)
+                        {
+                            data += "• There is adjustable lighting. \n\r";
+                        }
+                        else
+                            data += "• There is not adjustable lighting. \n\r";
+                    }
+                    if (low_visual_slim != null)
+                    {
+                        if (low_visual_slim.ToLower().CompareTo("yes") == 0)
+                        {
+                            data += "• All areas have low visual stimulation. \n\r";
+                        }
+                        else
+                            data += "• Not All areas have low visual stimulation \n\r";
+                    }
+                    if (low_sound != null)
+                    {
+                        if (low_sound.ToLower().CompareTo("yes") == 0)
+                        {
+                            data += "• There are one or more areas with low or no background sound, and / or sound-absorbing surfaces. \n\r";
+                        }
+                        else
+                            data += "• Not All areas have low background sound and / or sound-absorbing surfaces. \n\r";
+                    }
+                    if (companion_space != null)
+                    {
+                        if (companion_space.ToLower().CompareTo("yes") == 0)
+                        {
+                            data += "• There are spaces for companions to sit next to the wheelchair users. \n\r";
+                        }
+                        else
+                            data += "• There are not spaces for companions to sit next to the wheelchair users. \n\r";
+
+                    }
+
+
+                    if (comment.CompareTo("") != 0)
+                    {
+                        data += "• " + comment + "\n\r";
+                    }
+                }
+            }
+
+   
+            return data;
         }
 
         private string parseElevators(string unparsedData)
