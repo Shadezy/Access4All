@@ -151,7 +151,13 @@ namespace Access4All.Fragments
 
             else if (selection.CompareTo("Restroom") == 0)
             {
-                Toast.MakeText(MainActivity.activity, test, ToastLength.Short).Show();
+                table = "restroom";
+                unparsedData = GetData(table);
+                parsedData = parseRestroom(unparsedData);
+                table = "restroom_info";
+                unparsedData = GetData(table);
+                parsedData += parseRestroomInfo(unparsedData);
+                t.Text = parsedData;
             }
 
             else if (selection.CompareTo("Communication, Technologies & Cust. Svc.") == 0)
@@ -168,6 +174,175 @@ namespace Access4All.Fragments
                
             }
             return v;   
+        }
+
+        private string parseRestroomInfo(string unparsedData)
+        {
+            JArray jsonArray = JArray.Parse(unparsedData);
+            string data = "";
+
+            string restroom_desc;
+            string easy_open;
+            int lbs_force;
+            string clearing;
+            double opening;
+            string opens_out;
+            string use_fist;
+            string can_turn_around;
+            double turn_width;
+            double turn_depth;
+            string close_chair_inside;
+            string grab_bars;
+            string seat_height_req;
+            double seat_height;
+            string flush_auto_fist;
+            string ambulatory_accessible;
+            double bar_height;
+            string coat_hook;
+            double hook_height;
+            string sink;
+            double sink_height;
+            string faucet;
+            double faucet_depth;
+            string faucet_auto_fist;
+            string sink_clearance;
+            double sink_clearance_height;
+            string sink_pipes;
+            string soap_dispenser;
+            double soap_height;
+            string dry_fist;
+            int dry_control_height;
+            string mirror;
+            double mirror_height;
+            string shelves;
+            double shelf_height;
+            string trash_receptacles;
+            string hygiene_seat_cover;
+            double hygiene_cover_height;
+            string lighting;
+            string lighting_type;
+            string comment;
+
+
+            for (int i = 0; i < jsonArray.Count; i++)//this should only ever be one, but keep it here in case something goes wrong?
+            {
+                JToken json = jsonArray[i];
+
+                if (((int)json["est_id"]) == est_id)
+                {
+                    restroom_desc = (string)json[""];
+                    easy_open = (string)json[""];
+                    lbs_force = (int)json[""];
+                    clearing = (string)json[""];
+                    opening = (double)json[""];
+                    opens_out = (string)json[""];
+                    use_fist = (string)json[""];
+                    can_turn_around = (string)json[""];
+                    turn_width = (double)json[""];
+                    turn_depth = (double)json[""];
+                    close_chair_inside = (string)json[""];
+                    grab_bars = (string)json[""];
+                    seat_height_req = (string)json[""];
+                    seat_height = (double)json[""];
+                    flush_auto_fist = (string)json[""];
+                    ambulatory_accessible = (string)json[""];
+                    bar_height = (double)json[""];
+                    coat_hook = (string)json[""];
+                    hook_height = (double)json[""];
+                    sink = (string)json[""];
+                    sink_height = (double)json[""];
+                    faucet = (string)json[""];
+                    faucet_depth = (double)json[""];
+                    faucet_auto_fist = (string)json[""];
+                    sink_clearance = (string)json[""];
+                    sink_clearance_height = (double)json[""];
+                    sink_pipes = (string)json[""];
+                    soap_dispenser = (string)json[""];
+                    soap_height = (double)json[""];
+                    dry_fist = (string)json[""];
+                    dry_control_height = (int)json[""];
+                    mirror = (string)json[""];
+                    mirror_height = (double)json[""];
+                    shelves = (string)json[""];
+                    shelf_height = (double)json[""];
+                    trash_receptacles = (string)json[""];
+                    hygiene_seat_cover = (string)json[""];
+                    hygiene_cover_height = (double)json[""];
+                    lighting = (string)json[""];
+                    lighting_type = (string)json[""];
+                    comment = (string)json[""];
+
+                }
+            }
+            return data;
+        }
+
+        private string parseRestroom(string unparsedData)
+        {
+            JArray jsonArray = JArray.Parse(unparsedData);
+            string data = "";
+
+            string public_restroom;
+            int total_num = -1;
+            int designated_number = -1;
+            int num_wheelchair_sign = -1;
+            string sign_accessible;
+            string sign_location;
+            string key_needed;
+            string comment;
+
+
+            for (int i = 0; i < jsonArray.Count; i++)//this should only ever be one, but keep it here in case something goes wrong?
+            {
+                JToken json = jsonArray[i];
+
+                if (((int)json["est_id"]) == est_id)
+                {
+                    public_restroom = (string)json["public_restroom"];
+                    if (!json["total_num"].Equals(null))
+                    {
+                        total_num = (int)json["total_num"];
+                    }
+                    if (!json["designated_number"].Equals(null))
+                    {
+                        designated_number = (int)json["designated_number"];
+                    }
+                    if (!json["num_wheelchair_sign"].Equals(null))
+                    {
+                        num_wheelchair_sign = (int)json["num_wheelchair_sign"];
+                    }
+                    sign_accessible = (string)json["sign_accessable"];
+                    sign_location = (string)json["sign_location"];
+                    key_needed = (string)json["key_needed"];
+                    comment = (string)json["comment"];
+
+                    if(public_restroom.ToLower().CompareTo("yes")==0)
+                    {
+                        data += "• There is "+ total_num +" public restroom(s) in the establishment" + "\n\r";
+                    }
+                    if(designated_number>1)
+                    {
+                        data += "• This restroom is designated family, unisex, or assisted use" + "\n\r";
+                    }
+                    if(sign_accessible.ToLower().CompareTo("yes")==0)
+                    {
+                        data += "• This restroom has"+ num_wheelchair_sign +" ‘wheelchair accessible’ sign(s)" + "\n\r";
+                    }
+                    if(sign_location.ToLower().CompareTo("yes")==0)
+                    {
+                        data += "• " + comment + "\n\r";
+                    }
+                    if(key_needed.ToLower().CompareTo("yes")==0)
+                    {
+                        data += "• Users need to ask someone for a key to use the restroom" + "\n\r";
+                    }
+                    if (key_needed.ToLower().CompareTo("no") == 0)
+                    {
+                        data += "• Users do not need to ask someone for a key to use the restroom" + "\n\r";
+                    }
+                }
+            }
+            return data;
         }
 
         private string parseSeating(string unparsedData)
