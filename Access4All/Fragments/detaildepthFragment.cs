@@ -39,6 +39,7 @@ namespace Access4All.Fragments
             selection = b.GetString("selection");
             prevView = b.GetString("prevView");
             string test = curLocation + " " + selection;
+
            
 
            
@@ -1187,17 +1188,31 @@ namespace Access4All.Fragments
 
                 if (((string)json["name"]).Equals(loc))
                 {
+                    string phone;
+                    string [] phoneSplit;
                     website = ((string)json["website"]); 
                     loc += Environment.NewLine;
                     loc += (((string)json["street"]) +" "+ ((string)json["city"]) +", " +((string)json["state"])+" "+ ((string)json["zip"]) + Environment.NewLine);
                     loc += Environment.NewLine;
+                    loc += "Website: ";
                     loc += (website + Environment.NewLine);
                     loc += Environment.NewLine;
-                    loc += ((string)json["phone"]);
+                    loc += "Phone Number: ";
+                    phone = ((string)json["phone"]);
+                    string phoneTrim = "";
+                    if (phone.Length == 12)
+                    {
+                        phoneSplit = phone.Split('-');
+                        for (int x = 0; x < 3; x++)
+                        {
+                            phoneTrim += phoneSplit[x].ToString().Trim();
+                        }
+                        loc += phoneTrim;
+                    }
+                    else
+                        loc += phone;
                 }
-                    
             }
-         
             return loc;
         }
 
