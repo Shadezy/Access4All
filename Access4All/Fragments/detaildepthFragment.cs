@@ -107,7 +107,7 @@ namespace Access4All.Fragments
                 t.Text = parsedData;
             }
 
-            else if (selection.CompareTo("Exterior pathway & seating") == 0)
+            else if (selection.CompareTo("Exterior pathway") == 0)
             {
                 
                 table = "exterior_pathways";

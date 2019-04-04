@@ -58,6 +58,7 @@ namespace Access4All
             //setTempData();
 
             //Log.Debug(TAG, "SplashActivity.OnCreate");
+            
         }
 
         protected override void OnResume()

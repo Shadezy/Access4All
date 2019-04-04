@@ -39,7 +39,7 @@ namespace Access4All.Fragments
             group.Add(new Details("Information"));
             group.Add(new Details("Parking on street"));
             group.Add(new Details("Access to transit"));
-            group.Add(new Details("Exterior pathway & seating"));
+            group.Add(new Details("Exterior pathway"));
             group.Add(new Details("Entrances"));
             group.Add(new Details("Elevators"));
             group.Add(new Details("Interior"));
