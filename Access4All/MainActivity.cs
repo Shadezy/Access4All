@@ -8,6 +8,7 @@ using Android.Widget;
 using Access4All.Fragments;
 using Android.Content;
 using Android.Speech;
+using Xamarin.Essentials;
 
 namespace Access4All
 {
@@ -47,6 +48,19 @@ namespace Access4All
             SupportFragmentManager.BeginTransaction()
                 .Replace(Resource.Id.content_frame, fragment)
                 .Commit();
+            var connectivity = Connectivity.NetworkAccess;
+            if (connectivity != NetworkAccess.Internet)
+            {
+                Android.App.AlertDialog.Builder dialog = new Android.App.AlertDialog.Builder(this);
+                Android.App.AlertDialog alert = dialog.Create();
+                alert.SetTitle("Error");
+                alert.SetMessage("Device is not connected to the internet, please check network connection");
+                alert.SetButton("OK", (c, ev) =>
+                {
+                    this.FinishAffinity();
+                });
+                alert.Show();
+            }
         }
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
         {

@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using System.Net;
 using System.IO;
+using Xamarin.Essentials;
 
 namespace Access4All
 {
@@ -64,7 +65,11 @@ namespace Access4All
             base.OnResume();
             Task startupWork = new Task(() => { SimulateStartup(); });
             startupWork.Start();
-            setTempData();
+            var connectivity = Connectivity.NetworkAccess;
+            if (connectivity == Xamarin.Essentials.NetworkAccess.Internet)
+            {
+                setTempData();
+            }
         }
 
         async void SimulateStartup()

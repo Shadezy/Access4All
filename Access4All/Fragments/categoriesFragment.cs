@@ -106,7 +106,7 @@ namespace Access4All.Fragments
                     other_locations.Add((String)json["name"]);
             }
             */
-            group.Add(new Categories("Arts, Entertainment, Culture", SplashActivity.arts_and_entertainment_locations));
+            /*group.Add(new Categories("Arts, Entertainment, Culture", SplashActivity.arts_and_entertainment_locations));
             group.Add(new Categories("Automotive", SplashActivity.automotive_locations));
             group.Add(new Categories("Business Services", SplashActivity.business_locations));//not in db
             group.Add(new Categories("Education", SplashActivity.education_locations));
@@ -125,7 +125,7 @@ namespace Access4All.Fragments
             group.Add(new Categories("Restaurants, Coffee Shops", SplashActivity.restaurant_and_coffee_shop_locations));//conflicts with food & grocery/ not in db
             group.Add(new Categories("Shopping", SplashActivity.retail_locations));//probably
             group.Add(new Categories("Travel, Hotel, Motel", SplashActivity.travel_locations));
-
+            */
         }
 
         /*private string GetData()
