@@ -1135,6 +1135,11 @@ namespace Access4All.Fragments
                     reserve_space_obstacles = ((string)json["reserve_space_obstacles"]).ToLower();
                     comment = ((string)json["comment"]).ToLower();
 
+                    /*
+                     * if (one of those --^ == null)
+                     *     one of those --^ = "";
+                     */
+
                     if (street_metered.CompareTo("not metered") == 0)//• = alt + 7 on numpad
                         street_metered = "free";
 
@@ -1155,18 +1160,61 @@ namespace Access4All.Fragments
                     else
                         data += "• Surface is level, unbroken, firm, slip resistant, and free of obstacles\n\r";
 
-                    /**TODO: passenger_loading and route_from_parking**/
+                    JArray jsonArray_route_from_parking = JArray.Parse(GetDataTable("route_from_parking", "park_id=" + park_id.ToString()));
 
-                    /*if (street_metered.CompareTo("not metered") == 0)
-                        street_metered = "free";
+                    for (int j = 0; j < jsonArray_route_from_parking.Count; j++)
+                    {
+                        JToken json_route = jsonArray_route_from_parking[j];
 
-                    data += "<ul>This establishment has the following types of parking: " + lot_type + " lot, " + street_metered + " street\n\r";
-                    data += "<li>There are a total of " + total_spaces + " on the premises</li>";
+                        int route_park_id = (int)json_route["route_park_id"];
+                        string distance = ((string)json_route["distance"]).ToLower();
+                        string min_width = ((string)json_route["min_width"]).ToLower();
+                        string route_surface = ((string)json_route["route_surface"]).ToLower();
+                        string route_curbs = ((string)json_route["route_curbs"]).ToLower();
+                        string tactile_warning = ((string)json_route["tactile_warning"]).ToLower();
+                        string covered = ((string)json_route["covered"]).ToLower();
+                        string lighting = ((string)json_route["lighting"]).ToLower();
+                        string lighting_option = ((string)json_route["lighting_option"]).ToLower();
+                        string lighting_type = ((string)json_route["lighting_type"]).ToLower();
+                        string comment_route = ((string)json_route["comment"]).ToLower();
+                        string recommendations_route = ((string)json_route["recommendations"]).ToLower();
 
-                    if (parking_type.CompareTo("other") != 0)
-                        data += "<li>This establishment has " + parking_type + " parking</li>";
+                        data += "\n\rRoute from nearest accessible parking area to accessible entrance:\n\r\n\r";
 
-                    data += "<li>" + general_accessible_spaces + " accessible parking spaces have 5’ access aisle</li>";*/
+                        data += "• Distance from nearest accessible parking to wheelchair accessible entrance is " + distance + " feet\n\r";
+
+                        if (min_width.CompareTo("yes") == 0)
+                            data += "• Route is at least 44 inches wide\n\r";
+                        else
+                            data += "• Route is not at least 44 inches wide\n\r";
+
+                        if (route_surface.CompareTo("yes") == 0)
+                            data += "• Surface is level, unbroken, firm, slip resistant, and free of obstacles\n\r";
+                        else
+                            data += "• Surface is not level, unbroken, firm, slip resistant, or free of obstacles\n\r";
+
+                        if (route_curbs.CompareTo("yes") == 0)
+                            data += "• Route has curb ramps and curb cuts where needed\n\r";
+                        else
+                            data += "• Route does not have curb ramps or curb cuts where needed\n\r";
+
+                        if (tactile_warning.CompareTo("yes") == 0)
+                            data += "• Route has tactile warnings\n\r";
+                        else
+                            data += "• Route does not have tactile warnings\n\r";
+
+                        if (covered.CompareTo("yes") == 0) //no way to determine partially covered
+                            data += "• Route is covered\n\r";
+                        else
+                            data += "• Route is not covered\n\r";
+
+                        if (lighting.CompareTo("yes") == 0)
+                            data += "• Lighting level is " + lighting_type + " in " + lighting_option + "time, and is adequate for mobility and reading signs\n\r";
+                        else
+                            data += "• Lighting level is inadequate for mobility and reading signs\n\r";
+
+                        /**TODO: passenger_loading**/
+                    }
                 }
             }
 
@@ -1221,7 +1269,7 @@ namespace Access4All.Fragments
         private string parseTransitData(string unparsedData)
         {
             
-            string parsedData = null;
+            string parsedData = "";
 
             return parsedData;
         }
@@ -1244,10 +1292,38 @@ namespace Access4All.Fragments
         }
             
 
-        private string GetData(string search_specifics)
+        private string GetData(string search_specifics) //using default table + key to search table by
         {
 
             var request = HttpWebRequest.Create(String.Format(@"http://access4allspokane.org/RESTapi/" + table + "/?" + search_specifics));
+            request.ContentType = "application/json";
+            request.Method = "GET";
+
+            using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
+            {
+                if (response.StatusCode != HttpStatusCode.OK)
+                    Console.Out.WriteLine("Error fetching data. Server returned status code: {0}", response.StatusCode);
+                using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+                {
+                    var content = reader.ReadToEnd();
+                    if (String.IsNullOrWhiteSpace(content))
+                    {
+                        Console.Out.WriteLine("Response contained empty body...");
+                    }
+                    else
+                    {
+                        //Console.Out.WriteLine("Response Body: \r\n {0}", content);
+                        return content;
+                    }
+                }
+            }
+            return "NULL";
+        }
+
+        private string GetDataTable(string table_name, string search_specifics) //search a passed in table name + a passed in key
+        {
+
+            var request = HttpWebRequest.Create(String.Format(@"http://access4allspokane.org/RESTapi/" + table_name + "/?" + search_specifics));
             request.ContentType = "application/json";
             request.Method = "GET";
 
