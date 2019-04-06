@@ -17,6 +17,8 @@ using Android.Views;
 using Android.Widget;
 using Newtonsoft.Json.Linq;
 using Environment = System.Environment;
+using Xamarin.Essentials;
+using System.Threading.Tasks;
 
 //HTML.FromHtml is deprecated,so it might stop being supported soonish
 
@@ -31,6 +33,7 @@ namespace Access4All.Fragments
         TextView myTextTest;
         string table; //= "establishment";//change this later cuz parking dont work
         int est_id;
+        Button mapsButton;
 
         public override void OnCreate(Bundle savedInstanceState)
         {
@@ -59,7 +62,10 @@ namespace Access4All.Fragments
             View v = inflater.Inflate(Resource.Layout.detail_layout, null);
             TextView t = (TextView)v.FindViewById(Resource.Id.textView1);
             myTextTest = (TextView)v.FindViewById(Resource.Id.textView1);
-     
+            mapsButton = v.FindViewById<Button>(Resource.Id.mapsButton);
+            
+            mapsButton.Visibility = ViewStates.Invisible;
+            mapsButton.Enabled = false;
 
             /*var htmlCode = "<ul><li>Item 1</li><li>Item 2</li></ul>";
             var myTextView = FindViewById<TextView>(Resource.Id.myTextView);
@@ -86,6 +92,12 @@ namespace Access4All.Fragments
                 unparsedData = GetData("");//getGeneralInformation(curLocation);
                 parsedData = parseGeneralInformation(unparsedData, curLocation);
                 t.Text = parsedData;
+                mapsButton.Visibility = ViewStates.Visible;
+                mapsButton.Enabled = true;
+                mapsButton.Click += async delegate
+                {
+                    await getGeolocationAsync(unparsedData);
+                };
             }
 
             else if (selection.CompareTo("Parking on street") == 0)
@@ -175,6 +187,48 @@ namespace Access4All.Fragments
                
             }
             return v;   
+        }
+
+        private async Task getGeolocationAsync(string unparsedData)
+        {
+            JArray jsonArray = JArray.Parse(unparsedData);
+            string loc = "";
+            string name = "";
+            for (int i = 0; i < jsonArray.Count; i++)
+            {
+                JToken json = jsonArray[i];
+
+                if (((int)json["est_id"]).Equals(est_id))
+                {
+                    name = (string)json["name"];
+                    loc = (((string)json["street"]) + " " + ((string)json["city"]) + ", " + ((string)json["state"]) + " " + ((string)json["zip"]));
+                }
+            }
+            await OpenMaps(name, loc);
+        }
+
+        public async Task OpenMaps(string name, string loc)
+        {
+            Xamarin.Essentials.Location location1 = new Xamarin.Essentials.Location();
+            try
+            {
+                var address = loc;
+                var locations = await Geocoding.GetLocationsAsync(address);
+
+                location1 = locations?.FirstOrDefault();
+            }
+            catch (FeatureNotSupportedException fnsEx)
+            {
+                Toast.MakeText(MainActivity.activity, "Feature not supported on this device", ToastLength.Long).Show();
+            }
+            catch (Exception ex)
+            {
+                Toast.MakeText(MainActivity.activity, "Error parsing location", ToastLength.Long).Show();
+            }
+            var location = new Xamarin.Essentials.Location(location1.Latitude, location1.Longitude);
+            var options = new MapLaunchOptions { Name = name };
+            Toast.MakeText(MainActivity.activity, name, ToastLength.Long).Show();
+            await Map.OpenAsync(location, options);
         }
 
         private string parseRestroomInfo(string unparsedData)

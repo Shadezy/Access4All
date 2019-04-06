@@ -26,4 +26,13 @@
 				android:id="@+id/textView1" />
 		</TableLayout>
 	</ScrollView>
+	<Button
+		android:id="@+id/mapsButton"
+		android:layout_width="fill_parent"
+		android:layout_height="100dp"
+		android:text="Open location in maps"
+		android:textSize = "20dp"
+		android:textAlignment="center"
+		android:enabled="false"
+	/>
 </LinearLayout>

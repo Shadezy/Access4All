@@ -215,6 +215,10 @@ namespace Access4All.Fragments
                 debugMe += "\n";
             }
 
+            if(searched_Loc.Count == 0)
+            {
+                Toast.MakeText(MainActivity.activity, "No results found", ToastLength.Long).Show();
+            }
 
             //Listview stuff
             mTv = act.FindViewById<ListView>(Resource.Id.searchResults);

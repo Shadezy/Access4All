@@ -8,7 +8,7 @@
 
 	<TextView
 		android:id="@+id/group"
-		android:layout_marginLeft="25dp"
+		android:layout_marginLeft="30dp"
 		android:layout_width = "wrap_content"
 		android:layout_height="75dp"
 		android:textColor="@android:color/black"
