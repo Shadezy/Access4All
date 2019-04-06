@@ -70,7 +70,7 @@ namespace Access4All
             {
                 if (appState != true)
                 {
-                    setTempData();
+                    setData();
                     appState = true;
                 }
             }
@@ -96,21 +96,21 @@ namespace Access4All
 
         }
 
-        private void setTempData()
+        private void setData()
         {
             string data = GetData();
             //Toast.MakeText(this.Activity, data, ToastLength.Short).Show();
             JArray jsonArray = JArray.Parse(data);
             //Toast.MakeText(this.Activity, jsonArray.ToString(), ToastLength.Short).Show();
 
-            Console.WriteLine(jsonArray);
+            //Console.WriteLine(jsonArray);
 
-            business_locations.Add(new Location());
-            home_and_garden_locations.Add(new Location());
-            nightlife_locations.Add(new Location());
-            personal_services_locations.Add(new Location());
-            pet_locations.Add(new Location());
-            restaurant_and_coffee_shop_locations.Add(new Location());
+            //business_locations.Add(new Location());
+            //home_and_garden_locations.Add(new Location());
+            //nightlife_locations.Add(new Location());
+            //personal_services_locations.Add(new Location());
+            //pet_locations.Add(new Location());
+            //restaurant_and_coffee_shop_locations.Add(new Location());
 
             for (int i = 0; i < jsonArray.Count; i++)
             {

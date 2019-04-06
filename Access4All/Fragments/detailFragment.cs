@@ -25,7 +25,7 @@ namespace Access4All.Fragments
             Bundle b = Arguments;
             curLocation = b.GetString("location");
             prevView = b.GetString("prevView");
-            Toast.MakeText(MainActivity.activity, curLocation, ToastLength.Short).Show();
+            //Toast.MakeText(MainActivity.activity, curLocation, ToastLength.Short).Show();
             base.OnCreate(savedInstanceState);
             setTempData();
 

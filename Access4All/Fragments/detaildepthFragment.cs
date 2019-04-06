@@ -1024,7 +1024,7 @@ namespace Access4All.Fragments
             JArray jsonArray = JArray.Parse(unparsedData);
             string data = "";
 
-            SpannableString result;
+            //SpannableString result;
 
             //int ext_path_id;
             string service_animal;
@@ -1101,8 +1101,7 @@ namespace Access4All.Fragments
         {
             JArray jsonArray = JArray.Parse(unparsedData);
             string data = "";
-
-            SpannableString result;
+            
 
             int park_id;
             string lot_type;
@@ -1115,7 +1114,6 @@ namespace Access4All.Fragments
             string reserve_space_sign;
             string reserve_space_obstacles;
             string comment;
-            string recommendations;
 
             for (int i = 0; i < jsonArray.Count; i++)//this should only ever be one, but keep it here in case something goes wrong?
             {
