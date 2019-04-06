@@ -9,7 +9,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Access4All.Fragments
 {
-    public class categoriesFragment : Android.Support.V4.App.Fragment, MainActivity.IBackButtonListener
+    public class categoriesFragment : Android.Support.V4.App.Fragment//, MainActivity.IBackButtonListener
     {
         catAdapter mAdapter;
         List<Categories> group = new List<Categories>();
@@ -208,9 +208,9 @@ namespace Access4All.Fragments
             return true;
         }
 
-        public void OnBackPressed()
+        /*public void OnBackPressed()
         {
             OnStop();
-        }
+        }*/
     }
 }

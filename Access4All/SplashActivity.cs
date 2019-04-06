@@ -51,27 +51,37 @@ namespace Access4All
         public static List<Location> pet_locations = new List<Location>();
         public static List<Location> restaurant_and_coffee_shop_locations = new List<Location>();
         //static readonly string TAG = "X:" + typeof(SplashActivity).Name;
+        public static bool appState;
 
-        public override void OnCreate(Bundle savedInstanceState, PersistableBundle persistentState)
+        protected override void OnCreate(Bundle savedInstanceState)
         {
-            base.OnCreate(savedInstanceState, persistentState);
+            base.OnCreate(savedInstanceState);
             //setTempData();
-
+            if (savedInstanceState != null)
+            {
+                appState = savedInstanceState.GetBoolean("appState");
+            }
             //Log.Debug(TAG, "SplashActivity.OnCreate");
-            
-        }
 
-        protected override void OnResume()
-        {
-            base.OnResume();
             Task startupWork = new Task(() => { SimulateStartup(); });
             startupWork.Start();
             var connectivity = Connectivity.NetworkAccess;
             if (connectivity == Xamarin.Essentials.NetworkAccess.Internet)
             {
-                setTempData();
+                if (appState != true)
+                {
+                    setTempData();
+                    appState = true;
+                }
             }
         }
+        
+
+        /*protected override void OnResume()
+        {
+            base.OnResume();
+            
+        }*/
 
         async void SimulateStartup()
         {

@@ -62,6 +62,13 @@ namespace Access4All
                 alert.Show();
             }
         }
+
+        protected override void OnSaveInstanceState(Bundle outState)
+        {
+            outState.PutBoolean("appState", SplashActivity.appState);
+            base.OnSaveInstanceState(outState);
+        }
+
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
         {
             base.OnActivityResult(requestCode, resultCode, data);
