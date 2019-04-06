@@ -9,6 +9,7 @@ using Access4All.Fragments;
 using Android.Content;
 using Android.Speech;
 using Xamarin.Essentials;
+using Android.Content.PM;
 
 namespace Access4All
 {
@@ -40,7 +41,7 @@ namespace Access4All
             base.OnCreate(savedInstanceState);
             this.SetContentView(Resource.Layout.activity_main);
             activity = this;
-            
+
             BottomNavigationView navigation = (BottomNavigationView)FindViewById<BottomNavigationView>(Resource.Id.bottom_navigation);
             navigation.SetOnNavigationItemSelectedListener(this);
             Android.Support.V4.App.Fragment fragment = null;
@@ -60,6 +61,11 @@ namespace Access4All
                     this.FinishAffinity();
                 });
                 alert.Show();
+            }
+
+            if (CheckSelfPermission(Android.Manifest.Permission.AccessCoarseLocation) != (int)Permission.Granted)
+            {
+                RequestPermissions(new string[] { Android.Manifest.Permission.AccessCoarseLocation, Android.Manifest.Permission.AccessFineLocation }, 0);
             }
         }
 

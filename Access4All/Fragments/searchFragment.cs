@@ -21,6 +21,9 @@ using Android.Text;
 using Android.Text.Style;
 using Android.Text.Method;
 using System.Text.RegularExpressions;
+using Android.Locations;
+using System.Threading.Tasks;
+using Plugin.Geolocator;
 
 namespace Access4All.Fragments
 {
@@ -28,13 +31,25 @@ namespace Access4All.Fragments
     {
         ListView mTv;
         bool flagSearch = false;
-        
-        public override void OnCreate(Bundle savedInstanceState)
+        bool userLocationObtained = false;
+        Plugin.Geolocator.Abstractions.Position Userposition;
+
+
+        public override async void OnCreate(Bundle savedInstanceState)
         {
+           
+
             base.OnCreate(savedInstanceState);
+            //Check for user location permissions here to prevent long wait times for search function
+            MainActivity act = (MainActivity)this.Activity;
+            //Get user location
+            if (act.CheckSelfPermission(Android.Manifest.Permission.AccessCoarseLocation) == (int)Android.Content.PM.Permission.Granted)
+            {
+                await getLocation();
+                userLocationObtained = true;
+            }
 
-
-            // Create your fragment here
+         
 
         }
 
@@ -66,9 +81,6 @@ namespace Access4All.Fragments
         
 
         } 
-
-        
-
         
         public static searchFragment NewInstance()
         {
@@ -95,12 +107,9 @@ namespace Access4All.Fragments
             searchV.QueryTextSubmit += submitQueryListener;
 
             mTv.ItemClick += MTv_ItemClick;
-            
-            
+        
         
             return view;
-
-            
 
             //return base.OnCreateView(inflater, container, savedInstanceState);
         }
@@ -123,7 +132,7 @@ namespace Access4All.Fragments
                         .Commit();
         }
 
-        private void submitQueryListener(object sender, SearchView.QueryTextSubmitEventArgs e)
+        private async void submitQueryListener(object sender, SearchView.QueryTextSubmitEventArgs e)
         {
             MainActivity act = (MainActivity)this.Activity;
             SearchView searchView = (SearchView)act.FindViewById(Resource.Id.searchView1);
@@ -144,10 +153,12 @@ namespace Access4All.Fragments
 
             string debugMe = "";
             string tempinput = input;
+            
             tempinput = RemoveSpecialCharacters(tempinput);
             tempinput = tempinput.Replace(" ", System.String.Empty);
-            Toast.MakeText(this.Activity, tempinput, ToastLength.Short).Show();
-
+            
+            AddressLocator tempAddress;
+            List<AddressLocator> mAddresses = new List<AddressLocator>();
             for (int i = 0; i < jsonArray.Count; i++)
             {
                 JToken json = jsonArray[i];
@@ -156,37 +167,55 @@ namespace Access4All.Fragments
                 temp = temp.Replace(" ", System.String.Empty);
                 if (((string)json["name"]).Equals(input, StringComparison.InvariantCultureIgnoreCase) || temp.Equals(tempinput, StringComparison.InvariantCultureIgnoreCase))
                 {
-                    //Toast.MakeText(this.Activity, "We have a match for " + input, ToastLength.Short).Show();
-                    searched_Loc.Add(((string)json["name"]) + ": " + ((string)json["street"]) + " " + ((string)json["city"]) + " " + ((string)json["state"]));
+                    
+                    
+                    //Location stuff - make sure user location permissions were give
+                    if (act.CheckSelfPermission(Android.Manifest.Permission.AccessCoarseLocation) == (int)Android.Content.PM.Permission.Granted)
+                    {
+                        Geocoder coder = new Geocoder(act);
+                        IList<Address> address = new List<Address>();
+                        
+
+                        address = coder.GetFromLocationName(((string)json["street"]) + " " + ((string)json["city"]) + " " + ((string)json["state"]), 5);
+
+                        float lon = (float)address.ElementAt(0).Longitude;
+                        float lat = (float)address.ElementAt(0).Latitude;
+
+                        tempAddress = new AddressLocator((string)json["name"], ((string)json["street"]) + " " + ((string)json["city"]) + " " + ((string)json["state"]), lon, lat);
+                        mAddresses.Add(tempAddress);
+
+                        
+                        userLocationObtained = true;
+                    }
+                    else // if not, grab list like before.
+                    {
+                        searched_Loc.Add(((string)json["name"]) + ": " + ((string)json["street"]) + " " + ((string)json["city"]) + " " + ((string)json["state"]));
+                    }
                     
                 }
             }
+            
+            if (userLocationObtained)
+            {
+                //calculat distances
+                CalculateAddressDistance(mAddresses);
+                //sort distances
+                mAddresses.Sort();
+
+                for (int x = 0; x < mAddresses.Count; x++)
+                {
+                    searched_Loc.Add(mAddresses.ElementAt(x).Name + ": " + mAddresses.ElementAt(x).Address + " ("+mAddresses.ElementAt(x).Distance.ToString("n2")+" miles)");
+                }
+            }
+
             //debug
             for(int j = 0; j < searched_Loc.Count; j++)
             {
                 debugMe += searched_Loc[j];
                 debugMe += "\n";
             }
-            //build spannable string
 
-            /* I doubt this will work anymore. Keeping in case, but will try to find a better solution later 
-             * 
-             *
-            SpannableString mySpan = new SpannableString(debugMe);
-            var clickSpan = new MyClickableSpan();
-            clickSpan.Click += v => StartActivity(new Intent(act, typeof(MainActivity)));//need to point to detail depth
-            int StartCount = 0;
-            int StopCount = 0;
-            for (int x = 0; x < searched_Loc.Count; x++) {
-                StopCount += (searched_Loc.ElementAt(x).Length);
 
-                mySpan.SetSpan(clickSpan, StartCount, StopCount, SpanTypes.ExclusiveExclusive);
-
-                StartCount += (searched_Loc.ElementAt(x).Length);
-            }
-            text.TextFormatted = mySpan;
-            text.MovementMethod = new LinkMovementMethod();
-            */
             //Listview stuff
             mTv = act.FindViewById<ListView>(Resource.Id.searchResults);
             ArrayAdapter<string> arrayAdapter = new ArrayAdapter<string>(act, Android.Resource.Layout.SimpleListItem1, searched_Loc);
@@ -195,6 +224,31 @@ namespace Access4All.Fragments
             mTv.SetFooterDividersEnabled(true);
             mTv.SetHeaderDividersEnabled(true);
             
+            
+        }
+
+        private void CalculateAddressDistance(List<AddressLocator> mAddresses)
+        {
+            List<string> res = new List<string>();
+           // double dist;
+            float[] results = new float[5];
+            
+            for (int i = 0; i < mAddresses.Count; i++) {
+                Android.Locations.Location.DistanceBetween(mAddresses.ElementAt(i).Lat, mAddresses.ElementAt(i).Lon, Userposition.Latitude, Userposition.Longitude, results);
+                mAddresses.ElementAt(i).Distance = (float)((double)results.ElementAt(0) / 1609.34); //dist in miles
+            }
+
+           // return res;
+        }
+
+        private async Task getLocation()
+        {
+            var locateMe = CrossGeolocator.Current;
+            locateMe.DesiredAccuracy = 100;
+            
+            var pos = await locateMe.GetPositionAsync(TimeSpan.FromMilliseconds(10000));
+
+            Userposition = pos;
             
         }
 
