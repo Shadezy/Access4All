@@ -13,7 +13,8 @@
 		android:queryHint="Search here..."
 		android:id="@+id/searchView1"
 		android:contentDescription="Search box"
-		android:importantForAccessibility="yes" />
+		android:importantForAccessibility="yes">
+	</SearchView>
 	<View
 		android:id="@+id/centerShim"
 		android:layout_height="match_parent"
@@ -30,6 +31,15 @@
 		android:layout_toLeftOf="@+id/centerShim"
 		android:contentDescription="Voice Search"
 		android:layout_alignParentBottom="true"
+		/>
+	<Button
+		android:id="@+id/nearMe"
+		android:text="Near Me"
+		android:layout_width="match_parent"
+		android:layout_height="68dp"
+		android:layout_alignParentRight="true"
+		android:contentDescription="Search for locations near you"
+		android:layout_above="@id/voiceSearch" 
 		/>
 	<Button
 		android:id="@+id/textSearch"

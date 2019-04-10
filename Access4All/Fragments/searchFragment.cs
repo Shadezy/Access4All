@@ -94,12 +94,12 @@ namespace Access4All.Fragments
             var view = LayoutInflater.Inflate(Resource.Layout.searchLayout, container, false);
             Button textButton = view.FindViewById<Button>(Resource.Id.textSearch);
             Button voiceButton = view.FindViewById<Button>(Resource.Id.voiceSearch);
+            Button nearMeButton = view.FindViewById<Button>(Resource.Id.nearMe);
             SearchView searchV = view.FindViewById<SearchView>(Resource.Id.searchView1);
 
             mTv = view.FindViewById<ListView>(Resource.Id.searchResults);
 
             //set up listeners
-
             textButton.Click += searchByText;
 
             voiceButton.Click += searchByVoice;
@@ -107,11 +107,82 @@ namespace Access4All.Fragments
             searchV.QueryTextSubmit += submitQueryListener;
 
             mTv.ItemClick += MTv_ItemClick;
-        
-        
+
+            nearMeButton.Click += searchNearMe;
+
             return view;
 
             //return base.OnCreateView(inflater, container, savedInstanceState);
+        }
+
+        private void searchNearMe(object sender, EventArgs e)
+        {
+            //Going to search for anything within 15 miles. May add functionaility later for a variable amount of miles.
+
+            //ping database
+            string data = GetData();
+
+            JArray jsonArray = JArray.Parse(data);
+            List<string> searched_Loc = new List<string>();
+            List<AddressLocator> mAddresses = new List<AddressLocator>();
+            AddressLocator tempAddress;
+
+            MainActivity act = (MainActivity)this.Activity;
+
+            for (int i = 0; i < jsonArray.Count; i++)
+            {
+                JToken json = jsonArray[i];
+                //string temp = (string)json["name"];
+               // temp = RemoveSpecialCharacters(temp);
+                //temp = temp.Replace(" ", System.String.Empty);
+
+                    //Location stuff - make sure user location permissions were give
+                    if (act.CheckSelfPermission(Android.Manifest.Permission.AccessCoarseLocation) == (int)Android.Content.PM.Permission.Granted)
+                    {
+                        Geocoder coder = new Geocoder(act);
+                        IList<Address> address = new List<Address>();
+
+
+                        address = coder.GetFromLocationName(((string)json["street"]) + " " + ((string)json["city"]) + " " + ((string)json["state"]), 5);
+
+                        float lon = (float)address.ElementAt(0).Longitude;
+                        float lat = (float)address.ElementAt(0).Latitude;
+
+                        tempAddress = new AddressLocator((string)json["name"], ((string)json["street"]) + " " + ((string)json["city"]) + " " + ((string)json["state"]), lon, lat);
+                        mAddresses.Add(tempAddress);
+
+
+                        userLocationObtained = true;
+                    }
+                    else // if not, display error.
+                    {
+                    Toast.MakeText(MainActivity.activity, "Cannot Calculate User Location. Please allow for the application to use location permissions.", ToastLength.Long).Show();
+                    }
+            }
+
+            if (userLocationObtained)
+            {
+                //calculate distances
+                CalculateAddressDistance(mAddresses);
+                //sort distances
+                mAddresses.Sort();
+
+                for (int x = 0; x < mAddresses.Count; x++)
+                {
+                    if(mAddresses.ElementAt(x).Distance < 15.00)
+                        searched_Loc.Add(mAddresses.ElementAt(x).Name + ": " + mAddresses.ElementAt(x).Address + " (" + mAddresses.ElementAt(x).Distance.ToString("n2") + " miles)");
+                }
+            }
+
+            //Listview stuff
+            mTv = act.FindViewById<ListView>(Resource.Id.searchResults);
+            ArrayAdapter<string> arrayAdapter = new ArrayAdapter<string>(act, Android.Resource.Layout.SimpleListItem1, searched_Loc);
+
+            mTv.Adapter = arrayAdapter;
+            mTv.SetFooterDividersEnabled(true);
+            mTv.SetHeaderDividersEnabled(true);
+
+
         }
 
         private void MTv_ItemClick(object sender, AdapterView.ItemClickEventArgs e)

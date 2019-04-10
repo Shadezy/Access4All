@@ -2741,14 +2741,14 @@ namespace Access4All
 			// aapt resource value: 0x7f09009f
 			public const int mapsButton = 2131296415;
 			
-			// aapt resource value: 0x7f0900bc
-			public const int masked = 2131296444;
+			// aapt resource value: 0x7f0900bd
+			public const int masked = 2131296445;
 			
 			// aapt resource value: 0x7f0900a8
 			public const int media_actions = 2131296424;
 			
-			// aapt resource value: 0x7f0900ba
-			public const int message = 2131296442;
+			// aapt resource value: 0x7f0900bb
+			public const int message = 2131296443;
 			
 			// aapt resource value: 0x7f090031
 			public const int middle = 2131296305;
@@ -2759,14 +2759,17 @@ namespace Access4All
 			// aapt resource value: 0x7f090028
 			public const int multiply = 2131296296;
 			
-			// aapt resource value: 0x7f0900bd
-			public const int navigation_categories = 2131296445;
+			// aapt resource value: 0x7f0900be
+			public const int navigation_categories = 2131296446;
 			
 			// aapt resource value: 0x7f090097
 			public const int navigation_header_container = 2131296407;
 			
-			// aapt resource value: 0x7f0900be
-			public const int navigation_search = 2131296446;
+			// aapt resource value: 0x7f0900bf
+			public const int navigation_search = 2131296447;
+			
+			// aapt resource value: 0x7f0900b8
+			public const int nearMe = 2131296440;
 			
 			// aapt resource value: 0x7f09003b
 			public const int never = 2131296315;
@@ -2846,8 +2849,8 @@ namespace Access4All
 			// aapt resource value: 0x7f090055
 			public const int scrollable = 2131296341;
 			
-			// aapt resource value: 0x7f0900b9
-			public const int searchResults = 2131296441;
+			// aapt resource value: 0x7f0900ba
+			public const int searchResults = 2131296442;
 			
 			// aapt resource value: 0x7f0900b5
 			public const int searchView1 = 2131296437;
@@ -2948,8 +2951,8 @@ namespace Access4All
 			// aapt resource value: 0x7f09001b
 			public const int text2 = 2131296283;
 			
-			// aapt resource value: 0x7f0900b8
-			public const int textSearch = 2131296440;
+			// aapt resource value: 0x7f0900b9
+			public const int textSearch = 2131296441;
 			
 			// aapt resource value: 0x7f09006a
 			public const int textSpacerNoButtons = 2131296362;
@@ -3017,8 +3020,8 @@ namespace Access4All
 			// aapt resource value: 0x7f090016
 			public const int view_offset_helper = 2131296278;
 			
-			// aapt resource value: 0x7f0900bb
-			public const int visible = 2131296443;
+			// aapt resource value: 0x7f0900bc
+			public const int visible = 2131296444;
 			
 			// aapt resource value: 0x7f0900b7
 			public const int voiceSearch = 2131296439;
