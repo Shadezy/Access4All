@@ -373,27 +373,27 @@ namespace Access4All.Fragments
 
                     if(public_restroom.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• There is "+ total_num +" public restroom(s) in the establishment" + "\n\r";
+                        data += "• There is "+ total_num +" public restroom(s) in the establishment" + "\n\r\n\r";
                     }
                     if(designated_number>1)
                     {
-                        data += "• This restroom is designated family, unisex, or assisted use" + "\n\r";
+                        data += "• This restroom is designated family, unisex, or assisted use" + "\n\r\n\r";
                     }
                     if(sign_accessible.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• This restroom has"+ num_wheelchair_sign +" ‘wheelchair accessible’ sign(s)" + "\n\r";
+                        data += "• This restroom has"+ num_wheelchair_sign +" ‘wheelchair accessible’ sign(s)" + "\n\r\n\r";
                     }
                     if(sign_location.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• " + comment + "\n\r";
+                        data += "• " + comment + "\n\r\n\r";
                     }
                     if(key_needed.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• Users need to ask someone for a key to use the restroom" + "\n\r";
+                        data += "• Users need to ask someone for a key to use the restroom" + "\n\r\n\r";
                     }
                     if (key_needed.ToLower().CompareTo("no") == 0)
                     {
-                        data += "• Users do not need to ask someone for a key to use the restroom" + "\n\r";
+                        data += "• Users do not need to ask someone for a key to use the restroom" + "\n\r\n\r";
                     }
                 }
             }
@@ -457,17 +457,17 @@ namespace Access4All.Fragments
 
                     if (seating_no_step.ToLower().CompareTo("yes") == 0)
                     {
-                        data += "• One or more seating areas in the common area can be accessed without steps. \n\r";
+                        data += "• One or more seating areas in the common area can be accessed without steps. \n\r\n\r";
                     }
                     else
-                        data += "• One or more seating areas in the common area requires steps. \n\r";
+                        data += "• One or more seating areas in the common area requires steps. \n\r\n\r";
 
                     if (table_aisles.ToLower().CompareTo("yes") == 0)
                     {
-                        data += "• Customers can maneuver between tables without bumping into chairs.  \n\r";
+                        data += "• Customers can maneuver between tables without bumping into chairs.  \n\r\n\r";
                     }
                     else if(table_aisles.ToLower().CompareTo("no") == 0)
-                        data += "• Customers can't maneuver between tables without bumping into chairs.  \n\r";
+                        data += "• Customers can't maneuver between tables without bumping into chairs.  \n\r\n\r";
 
                     if (legroom.ToLower().CompareTo("yes") == 0)
                     {
@@ -475,84 +475,84 @@ namespace Access4All.Fragments
                         if (num_legroom.ToLower().CompareTo("") != 0)
                             data += " (" + num_legroom + ")";
 
-                        data += "\n\r";
+                        data += "\n\r\n\r";
 
 
                     }
                     else if (legroom.ToLower().CompareTo("no") == 0)
-                        data += "• There are not tables with legroom for wheelchair users.  \n\r";
+                        data += "• There are not tables with legroom for wheelchair users.  \n\r\n\r";
                     if (rearranged != null)
                     {
                         if (rearranged.ToLower().CompareTo("yes") == 0)
                         {
                             if (num_table_rearranged.ToLower().CompareTo("all") == 0)
-                                data += "• All tables can be moved or rearranged.  \n\r";
+                                data += "• All tables can be moved or rearranged.  \n\r\n\r";
                             else
-                                data += "• " + num_table_rearranged + " tables can be moved or rearranged.  \n\r";
+                                data += "• " + num_table_rearranged + " tables can be moved or rearranged.  \n\r\n\r";
                             if (num_chair_rearranged.ToLower().CompareTo("all") == 0)
-                                data += "• All chairs can be moved or rearranged.  \n\r";
+                                data += "• All chairs can be moved or rearranged.  \n\r\n\r";
                             else
-                                data += "• " + num_chair_rearranged + " chairs can be moved or rearranged.  \n\r";
+                                data += "• " + num_chair_rearranged + " chairs can be moved or rearranged.  \n\r\n\r";
 
                         }
                     }
                     else if (table_aisles.ToLower().CompareTo("no") == 0)
-                        data += "• Some or none of the tables and chairs can be moved or rearranged.  \n\r";
+                        data += "• Some or none of the tables and chairs can be moved or rearranged.  \n\r\n\r";
 
                     if (lighting != null)
                     {
                         if (lighting.ToLower().CompareTo("yes") == 0)
                         {
                             if (lighting_option.ToLower().CompareTo("day") == 0)
-                                data += "• Lighting level is " + lighting_type + " in daytime, and is adequate for mobility and reading menu / program \n\r";
+                                data += "• Lighting level is " + lighting_type + " in daytime, and is adequate for mobility and reading menu / program \n\r\n\r";
                             else if (lighting_option.ToLower().CompareTo("night") == 0)
-                                data += "• Lighting level is " + lighting_type + " in daytime, and is adequate for mobility and reading menu / program \n\r";
+                                data += "• Lighting level is " + lighting_type + " in daytime, and is adequate for mobility and reading menu / program \n\r\n\r";
                             else //else it's N/A
-                                data += "• Lighting level is " + lighting_type + ", and is adequate for mobility and reading menu / program \n\r";
+                                data += "• Lighting level is " + lighting_type + ", and is adequate for mobility and reading menu / program \n\r\n\r";
                         }
                     }
                     if (adjustible_lighting != null)
                     {
                         if (adjustible_lighting.ToLower().CompareTo("yes") == 0)
                         {
-                            data += "• There is adjustable lighting. \n\r";
+                            data += "• There is adjustable lighting. \n\r\n\r";
                         }
                         else
-                            data += "• There is not adjustable lighting. \n\r";
+                            data += "• There is not adjustable lighting. \n\r\n\r";
                     }
                     if (low_visual_slim != null)
                     {
                         if (low_visual_slim.ToLower().CompareTo("yes") == 0)
                         {
-                            data += "• All areas have low visual stimulation. \n\r";
+                            data += "• All areas have low visual stimulation. \n\r\n\r";
                         }
                         else
-                            data += "• Not All areas have low visual stimulation \n\r";
+                            data += "• Not All areas have low visual stimulation \n\r\n\r";
                     }
                     if (low_sound != null)
                     {
                         if (low_sound.ToLower().CompareTo("yes") == 0)
                         {
-                            data += "• There are one or more areas with low or no background sound, and / or sound-absorbing surfaces. \n\r";
+                            data += "• There are one or more areas with low or no background sound, and / or sound-absorbing surfaces. \n\r\n\r";
                         }
                         else
-                            data += "• Not All areas have low background sound and / or sound-absorbing surfaces. \n\r";
+                            data += "• Not All areas have low background sound and / or sound-absorbing surfaces. \n\r\n\r";
                     }
                     if (companion_space != null)
                     {
                         if (companion_space.ToLower().CompareTo("yes") == 0)
                         {
-                            data += "• There are spaces for companions to sit next to the wheelchair users. \n\r";
+                            data += "• There are spaces for companions to sit next to the wheelchair users. \n\r\n\r";
                         }
                         else
-                            data += "• There are not spaces for companions to sit next to the wheelchair users. \n\r";
+                            data += "• There are not spaces for companions to sit next to the wheelchair users. \n\r\n\r";
 
                     }
 
 
                     if (comment.CompareTo("") != 0)
                     {
-                        data += "• " + comment + "\n\r";
+                        data += "• " + comment + "\n\r\n\r";
                     }
                 }
             }
@@ -604,37 +604,37 @@ namespace Access4All.Fragments
 
                     if(is_elevator.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• There is an elevator at this establishment located at " + location + " and it " + works + "\n\r";
+                        data += "• There is an elevator at this establishment located at " + location + " and it " + works + "\n\r\n\r";
                     }
                     
 
                     if (no_assist.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• No assistance is provided for the elevator(s)" + "\n\r";
+                        data += "• No assistance is provided for the elevator(s)" + "\n\r\n\r";
                     }
                     if(button_height.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• The outside button height is " + outside_btn_height + " inches, the inside button height is " + " inches, and the buttons are able to be pushed with a closed fist: " + button_use_fist + "\n\r";
+                        data += "• The outside button height is " + outside_btn_height + " inches, the inside button height is " + " inches, and the buttons are able to be pushed with a closed fist: " + button_use_fist + "\n\r\n\r";
                     }
                     if(braille.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• There is braille information for the elevator" + "\n\r";
+                        data += "• There is braille information for the elevator" + "\n\r\n\r";
                     }
                     if(audible_tones.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• There are audible tones in the elevator" + "\n\r";
+                        data += "• There are audible tones in the elevator" + "\n\r\n\r";
                     }
                     if(lighting.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• Lighting level is " + lighting_type + " in daytime, and is adequate for mobility and reading signs" + "\n\r";
+                        data += "• Lighting level is " + lighting_type + " in daytime, and is adequate for mobility and reading signs" + "\n\r\n\r";
                     }
                     if(elevator_depth.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• Elevator depth is at least 51 inches" + "\n\r";
+                        data += "• Elevator depth is at least 51 inches" + "\n\r\n\r";
                     }
                     if(comment.CompareTo("")!=0)
                     {
-                        data += "• " + comment + "\n\r"; 
+                        data += "• " + comment + "\n\r\n\r"; 
                     }
                 }
             }
@@ -738,103 +738,103 @@ namespace Access4All.Fragments
 
                     if(public_phone.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• One or more public phones are available w/adjustable volume control" + "\n\r";
+                        data += "• One or more public phones are available w/adjustable volume control" + "\n\r\n\r";
                     }
                     if(phone_clearance.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• Public phones have controls min 48 inches from floor, protruding < 4 inches from wall" + "\n\r";
+                        data += "• Public phones have controls min 48 inches from floor, protruding < 4 inches from wall" + "\n\r\n\r";
                     }
                     if(tty.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• TTY is available" + "\n\r";
+                        data += "• TTY is available" + "\n\r\n\r";
                     }
                     if(staff_tty.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• TTY assistance from staff is available" + "\n\r";
+                        data += "• TTY assistance from staff is available" + "\n\r\n\r";
                     }
                     if(assisted_listening.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• Assisted listening is available of type" + assisted_listen_type + " with assisted listen receiver " + assisted_listen_receiver + "\n\r";
+                        data += "• Assisted listening is available of type" + assisted_listen_type + " with assisted listen receiver " + assisted_listen_receiver + "\n\r\n\r";
                     }
                     if(listening_signage.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• Listening signage is available" + "\n\r";
+                        data += "• Listening signage is available" + "\n\r\n\r";
                     }
                     if(staff_listening.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• Staff listening is available" + "\n\r";
+                        data += "• Staff listening is available" + "\n\r\n\r";
                     }
                     if(acoustics.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• Acoustics are comfortable (no echoing, loud music, etc). Noise level = " + acoustics_level + "\n\r";
+                        data += "• Acoustics are comfortable (no echoing, loud music, etc). Noise level = " + acoustics_level + "\n\r\n\r";
                     }
                     if(alt_comm_methods.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• If a customer is unable to hear, other forms of communication include: " + alt_comm_type + "\n\r";
+                        data += "• If a customer is unable to hear, other forms of communication include: " + alt_comm_type + "\n\r\n\r";
                     }
                     if(staff_ASL.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• Some or all of the staff are proficient with sign language" + "\n\r";
+                        data += "• Some or all of the staff are proficient with sign language" + "\n\r\n\r";
                     }
                     if(captioning_default.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• By default, captioning is available" + "\n\r";
+                        data += "• By default, captioning is available" + "\n\r\n\r";
                     }
                     if(theater_captioning.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• Theater captioning is available of type " + theater_capt_type + "\n\r";
+                        data += "• Theater captioning is available of type " + theater_capt_type + "\n\r\n\r";
                     }
                     if(auditory_info_visual.ToLower().CompareTo("yes") == 0)
                     {
-                        data += "• Auditory information is presented visually (special of the day written down)" + "\n\r";
+                        data += "• Auditory information is presented visually (special of the day written down)" + "\n\r\n\r";
                     }
                     if(visual_info_auditory.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• Visual information is presented audibly (employees will read information out load, etc.)" + "\n\r";
+                        data += "• Visual information is presented audibly (employees will read information out load, etc.)" + "\n\r\n\r";
                     }
                     if(website_text_reader.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• The establishment’s website is accessible to users of screen text readers" + "\n\r";
+                        data += "• The establishment’s website is accessible to users of screen text readers" + "\n\r\n\r";
                     }
                     if(alt_contact.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• The following alternate means are available for patrons to order, contact, or schedule: " + alt_contact_type + "\n\r";
+                        data += "• The following alternate means are available for patrons to order, contact, or schedule: " + alt_contact_type + "\n\r\n\r";
                     }
                     if(shopping_assist.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• The establishment offers shopping assistance or delivery on a case-by-case basis" + "\n\r";
+                        data += "• The establishment offers shopping assistance or delivery on a case-by-case basis" + "\n\r\n\r";
                     }
                     if(assist_service.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• Assistance services are available at a cost of $" + assist_fee + "\n\r";
+                        data += "• Assistance services are available at a cost of $" + assist_fee + "\n\r\n\r";
                     }
                     if(store_scooter.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• The establishment provides scooters at a cost of $" + scooter_fee + " and are located at " + scooter_location + "\n\r";
+                        data += "• The establishment provides scooters at a cost of $" + scooter_fee + " and are located at " + scooter_location + "\n\r\n\r";
                     }
                     if(restaurant_allergies.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• Information on food allergies sensitivities are available" + "\n\r";
+                        data += "• Information on food allergies sensitivities are available" + "\n\r\n\r";
                     }
                     if(staff_disable_trained.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• The staff are disability trained in: " + staff_disable_trained_desc + "\n\r";
+                        data += "• The staff are disability trained in: " + staff_disable_trained_desc + "\n\r\n\r";
                     }
                     if(items_reach.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• All items are within reach or assistance is offered to reach them" + "\n\r";
+                        data += "• All items are within reach or assistance is offered to reach them" + "\n\r\n\r";
                     }
                     if(service_alt_manner.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• If goods and services are not accessible they are provided in alternative manner" + "\n\r";
+                        data += "• If goods and services are not accessible they are provided in alternative manner" + "\n\r\n\r";
                     }
                     if(senior_discount.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• The establishment offers a senior discount, beginning at age " + senior_age + "\n\r";
+                        data += "• The establishment offers a senior discount, beginning at age " + senior_age + "\n\r\n\r";
                     }
                     if(comment.CompareTo("")!=0)
                     {
-                        data += "• " + comment + "\n\r";
+                        data += "• " + comment + "\n\r\n\r";
                     }
 
                 }
@@ -897,62 +897,62 @@ namespace Access4All.Fragments
 
                     if(int_door_open_clearance.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• Interior doors (aside from restrooms) have at least 32 inches clearance when the door is open at 90 degrees" + "\n\r";
+                        data += "• Interior doors (aside from restrooms) have at least 32 inches clearance when the door is open at 90 degrees" + "\n\r\n\r";
                     }
 
                     if(int_opening_measurement > 0)
                     {
-                        data += "• Interior door is "+ int_opening_measurement + " inches wide\n\r";
+                        data += "• Interior door is "+ int_opening_measurement + " inches wide\n\r\n\r";
                     }
 
                     if(int_door_easy_open.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• Interior doors are easy to open, requiring 5 lbs. or less of force(" + int_opening_measurement + " lbs)\n\r";
+                        data += "• Interior doors are easy to open, requiring 5 lbs. or less of force(" + int_opening_measurement + " lbs)\n\r\n\r";
                     }
 
                     if(int_door_use_with_fist.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• Door handles can be operated with a closed fist" + "\n\r";
+                        data += "• Door handles can be operated with a closed fist" + "\n\r\n\r";
                     }
 
                     if(five_second_close.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• Doors stay open for at least five seconds" + "\n\r";
+                        data += "• Doors stay open for at least five seconds" + "\n\r\n\r";
                     }
 
                     if(hallway_width.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• Hallways and aisles are at least 36 inches wide, or not less than " + narrowest_width + " inches for four foot intervals\n\r";
+                        data += "• Hallways and aisles are at least 36 inches wide, or not less than " + narrowest_width + " inches for four foot intervals\n\r\n\r";
                     }
 
                     if(wheelchair_turnaround.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• There are locations that allow 60 inches space for a wheelchair to turn around" + "\n\r";
+                        data += "• There are locations that allow 60 inches space for a wheelchair to turn around" + "\n\r\n\r";
                     }
 
                     if(hallway_obstacles.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• Hallways and aisles are clear of obstacles, tripping hazards, objects protruding more than 4 inches or lower than 80 inches" + "\n\r";
+                        data += "• Hallways and aisles are clear of obstacles, tripping hazards, objects protruding more than 4 inches or lower than 80 inches" + "\n\r\n\r";
                     }
 
                     if(lighting.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• Lighting level is " + lighting_type + " in daytime, and is adequate for mobility and reading signs" + "\n\r";
+                        data += "• Lighting level is " + lighting_type + " in daytime, and is adequate for mobility and reading signs" + "\n\r\n\r";
                     }
 
                     if(service_counter.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• Lowest service counter is no higher than " + counter_height + " inches with a clear view from a sitting position and a check writing surface is no higher than " + writing_surface_height + " inches\n\r";
+                        data += "• Lowest service counter is no higher than " + counter_height + " inches with a clear view from a sitting position and a check writing surface is no higher than " + writing_surface_height + " inches\n\r\n\r";
                     }
 
                     if(drinking_fountain.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• Accessible drinking fountain has spout no higher than 36 inches from floor and easy to operate controls" + "\n\r";
+                        data += "• Accessible drinking fountain has spout no higher than 36 inches from floor and easy to operate controls" + "\n\r\n\r";
                     }
 
                     if(comment.CompareTo("")!=0)
                     {
-                        data += "• " + comment + "\n\r";
+                        data += "• " + comment + "\n\r\n\r";
                     }
                 }
             }
@@ -1017,56 +1017,56 @@ namespace Access4All.Fragments
                     lighting_option = ((string)json["lighting_option"]).ToLower();
                     comment = ((string)json["comment"]).ToLower();
 
-                    data += ("• " + "The establishment has " + total_num_public_entrances + " public entrances.\n\r");
+                    data += ("• " + "The establishment has " + total_num_public_entrances + " public entrances.\n\r\n\r");
 
                     if (main_ent_accessible.ToLower().CompareTo("yes") == 0)
-                        data += ("• The main entrance is wheelchair accessible. \n\r");
+                        data += ("• The main entrance is wheelchair accessible. \n\r\n\r");
 
 
                     if (ground_level.ToLower().CompareTo("yes") == 0)
-                        data += ("• Ground floor is level inside and outside entrance door. \n\r");
+                        data += ("• Ground floor is level inside and outside entrance door. \n\r\n\r");
                     else
-                        data += ("• Ground floor is not level inside and outside entrance door. \n\r");
+                        data += ("• Ground floor is not level inside and outside entrance door. \n\r\n\r");
 
 
                     if (threshold_level.ToLower().CompareTo("yes") == 0)
-                        data += ("• Threshold of door is level. \n\r");
+                        data += ("• Threshold of door is level. \n\r\n\r");
                     else
-                        data += ("• Threshold of door is not level. \n\r");
+                        data += ("• Threshold of door is not level. \n\r\n\r");
 
                     if (threshold_beveled.ToLower().CompareTo("yes") == 0)
                     {
                         if (beveled_height <= 0.5)
-                            data += ("• Door threshold is no more than ½ inch high. \n\r");
+                            data += ("• Door threshold is no more than ½ inch high. \n\r\n\r");
                         else
-                            data += ("• Door threshold is more than ½ inch high. (actual "+beveled_height+" of an inch). \n\r");
+                            data += ("• Door threshold is more than ½ inch high. (actual "+beveled_height+" of an inch). \n\r\n\r");
                     }
 
 
                     if (door_action.ToLower().CompareTo("open in") == 0)
-                        data += ("• As you enter, door opens away from you. \n\r");
+                        data += ("• As you enter, door opens away from you. \n\r\n\r");
                     else if(door_action.ToLower().CompareTo("open out") == 0)
-                        data += ("• As you enter, door opens toward you. \n\r");
+                        data += ("• As you enter, door opens toward you. \n\r\n\r");
                     else
-                        data += ("• As you enter, door slides to the side. \n\r");
+                        data += ("• As you enter, door slides to the side. \n\r\n\r");
 
                     if (opening_measurement > 0.00)
-                        data += ("• Door has at least "+opening_measurement+" inch clearance when door is open 90 degrees. \n\r");
+                        data += ("• Door has at least "+opening_measurement+" inch clearance when door is open 90 degrees. \n\r\n\r");
 
                     if (door_easy_open.ToLower().CompareTo("yes") == 0)
-                        data += ("• Door is easy to open, requiring 10 lbs or less of force ("+ door_open_force + " lbs). \n\r");
+                        data += ("• Door is easy to open, requiring 10 lbs or less of force ("+ door_open_force + " lbs). \n\r\n\r");
                     else
-                        data += ("• Door is hard to open, requiring 10 lbs or more of force (" + door_open_force + " lbs). \n\r");
+                        data += ("• Door is hard to open, requiring 10 lbs or more of force (" + door_open_force + " lbs). \n\r\n\r");
 
                     if (door_use_with_fist.ToLower().CompareTo("yes") == 0)
-                        data += ("• Door handles can be operated with closed fist. \n\r");
+                        data += ("• Door handles can be operated with closed fist. \n\r\n\r");
                     else
-                        data += ("• Door handles can not be operated with closed fist. \n\r");
+                        data += ("• Door handles can not be operated with closed fist. \n\r\n\r");
 
                     if (lighting.ToLower().CompareTo("yes") == 0)
-                        data += ("• Lighting level is"+lighting_type+" in "+lighting_option+"time, and is adequate for mobility and reading signs. \n\r");
+                        data += ("• Lighting level is"+lighting_type+" in "+lighting_option+"time, and is adequate for mobility and reading signs. \n\r\n\r");
                     else
-                        data += ("• Lighting level is poor. \n\r");
+                        data += ("• Lighting level is poor. \n\r\n\r");
                 }
             }
 
@@ -1117,34 +1117,34 @@ namespace Access4All.Fragments
                         data += "• This establishment has exterior pathway";
 
                     if (min_width.ToLower().CompareTo("yes")==0)
-                        data += "• Sidewalk pathway is minimum 44 inches wide" + "\n\r";
+                        data += "• Sidewalk pathway is minimum 44 inches wide" + "\n\r\n\r";
 
                     if (pathway_curbs.ToLower().CompareTo("yes") == 0)
-                        data += "• Pathway has curb ramps and curb cuts where needed" + "\n\r";
+                        data += "• Pathway has curb ramps and curb cuts where needed" + "\n\r\n\r";
 
                     if (pathway_surface.ToLower().CompareTo("yes") == 0)
-                        data += "• Surface is slip resistant, free of obstacles" + "\n\r";
+                        data += "• Surface is slip resistant, free of obstacles" + "\n\r\n\r";
 
                     if (tactile_warning.ToLower().CompareTo("yes") == 0)
-                        data += "• There are tactile warning strips or high contrast paint at curb ramps, stairwells, building entrances, parking areas and pedestrian crossings" + "\n\r";
+                        data += "• There are tactile warning strips or high contrast paint at curb ramps, stairwells, building entrances, parking areas and pedestrian crossings" + "\n\r\n\r";
 
                     /*if(slope.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• Exterior has a ramp to enter the establishment" + "\n\r";
-                        data += "• Ramp is at least 36 inches wide between handrails" + "\n\r";
-                        data += "• For each section of the ramp, the running slope is no greater than 1:12, i.e. for every inch of height change there are at least 12 inches of ramp run. (actual 13 inches height & 204 inches length)" + "\n\r";
-                        data += "• There is a level landing that is at least 60 inches long and at least as wide as the ramp at top of ramp" + "\n\r";
-                        data += "• The ramp is clear of obstacles and protrusions of 4 inches or more from the sides" + "\n\r";
-                        data += "• Ramp surface is firm, slip-resistant, and unbroken" + "\n\r";
+                        data += "• Exterior has a ramp to enter the establishment" + "\n\r\n\r";
+                        data += "• Ramp is at least 36 inches wide between handrails" + "\n\r\n\r";
+                        data += "• For each section of the ramp, the running slope is no greater than 1:12, i.e. for every inch of height change there are at least 12 inches of ramp run. (actual 13 inches height & 204 inches length)" + "\n\r\n\r";
+                        data += "• There is a level landing that is at least 60 inches long and at least as wide as the ramp at top of ramp" + "\n\r\n\r";
+                        data += "• The ramp is clear of obstacles and protrusions of 4 inches or more from the sides" + "\n\r\n\r";
+                        data += "• Ramp surface is firm, slip-resistant, and unbroken" + "\n\r\n\r";
                     }*/
                     //This section needs to be parsed in the ramp section
 
                     if (service_animal.ToLower().CompareTo("yes")==0)
-                        data += "• Service animal relief area at " + service_animal_location + "\n\r";
+                        data += "• Service animal relief area at " + service_animal_location + "\n\r\n\r";
 
                     if(lighting.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• Lighting level is " + lighting_type + " in " + lighting_option + ", and is adequate for mobility and reading signs" + "\n\r";
+                        data += "• Lighting level is " + lighting_type + " in " + lighting_option + ", and is adequate for mobility and reading signs" + "\n\r\n\r";
                     }
                 }
             }
@@ -1195,22 +1195,22 @@ namespace Access4All.Fragments
                     if (street_metered.CompareTo("not metered") == 0)//• = alt + 7 on numpad
                         street_metered = "free";
 
-                    data += "• This establishment has the following types of parking: " + lot_type + " lot, " + street_metered + " street\n\r";
-                    data += "• There are a total of " + total_spaces + " on the premises\n\r";
+                    data += "• This establishment has the following types of parking: " + lot_type + " lot, " + street_metered + " street\n\r\n\r";
+                    data += "• There are a total of " + total_spaces + " on the premises\n\r\n\r";
 
                     if (parking_type.CompareTo("other") != 0)
-                        data += "• This establishment has " + parking_type + " parking\n\r";
+                        data += "• This establishment has " + parking_type + " parking\n\r\n\r";
 
-                    data += "• " + general_accessible_spaces + " accessible parking spaces have a 5 foot loading aisle\n\r";
-                    data += "• " + van_accessible_spaces + " ‘van accessible’ parking spaces have an 8 foot loading aisle\n\r";
+                    data += "• " + general_accessible_spaces + " accessible parking spaces have a 5 foot loading aisle\n\r\n\r";
+                    data += "• " + van_accessible_spaces + " ‘van accessible’ parking spaces have an 8 foot loading aisle\n\r\n\r";
 
                     if (reserve_space_sign.CompareTo("yes") == 0)
-                        data += "• " + "Accessible parking spaces have signs that are not obstructed when a vehicle is parked there\n\r";
+                        data += "• " + "Accessible parking spaces have signs that are not obstructed when a vehicle is parked there\n\r\n\r";
 
                     if (reserve_space_obstacles.CompareTo("no") == 0)//means free of obstacles, bad variable name  ->last team<-
-                        data += "• Surface is not level, unbroken, firm, slip resistant, or free of obstacles\n\r";
+                        data += "• Surface is not level, unbroken, firm, slip resistant, or free of obstacles\n\r\n\r";
                     else
-                        data += "• Surface is level, unbroken, firm, slip resistant, and free of obstacles\n\r";
+                        data += "• Surface is level, unbroken, firm, slip resistant, and free of obstacles\n\r\n\r";
 
                     JArray jsonArray_route_from_parking = JArray.Parse(GetDataTable("route_from_parking", "park_id=" + park_id.ToString()));
 
@@ -1231,41 +1231,103 @@ namespace Access4All.Fragments
                         string comment_route = ((string)json_route["comment"]).ToLower();
                         string recommendations_route = ((string)json_route["recommendations"]).ToLower();
 
-                        data += "\n\rRoute from nearest accessible parking area to accessible entrance:\n\r\n\r";
+                        if (j == 0)
+                            data += "\n\r\n\rRoute from nearest accessible parking area to accessible entrance:\n\r\n\r\n\r\n\r";
 
-                        data += "• Distance from nearest accessible parking to wheelchair accessible entrance is " + distance + " feet\n\r";
+                        data += "• Distance from nearest accessible parking to wheelchair accessible entrance is " + distance + " feet\n\r\n\r";
 
                         if (min_width.CompareTo("yes") == 0)
-                            data += "• Route is at least 44 inches wide\n\r";
+                            data += "• Route is at least 44 inches wide\n\r\n\r";
                         else
-                            data += "• Route is not at least 44 inches wide\n\r";
+                            data += "• Route is not at least 44 inches wide\n\r\n\r";
 
                         if (route_surface.CompareTo("yes") == 0)
-                            data += "• Surface is level, unbroken, firm, slip resistant, and free of obstacles\n\r";
+                            data += "• Surface is level, unbroken, firm, slip resistant, and free of obstacles\n\r\n\r";
                         else
-                            data += "• Surface is not level, unbroken, firm, slip resistant, or free of obstacles\n\r";
+                            data += "• Surface is not level, unbroken, firm, slip resistant, or free of obstacles\n\r\n\r";
 
                         if (route_curbs.CompareTo("yes") == 0)
-                            data += "• Route has curb ramps and curb cuts where needed\n\r";
+                            data += "• Route has curb ramps and curb cuts where needed\n\r\n\r";
                         else
-                            data += "• Route does not have curb ramps or curb cuts where needed\n\r";
+                            data += "• Route does not have curb ramps or curb cuts where needed\n\r\n\r";
 
                         if (tactile_warning.CompareTo("yes") == 0)
-                            data += "• Route has tactile warnings\n\r";
+                            data += "• Route has tactile warnings\n\r\n\r";
                         else
-                            data += "• Route does not have tactile warnings\n\r";
+                            data += "• Route does not have tactile warnings\n\r\n\r";
 
                         if (covered.CompareTo("yes") == 0) //no way to determine partially covered
-                            data += "• Route is covered\n\r";
+                            data += "• Route is covered\n\r\n\r";
                         else
-                            data += "• Route is not covered\n\r";
+                            data += "• Route is not covered or is partially covered\n\r\n\r";
 
                         if (lighting.CompareTo("yes") == 0)
-                            data += "• Lighting level is " + lighting_type + " in " + lighting_option + "time, and is adequate for mobility and reading signs\n\r";
+                            data += "• Lighting level is " + lighting_type + " in " + lighting_option + "time, and is adequate for mobility and reading signs\n\r\n\r";
                         else
-                            data += "• Lighting level is inadequate for mobility and reading signs\n\r";
+                            data += "• Lighting level is inadequate for mobility and reading signs\n\r\n\r";
 
                         /**TODO: passenger_loading**/
+                    }
+
+                    JArray jsonArray_passenger_loading = JArray.Parse(GetDataTable("passenger_loading", "park_id=" + park_id.ToString()));
+
+                    for (int j = 0; j < jsonArray_passenger_loading.Count; j++)
+                    {
+                        JToken json_passenger = jsonArray_passenger_loading[j];
+                   
+                        int passenger_id = (int)json_passenger["passenger_id"];
+                        string designated_zone = ((string)json_passenger["designated_zone"]).ToLower();
+                        string p_distance = ((string)json_passenger["distance"]).ToLower();
+                        string p_min_width = ((string)json_passenger["min_width"]).ToLower();
+                        string passenger_surface = ((string)json_passenger["passenger_surface"]).ToLower();
+                        string tactile_warning_strips = ((string)json_passenger["tactile_warning_strips"]).ToLower();
+                        string passenger_curbs = ((string)json_passenger["passenger_curbs"]).ToLower();
+                        string p_covered = ((string)json_passenger["covered"]).ToLower();
+                        string p_lighting = ((string)json_passenger["lighting"]).ToLower();
+                        string p_lighting_option = ((string)json_passenger["lighting_option"]).ToLower();
+                        string p_lighting_type = ((string)json_passenger["lighting_type"]).ToLower();
+                        string p_comment = ((string)json_passenger["comment"]).ToLower();
+                        string p_recommendations = ((string)json_passenger["recommendations"]).ToLower();
+
+                        if (j == 0)
+                            data += "\n\r\n\rPassenger Loading Zone\n\r\n\r\n\r\n\r";
+
+                        if (designated_zone.CompareTo("no") == 0)
+                            data += "There is no designated passenger loading zone for the establishment\n\r\n\r";
+                        else
+                        {
+                            data += "• There is a passenger loading zone within " + p_distance + " feet of the entrance\n\r\n\r";
+
+                            if (p_min_width.CompareTo("yes") == 0)
+                                data += "• width of loading zone is at least 44 inches\n\r\n\r"; //no example on the website where this is yes
+                            else
+                                data += "• width of loading zone is below 44 inches\n\r\n\r";
+
+                            if (passenger_surface.CompareTo("yes") == 0)
+                                data += "• Surface is level, unbroken, firm, slip resistant, and free of obstacles\n\r\n\r";
+                            else
+                                data += "• Surface is not level, unbroken, firm, slip resistant, or free of obstacles\n\r\n\r";
+
+                            if (tactile_warning_strips.CompareTo("yes") == 0)
+                                data += "• Loading zone has tactile warning strips\n\r\n\r";
+                            else
+                                data += "• Loading zone does not have tactile warning strips\n\r\n\r";
+
+                            if (passenger_curbs.CompareTo("yes") == 0)
+                                data += "• Loading zone has curb ramps and curb cuts where needed\n\r\n\r";
+                            else
+                                data += "• Loading zone does not have curb ramps or curb cuts where needed\n\r\n\r";
+
+                            if (p_covered.CompareTo("yes") == 0) //no way to determine partially covered
+                                data += "• Loading zone is covered\n\r\n\r";
+                            else
+                                data += "• Loading zone is not covered or is partially covered\n\r\n\r";
+
+                            if (p_lighting.CompareTo("yes") == 0)
+                                data += "• Lighting level is " + p_lighting_type + " in " + p_lighting_option + "time\n\r\n\r";
+                            else
+                                data += "• Lighting level is inadequate\n\r\n\r";
+                        }
                     }
                 }
             }
