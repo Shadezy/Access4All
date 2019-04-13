@@ -237,6 +237,8 @@ namespace Access4All.Fragments
             JArray jsonArray = JArray.Parse(unparsedData);
             string data = "";
 
+            string debugValue;
+
             string restroom_desc;
             string easy_open;
             int lbs_force;
@@ -286,49 +288,174 @@ namespace Access4All.Fragments
 
                 if(((int)json["rest_id"]) == rest_id)
                 {
-                    /* - Crashes due to incorrect Parsing
+                    //data += "---------------------------------------------------------------------- \n\r\n\r";
+                    data += "The Restroom in this location has the following information: \n\r\n\r";
+                    //get data - make sure not to cast null or empty values
                     restroom_desc = (string)json["restroom_desc"];
+                    if(restroom_desc.ToLower().CompareTo("") != 0)
+                    {
+                        data += "• This restroom is " + restroom_desc+"\n\r\n\r";
+                    }
                     easy_open = (string)json["easy_open"];
-                    lbs_force = (int)json["lbs_force"];
+                    if(easy_open.ToLower().CompareTo("yes") == 0)
+                        data += "• This restroom door is easy to open.";
+                    else
+                        data += "• This restroom door is hard to open.";
+
+                    if (!json["lbs_force"].Equals(null))
+                    {
+                        debugValue = (string)json["lbs_force"];
+                        if (debugValue != null && debugValue.ToLower().CompareTo("n/a") != 0 && debugValue.ToLower().CompareTo("") != 0)
+                        {
+                            lbs_force = (int)json["lbs_force"];
+                            data += "requiring " + lbs_force + " lbs or less force to open. \n\r\n\r";
+                        }
+                        else
+                            data += "\n\r\n\r";
+                    }
+                    
                     clearing = (string)json["clearing"];
-                    opening = (double)json["opening"];
+
+
+                    if (!json["opening"].Equals(null))
+                    {
+                        debugValue = (string)json["opening"];
+                        if (debugValue != null && debugValue.ToLower().CompareTo("n/a") != 0 && debugValue.ToLower().CompareTo("") != 0)
+                            opening = (double)json["opening"];
+                    }
+                    
                     opens_out = (string)json["opens_out"];
                     use_fist = (string)json["use_fist"];
                     can_turn_around = (string)json["can_turn_around"];
-                    turn_width = (double)json["turn_width"];
-                    turn_depth = (double)json["turn_depth"];
+
+                    if (!json["turn_width"].Equals(null))
+                    {
+                        debugValue = (string)json["turn_width"];
+                        if (debugValue != null && debugValue.ToLower().CompareTo("n/a") != 0 && debugValue.ToLower().CompareTo("") != 0)
+                            turn_width = (double)json["turn_width"];
+                    }
+                    if (!json["turn_depth"].Equals(null))
+                    {
+                        debugValue = (string)json["turn_depth"];
+                        if (debugValue != null && debugValue.ToLower().CompareTo("n/a") != 0 && debugValue.ToLower().CompareTo("") != 0)
+                            turn_depth = (double)json["turn_depth"];
+                    }
+
+                    
                     close_chair_inside = (string)json["close_chair_inside"];
                     grab_bars = (string)json["grab_bars"];
                     seat_height_req = (string)json["seat_height_req"];
-                    seat_height = (double)json["seat_height"];
+
+                    if (!json["seat_height"].Equals(null))
+                    {
+                        debugValue = (string)json["seat_height"];
+                        if (debugValue != null && debugValue.ToLower().CompareTo("n/a") != 0 && debugValue.ToLower().CompareTo("") != 0)
+                            seat_height = (double)json["seat_height"];
+                    }
+
+                    
                     flush_auto_fist = (string)json["flush_auto_fist"];
                     ambulatory_accessible = (string)json["ambulatory_accessible"];
-                    bar_height = (double)json["bar_height"];
+
+                    if (!json["bar_height"].Equals(null))
+                    {
+                        debugValue = (string)json["bar_height"];
+                        if (debugValue != null && debugValue.ToLower().CompareTo("n/a") != 0 && debugValue.ToLower().CompareTo("") != 0)
+                            bar_height = (double)json["bar_height"];
+                    }
+                    
                     coat_hook = (string)json["coat_hook"];
-                    hook_height = (double)json["hook_height"];
+
+                    if (!json["hook_height"].Equals(null))
+                    {
+                        debugValue = (string)json["hook_height"];
+                        if (debugValue != null && debugValue.ToLower().CompareTo("n/a") != 0 && debugValue.ToLower().CompareTo("") != 0)
+                            hook_height = (double)json["hook_height"];
+                    }
+                    
                     sink = (string)json["sink"];
-                    sink_height = (double)json["sink_height"];
+
+                    if (!json["sink_height"].Equals(null))
+                    {
+                        debugValue = (string)json["sink_height"];
+                        if (debugValue != null && debugValue.ToLower().CompareTo("n/a") != 0 && debugValue.ToLower().CompareTo("") != 0)
+                            sink_height = (double)json["sink_height"];
+                    }
+                    
                     faucet = (string)json["faucet"];
-                    faucet_depth = (double)json["faucet_depth"];
+
+                    if (!json["faucet_depth"].Equals(null))
+                    {
+                        debugValue = (string)json["faucet_depth"];
+                        if (debugValue != null && debugValue.ToLower().CompareTo("n/a") != 0 && debugValue.ToLower().CompareTo("") != 0)
+                            faucet_depth = (double)json["faucet_depth"];
+                    }
+                    
                     faucet_auto_fist = (string)json["faucet_auto_fist"];
                     sink_clearance = (string)json["sink_clearance"];
-                    sink_clearance_height = (double)json["sink_clearance_height"];
+
+                    if (!json["sink_clearance_height"].Equals(null))
+                    {
+                        debugValue = (string)json["sink_clearance_height"];
+                        if (debugValue != null && debugValue.ToLower().CompareTo("n/a") != 0 && debugValue.ToLower().CompareTo("") != 0)
+                            sink_clearance_height = (double)json["sink_clearance_height"];
+                    }
+                    
                     sink_pipes = (string)json["sink_pipes"];
                     soap_dispenser = (string)json["soap_dispenser"];
-                    soap_height = (double)json["soap_height"];
+
+                    if (!json["soap_height"].Equals(null))
+                    {
+                        debugValue = (string)json["soap_height"];
+                        if (debugValue != null && debugValue.ToLower().CompareTo("n/a") != 0 && debugValue.ToLower().CompareTo("") != 0)
+                            soap_height = (double)json["soap_height"];
+                    }
+                    
                     dry_fist = (string)json["dry_fist"];
-                    dry_control_height = (int)json["dry_control_height"];
+
+                    if (!json["dry_control_height"].Equals(null))
+                    {
+                        debugValue = (string)json["dry_control_height"];
+                        if (debugValue != null && debugValue.ToLower().CompareTo("n/a") != 0 && debugValue.ToLower().CompareTo("") != 0)
+                            dry_control_height = (int)json["dry_control_height"];
+                    }
+                    
+
+
                     mirror = (string)json["mirror"];
-                    mirror_height = (double)json["mirror_height"];
+
+                    if (!json["mirror_height"].Equals(null))
+                    {
+                        debugValue = (string)json["mirror_height"];
+                        if (debugValue != null && debugValue.ToLower().CompareTo("n/a") != 0 && debugValue.ToLower().CompareTo("") != 0)
+                            mirror_height = (double)json["mirror_height"];
+                    }
+                    
                     shelves = (string)json["shelves"];
-                    shelf_height = (double)json["shelf_height"];
+
+                    if (!json["shelf_height"].Equals(null))
+                    {
+                        debugValue = (string)json["shelf_height"];
+                        if (debugValue != null && debugValue.ToLower().CompareTo("n/a") != 0 && debugValue.ToLower().CompareTo("") != 0)
+                            shelf_height = (double)json["shelf_height"];
+                    }
+                    
                     trash_receptacles = (string)json["trash_receptacles"];
                     hygiene_seat_cover = (string)json["hygiene_seat_cover"];
-                    hygiene_cover_height = (double)json["hygiene_cover_height"];
+
+                    if (!json["hygiene_cover_height"].Equals(null))
+                    {
+                        debugValue = (string)json["hygiene_cover_height"];
+                        if (debugValue != null && debugValue.ToLower().CompareTo("n/a") != 0 && debugValue.ToLower().CompareTo("") != 0)
+                            hygiene_cover_height = (double)json["hygiene_cover_height"];
+                    }
+                    
                     lighting = (string)json["lighting"];
                     lighting_type = (string)json["lighting_type"];
                     comment = (string)json["comment"];
-                    */
+                    
+                    //Got all data
+                    
                 }
             }
             return data;
