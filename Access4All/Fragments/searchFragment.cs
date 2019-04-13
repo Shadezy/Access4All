@@ -345,10 +345,13 @@ namespace Access4All.Fragments
             Intent intent = new Intent(RecognizerIntent.ActionRecognizeSpeech);
             try
             {
+                //Still not working with Talkback on.
                 intent.PutExtra(RecognizerIntent.ActionRecognizeSpeech, "en-US");
                 intent.PutExtra(RecognizerIntent.ExtraLanguageModel, RecognizerIntent.LanguageModelFreeForm);
                 intent.PutExtra(RecognizerIntent.ExtraLanguage, LocaleList.Default);
                 intent.PutExtra(RecognizerIntent.ExtraPrompt, "Say Location Name");
+                intent.PutExtra(RecognizerIntent.ExtraSpeechInputCompleteSilenceLengthMillis, 8000);
+                intent.PutExtra(RecognizerIntent.ActionVoiceSearchHandsFree, true);
              
                 act.StartActivityForResult(intent, 100);
                 

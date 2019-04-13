@@ -33,6 +33,7 @@ namespace Access4All.Fragments
         TextView myTextTest;
         string table; //= "establishment";//change this later cuz parking dont work
         int est_id;
+        int rest_id;
         Button mapsButton;
 
         public override void OnCreate(Bundle savedInstanceState)
@@ -283,50 +284,51 @@ namespace Access4All.Fragments
             {
                 JToken json = jsonArray[i];
 
-                if (((int)json["est_id"]) == est_id)
+                if(((int)json["rest_id"]) == rest_id)
                 {
-                    restroom_desc = (string)json[""];
-                    easy_open = (string)json[""];
-                    lbs_force = (int)json[""];
-                    clearing = (string)json[""];
-                    opening = (double)json[""];
-                    opens_out = (string)json[""];
-                    use_fist = (string)json[""];
-                    can_turn_around = (string)json[""];
-                    turn_width = (double)json[""];
-                    turn_depth = (double)json[""];
-                    close_chair_inside = (string)json[""];
-                    grab_bars = (string)json[""];
-                    seat_height_req = (string)json[""];
-                    seat_height = (double)json[""];
-                    flush_auto_fist = (string)json[""];
-                    ambulatory_accessible = (string)json[""];
-                    bar_height = (double)json[""];
-                    coat_hook = (string)json[""];
-                    hook_height = (double)json[""];
-                    sink = (string)json[""];
-                    sink_height = (double)json[""];
-                    faucet = (string)json[""];
-                    faucet_depth = (double)json[""];
-                    faucet_auto_fist = (string)json[""];
-                    sink_clearance = (string)json[""];
-                    sink_clearance_height = (double)json[""];
-                    sink_pipes = (string)json[""];
-                    soap_dispenser = (string)json[""];
-                    soap_height = (double)json[""];
-                    dry_fist = (string)json[""];
-                    dry_control_height = (int)json[""];
-                    mirror = (string)json[""];
-                    mirror_height = (double)json[""];
-                    shelves = (string)json[""];
-                    shelf_height = (double)json[""];
-                    trash_receptacles = (string)json[""];
-                    hygiene_seat_cover = (string)json[""];
-                    hygiene_cover_height = (double)json[""];
-                    lighting = (string)json[""];
-                    lighting_type = (string)json[""];
-                    comment = (string)json[""];
-
+                    /* - Crashes due to incorrect Parsing
+                    restroom_desc = (string)json["restroom_desc"];
+                    easy_open = (string)json["easy_open"];
+                    lbs_force = (int)json["lbs_force"];
+                    clearing = (string)json["clearing"];
+                    opening = (double)json["opening"];
+                    opens_out = (string)json["opens_out"];
+                    use_fist = (string)json["use_fist"];
+                    can_turn_around = (string)json["can_turn_around"];
+                    turn_width = (double)json["turn_width"];
+                    turn_depth = (double)json["turn_depth"];
+                    close_chair_inside = (string)json["close_chair_inside"];
+                    grab_bars = (string)json["grab_bars"];
+                    seat_height_req = (string)json["seat_height_req"];
+                    seat_height = (double)json["seat_height"];
+                    flush_auto_fist = (string)json["flush_auto_fist"];
+                    ambulatory_accessible = (string)json["ambulatory_accessible"];
+                    bar_height = (double)json["bar_height"];
+                    coat_hook = (string)json["coat_hook"];
+                    hook_height = (double)json["hook_height"];
+                    sink = (string)json["sink"];
+                    sink_height = (double)json["sink_height"];
+                    faucet = (string)json["faucet"];
+                    faucet_depth = (double)json["faucet_depth"];
+                    faucet_auto_fist = (string)json["faucet_auto_fist"];
+                    sink_clearance = (string)json["sink_clearance"];
+                    sink_clearance_height = (double)json["sink_clearance_height"];
+                    sink_pipes = (string)json["sink_pipes"];
+                    soap_dispenser = (string)json["soap_dispenser"];
+                    soap_height = (double)json["soap_height"];
+                    dry_fist = (string)json["dry_fist"];
+                    dry_control_height = (int)json["dry_control_height"];
+                    mirror = (string)json["mirror"];
+                    mirror_height = (double)json["mirror_height"];
+                    shelves = (string)json["shelves"];
+                    shelf_height = (double)json["shelf_height"];
+                    trash_receptacles = (string)json["trash_receptacles"];
+                    hygiene_seat_cover = (string)json["hygiene_seat_cover"];
+                    hygiene_cover_height = (double)json["hygiene_cover_height"];
+                    lighting = (string)json["lighting"];
+                    lighting_type = (string)json["lighting_type"];
+                    comment = (string)json["comment"];
+                    */
                 }
             }
             return data;
@@ -345,6 +347,7 @@ namespace Access4All.Fragments
             string sign_location;
             string key_needed;
             string comment;
+            string debugValue;
 
 
             for (int i = 0; i < jsonArray.Count; i++)//this should only ever be one, but keep it here in case something goes wrong?
@@ -354,24 +357,31 @@ namespace Access4All.Fragments
                 if (((int)json["est_id"]) == est_id)
                 {
                     public_restroom = (string)json["public_restroom"];
+                    this.rest_id = (int)json["restroom_id"];
                     if (!json["total_num"].Equals(null))
                     {
-                        total_num = (int)json["total_num"];
+                        debugValue = (string)json["total_num"];
+                        if (debugValue != null)
+                            total_num = (int)json["total_num"];
                     }
                     if (!json["designated_number"].Equals(null))
                     {
-                        designated_number = (int)json["designated_number"];
+                        debugValue = (string)json["designated_number"];
+                        if (debugValue != null)
+                            designated_number = (int)json["designated_number"];
                     }
                     if (!json["num_wheelchair_sign"].Equals(null))
                     {
-                        num_wheelchair_sign = (int)json["num_wheelchair_sign"];
+                        debugValue = (string)json["num_wheelchair_sign"];
+                        if (debugValue != null)
+                            num_wheelchair_sign = (int)json["num_wheelchair_sign"];
                     }
                     sign_accessible = (string)json["sign_accessable"];
                     sign_location = (string)json["sign_location"];
                     key_needed = (string)json["key_needed"];
                     comment = (string)json["comment"];
 
-                    if(public_restroom.ToLower().CompareTo("yes")==0)
+                    if(public_restroom != null && public_restroom.ToLower().CompareTo("yes")==0)
                     {
                         data += "• There is "+ total_num +" public restroom(s) in the establishment" + "\n\r\n\r";
                     }
@@ -379,19 +389,19 @@ namespace Access4All.Fragments
                     {
                         data += "• This restroom is designated family, unisex, or assisted use" + "\n\r\n\r";
                     }
-                    if(sign_accessible.ToLower().CompareTo("yes")==0)
+                    if(sign_accessible != null && sign_accessible.ToLower().CompareTo("yes")==0)
                     {
                         data += "• This restroom has"+ num_wheelchair_sign +" ‘wheelchair accessible’ sign(s)" + "\n\r\n\r";
                     }
-                    if(sign_location.ToLower().CompareTo("yes")==0)
+                    if(sign_location != null && sign_location.ToLower().CompareTo("yes")==0)
                     {
                         data += "• " + comment + "\n\r\n\r";
                     }
-                    if(key_needed.ToLower().CompareTo("yes")==0)
+                    if(key_needed != null && key_needed.ToLower().CompareTo("yes")==0)
                     {
                         data += "• Users need to ask someone for a key to use the restroom" + "\n\r\n\r";
                     }
-                    if (key_needed.ToLower().CompareTo("no") == 0)
+                    if (key_needed != null && key_needed.ToLower().CompareTo("no") == 0)
                     {
                         data += "• Users do not need to ask someone for a key to use the restroom" + "\n\r\n\r";
                     }
@@ -487,11 +497,11 @@ namespace Access4All.Fragments
                         {
                             if (num_table_rearranged.ToLower().CompareTo("all") == 0)
                                 data += "• All tables can be moved or rearranged.  \n\r\n\r";
-                            else
+                            else if(num_table_rearranged != null && num_chair_rearranged.CompareTo(" ") != 0)
                                 data += "• " + num_table_rearranged + " tables can be moved or rearranged.  \n\r\n\r";
                             if (num_chair_rearranged.ToLower().CompareTo("all") == 0)
                                 data += "• All chairs can be moved or rearranged.  \n\r\n\r";
-                            else
+                            else if(num_chair_rearranged != null  && num_chair_rearranged.CompareTo(" ") != 0)
                                 data += "• " + num_chair_rearranged + " chairs can be moved or rearranged.  \n\r\n\r";
 
                         }
@@ -503,15 +513,15 @@ namespace Access4All.Fragments
                     {
                         if (lighting.ToLower().CompareTo("yes") == 0)
                         {
-                            if (lighting_option.ToLower().CompareTo("day") == 0)
+                            if (lighting_option.ToLower().CompareTo("day") == 0 && lighting_option.CompareTo(" ") != 0)
                                 data += "• Lighting level is " + lighting_type + " in daytime, and is adequate for mobility and reading menu / program \n\r\n\r";
-                            else if (lighting_option.ToLower().CompareTo("night") == 0)
+                            else if (lighting_option.ToLower().CompareTo("night") == 0 && lighting_option.CompareTo(" ") != 0)
                                 data += "• Lighting level is " + lighting_type + " in daytime, and is adequate for mobility and reading menu / program \n\r\n\r";
                             else //else it's N/A
-                                data += "• Lighting level is " + lighting_type + ", and is adequate for mobility and reading menu / program \n\r\n\r";
+                                data += "• Lighting level is is adequate for mobility and reading menu / program \n\r\n\r";
                         }
                     }
-                    if (adjustible_lighting != null)
+                    if (adjustible_lighting != null && adjustible_lighting.CompareTo(" ") != 0)
                     {
                         if (adjustible_lighting.ToLower().CompareTo("yes") == 0)
                         {
@@ -520,7 +530,7 @@ namespace Access4All.Fragments
                         else
                             data += "• There is not adjustable lighting. \n\r\n\r";
                     }
-                    if (low_visual_slim != null)
+                    if (low_visual_slim != null && low_visual_slim.CompareTo(" ") != 0)
                     {
                         if (low_visual_slim.ToLower().CompareTo("yes") == 0)
                         {
@@ -529,7 +539,7 @@ namespace Access4All.Fragments
                         else
                             data += "• Not All areas have low visual stimulation \n\r\n\r";
                     }
-                    if (low_sound != null)
+                    if (low_sound != null && low_sound.CompareTo(" ") != 0)
                     {
                         if (low_sound.ToLower().CompareTo("yes") == 0)
                         {
@@ -538,7 +548,7 @@ namespace Access4All.Fragments
                         else
                             data += "• Not All areas have low background sound and / or sound-absorbing surfaces. \n\r\n\r";
                     }
-                    if (companion_space != null)
+                    if (companion_space != null && companion_space.CompareTo(" ") != 0)
                     {
                         if (companion_space.ToLower().CompareTo("yes") == 0)
                         {
@@ -1017,7 +1027,7 @@ namespace Access4All.Fragments
                     lighting_option = ((string)json["lighting_option"]).ToLower();
                     comment = ((string)json["comment"]).ToLower();
 
-                    data += ("• " + "The establishment has " + total_num_public_entrances + " public entrances.\n\r\n\r");
+                    data += ("• " + "The establishment has " + total_num_public_entrances + " public entrance(s).\n\r\n\r");
 
                     if (main_ent_accessible.ToLower().CompareTo("yes") == 0)
                         data += ("• The main entrance is wheelchair accessible. \n\r\n\r");
@@ -1055,8 +1065,10 @@ namespace Access4All.Fragments
 
                     if (door_easy_open.ToLower().CompareTo("yes") == 0)
                         data += ("• Door is easy to open, requiring 10 lbs or less of force ("+ door_open_force + " lbs). \n\r\n\r");
-                    else
+                    else if(door_easy_open.ToLower().CompareTo("no") == 0)
                         data += ("• Door is hard to open, requiring 10 lbs or more of force (" + door_open_force + " lbs). \n\r\n\r");
+                    else
+                        data += ("• Door is not hard to open, requiring 10 lbs or less of force. \n\r\n\r");
 
                     if (door_use_with_fist.ToLower().CompareTo("yes") == 0)
                         data += ("• Door handles can be operated with closed fist. \n\r\n\r");
@@ -1064,9 +1076,9 @@ namespace Access4All.Fragments
                         data += ("• Door handles can not be operated with closed fist. \n\r\n\r");
 
                     if (lighting.ToLower().CompareTo("yes") == 0)
-                        data += ("• Lighting level is"+lighting_type+" in "+lighting_option+"time, and is adequate for mobility and reading signs. \n\r\n\r");
+                        data += ("• Lighting level is "+lighting_type+" in "+lighting_option+" time, and is adequate for mobility and reading signs. \n\r\n\r");
                     else
-                        data += ("• Lighting level is poor. \n\r\n\r");
+                        data += ("• Lighting level is poor. \n\r\n\r");                          
                 }
             }
 
