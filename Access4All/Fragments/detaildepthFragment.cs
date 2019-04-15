@@ -238,42 +238,42 @@ namespace Access4All.Fragments
 
             string restroom_desc;
             string easy_open;
-            int lbs_force;
+            int? lbs_force;
             string clearing;
-            double opening;
+            double? opening;
             string opens_out;
             string use_fist;
             string can_turn_around;
-            double turn_width;
-            double turn_depth;
+            double? turn_width;
+            double? turn_depth;
             string close_chair_inside;
             string grab_bars;
             string seat_height_req;
-            double seat_height;
+            double? seat_height;
             string flush_auto_fist;
             string ambulatory_accessible;
-            double bar_height;
+            double? bar_height;
             string coat_hook;
-            double hook_height;
+            double? hook_height;
             string sink;
-            double sink_height;
+            double? sink_height;
             string faucet;
-            double faucet_depth;
+            double? faucet_depth;
             string faucet_auto_fist;
             string sink_clearance;
-            double sink_clearance_height;
+            double? sink_clearance_height;
             string sink_pipes;
             string soap_dispenser;
-            double soap_height;
+            double? soap_height;
             string dry_fist;
-            int dry_control_height;
+            int? dry_control_height;
             string mirror;
-            double mirror_height;
+            double? mirror_height;
             string shelves;
-            double shelf_height;
+            double? shelf_height;
             string trash_receptacles;
             string hygiene_seat_cover;
-            double hygiene_cover_height;
+            double? hygiene_cover_height;
             string lighting;
             string lighting_type;
             string comment;
@@ -285,47 +285,47 @@ namespace Access4All.Fragments
 
                 if (((int)json["est_id"]) == est_id)
                 {
-                    restroom_desc = (string)json[""];
-                    easy_open = (string)json[""];
-                    lbs_force = (int)json[""];
-                    clearing = (string)json[""];
-                    opening = (double)json[""];
-                    opens_out = (string)json[""];
-                    use_fist = (string)json[""];
-                    can_turn_around = (string)json[""];
-                    turn_width = (double)json[""];
-                    turn_depth = (double)json[""];
-                    close_chair_inside = (string)json[""];
-                    grab_bars = (string)json[""];
-                    seat_height_req = (string)json[""];
-                    seat_height = (double)json[""];
-                    flush_auto_fist = (string)json[""];
-                    ambulatory_accessible = (string)json[""];
-                    bar_height = (double)json[""];
-                    coat_hook = (string)json[""];
-                    hook_height = (double)json[""];
-                    sink = (string)json[""];
-                    sink_height = (double)json[""];
-                    faucet = (string)json[""];
-                    faucet_depth = (double)json[""];
-                    faucet_auto_fist = (string)json[""];
-                    sink_clearance = (string)json[""];
-                    sink_clearance_height = (double)json[""];
-                    sink_pipes = (string)json[""];
-                    soap_dispenser = (string)json[""];
-                    soap_height = (double)json[""];
-                    dry_fist = (string)json[""];
-                    dry_control_height = (int)json[""];
-                    mirror = (string)json[""];
-                    mirror_height = (double)json[""];
-                    shelves = (string)json[""];
-                    shelf_height = (double)json[""];
-                    trash_receptacles = (string)json[""];
-                    hygiene_seat_cover = (string)json[""];
-                    hygiene_cover_height = (double)json[""];
-                    lighting = (string)json[""];
-                    lighting_type = (string)json[""];
-                    comment = (string)json[""];
+                    restroom_desc = (string)json["restroom_desc"];
+                    easy_open = (string)json["easy_open"];
+                    lbs_force = (int?)json["lbs_force"];
+                    clearing = (string)json["clearing"];
+                    opening = (double?)json["opening"];
+                    opens_out = (string)json["opens_out"];
+                    use_fist = (string)json["use_fist"];
+                    can_turn_around = (string)json["can_turn_around"];
+                    turn_width = (double?)json["turn_width"];
+                    turn_depth = (double?)json["turn_depth"];
+                    close_chair_inside = (string)json["close_chair_inside"];
+                    grab_bars = (string)json["grab_bars"];
+                    seat_height_req = (string)json["seat_height_req"];
+                    seat_height = (double?)json["seat_height"];
+                    flush_auto_fist = (string)json["flush_auto_fist"];
+                    ambulatory_accessible = (string)json["ambulatory_accessible"];
+                    bar_height = (double?)json["bar_height"];
+                    coat_hook = (string)json["coat_hook"];
+                    hook_height = (double?)json["hook_height"];
+                    sink = (string)json["sink"];
+                    sink_height = (double?)json["sink_height"];
+                    faucet = (string)json["faucet"];
+                    faucet_depth = (double?)json["faucet_depth"];
+                    faucet_auto_fist = (string)json["faucet_auto_fist"];
+                    sink_clearance = (string)json["sink_clearance"];
+                    sink_clearance_height = (double?)json["sink_clearance_height"];
+                    sink_pipes = (string)json["sink_pipes"];
+                    soap_dispenser = (string)json["soap_dispenser"];
+                    soap_height = (double?)json["soap_height"];
+                    dry_fist = (string)json["dry_fist"];
+                    dry_control_height = (int?)json["dry_control_height"];
+                    mirror = (string)json["mirror"];
+                    mirror_height = (double?)json["mirror_height"];
+                    shelves = (string)json["shelves"];
+                    shelf_height = (double?)json["shelf_height"];
+                    trash_receptacles = (string)json["trash_receptacles"];
+                    hygiene_seat_cover = (string)json["hygiene_seat_cover"];
+                    hygiene_cover_height = (double?)json["hygiene_cover_height"];
+                    lighting = (string)json["lighting"];
+                    lighting_type = (string)json["lighting_type"];
+                    comment = (string)json["comment"];
 
                 }
             }
@@ -338,9 +338,9 @@ namespace Access4All.Fragments
             string data = "";
 
             string public_restroom;
-            int total_num = -1;
-            int designated_number = -1;
-            int num_wheelchair_sign = -1;
+            int? total_num = -1;
+            int? designated_number = -1;
+            int? num_wheelchair_sign = -1;
             string sign_accessible;
             string sign_location;
             string key_needed;
@@ -356,44 +356,57 @@ namespace Access4All.Fragments
                     public_restroom = (string)json["public_restroom"];
                     if (!json["total_num"].Equals(null))
                     {
-                        total_num = (int)json["total_num"];
+                        total_num = (int?)json["total_num"];
                     }
                     if (!json["designated_number"].Equals(null))
                     {
-                        designated_number = (int)json["designated_number"];
+                        designated_number = (int?)json["designated_number"];
                     }
                     if (!json["num_wheelchair_sign"].Equals(null))
                     {
-                        num_wheelchair_sign = (int)json["num_wheelchair_sign"];
+                        num_wheelchair_sign = (int?)json["num_wheelchair_sign"];
                     }
                     sign_accessible = (string)json["sign_accessable"];
                     sign_location = (string)json["sign_location"];
                     key_needed = (string)json["key_needed"];
                     comment = (string)json["comment"];
 
-                    if(public_restroom.ToLower().CompareTo("yes")==0)
+                    if (public_restroom != null)
                     {
-                        data += "• There is "+ total_num +" public restroom(s) in the establishment" + "\n\r";
+                        if (public_restroom.ToLower().CompareTo("yes") == 0)
+                        {
+                            data += "• There is " + total_num + " public restroom(s) in the establishment" + "\n\r";
+                        }
                     }
                     if(designated_number>1)
                     {
                         data += "• This restroom is designated family, unisex, or assisted use" + "\n\r";
                     }
-                    if(sign_accessible.ToLower().CompareTo("yes")==0)
+                    if (sign_accessible != null)
                     {
-                        data += "• This restroom has"+ num_wheelchair_sign +" ‘wheelchair accessible’ sign(s)" + "\n\r";
+                        if (sign_accessible.ToLower().CompareTo("yes") == 0)
+                        {
+                            data += "• This restroom has" + num_wheelchair_sign + " ‘wheelchair accessible’ sign(s)" + "\n\r";
+                        }
                     }
-                    if(sign_location.ToLower().CompareTo("yes")==0)
+                    if (sign_location != null)
                     {
-                        data += "• " + comment + "\n\r";
+                        if (sign_location.ToLower().CompareTo("yes") == 0)
+                        {
+                            data += "• " + comment + "\n\r";
+                        }
                     }
-                    if(key_needed.ToLower().CompareTo("yes")==0)
+                    if (key_needed != null)
                     {
-                        data += "• Users need to ask someone for a key to use the restroom" + "\n\r";
-                    }
-                    if (key_needed.ToLower().CompareTo("no") == 0)
-                    {
-                        data += "• Users do not need to ask someone for a key to use the restroom" + "\n\r";
+                        if (key_needed.ToLower().CompareTo("yes") == 0)
+                        {
+                            data += "• Users need to ask someone for a key to use the restroom" + "\n\r";
+                        }
+
+                        if (key_needed.ToLower().CompareTo("no") == 0)
+                        {
+                            data += "• Users do not need to ask someone for a key to use the restroom" + "\n\r";
+                        }
                     }
                 }
             }
