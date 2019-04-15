@@ -342,8 +342,11 @@ namespace Access4All.Fragments
                             data += "\n\r\n\r";
                     }
                     
-                    clearing = (string)json["clearing"];
-
+                    clearing = (string)json["clearance"];
+                    if(clearing.ToLower().CompareTo("yes") == 0)
+                        data += "• Door has at least 32” clearance when open 90 degrees\n\r\n\r";
+                    else
+                        data += "• Door does not have at least 32” clearance when open 90 degrees\n\r\n\r";
 
                     if (!json["opening"].Equals(null))
                     {
@@ -353,7 +356,17 @@ namespace Access4All.Fragments
                     }
                     
                     opens_out = (string)json["opens_out"];
+                    if(opens_out.ToLower().CompareTo("yes") == 0)
+                        data += "• Door stall opens away from you.\n\r\n\r";
+                    else
+                        data += "• Door stall opens towards you.\n\r\n\r";
+
                     use_fist = (string)json["use_fist"];
+                    if (use_fist.ToLower().CompareTo("yes") == 0)
+                        data += "• Doors, handles, and levers can be operated with a closed fist. \n\r\n\r";
+                    else if(use_fist.ToLower().CompareTo("no") == 0)
+                        data += "• Doors, handles, and levers cannot be operated with a closed fist. \n\r\n\r";
+                    //Not sure what to say with turn around, width and depth
                     can_turn_around = (string)json["can_turn_around"];
 
                     if (!json["turn_width"].Equals(null))
@@ -368,11 +381,23 @@ namespace Access4All.Fragments
                         if (debugValue != null && debugValue.ToLower().CompareTo("n/a") != 0 && debugValue.ToLower().CompareTo("") != 0)
                             turn_depth = (double)json["turn_depth"];
                     }
-
+                    //read above
                     
                     close_chair_inside = (string)json["close_chair_inside"];
+                    if(close_chair_inside.ToLower().CompareTo("yes") == 0)
+                        data += "• Room door can be closed once a wheelchair is inside. \n\r\n\r";
+                    else if(close_chair_inside.ToLower().CompareTo("no") == 0)
+                        data += "• Room door cannot be closed once a wheelchair is inside. \n\r\n\r";
+
                     grab_bars = (string)json["grab_bars"];
+                    if (grab_bars.ToLower().CompareTo("yes") == 0)
+                        data += "• Grab bars are easily reachable behind toilet and on side wall nearest toilet. \n\r\n\r";
+                    //slight issue here. In most the db entries, when seat_height_req is yes, it gives 0.0 inches. Made it 17 as it 
+                    // was the only entry there besides 0.0
                     seat_height_req = (string)json["seat_height_req"];
+                    if (seat_height_req.ToLower().CompareTo("yes") == 0)
+                        data += "• Height of toilet seat is at least 17” from the floor. \n\r\n\r";
+
 
                     if (!json["seat_height"].Equals(null))
                     {
@@ -380,11 +405,14 @@ namespace Access4All.Fragments
                         if (debugValue != null && debugValue.ToLower().CompareTo("n/a") != 0 && debugValue.ToLower().CompareTo("") != 0)
                             seat_height = (double)json["seat_height"];
                     }
-
+                    //see above comment
                     
                     flush_auto_fist = (string)json["flush_auto_fist"];
+                    if (flush_auto_fist.ToLower().CompareTo("yes") == 0)
+                        data += "• Toilet can be flushed with a closed fist. \n\r\n\r";
+                    //all inputs for ambulatory_accessible are either null or empty so skipping for now
                     ambulatory_accessible = (string)json["ambulatory_accessible"];
-
+                    //all barheight is 0.0 for now so skipping atm
                     if (!json["bar_height"].Equals(null))
                     {
                         debugValue = (string)json["bar_height"];
@@ -393,6 +421,8 @@ namespace Access4All.Fragments
                     }
                     
                     coat_hook = (string)json["coat_hook"];
+                    if(coat_hook.ToLower().CompareTo("yes") == 0)
+                        data += "• Restroom has a coat hook available. \n\r\n\r";
 
                     if (!json["hook_height"].Equals(null))
                     {
@@ -411,6 +441,7 @@ namespace Access4All.Fragments
                     }
                     
                     faucet = (string)json["faucet"];
+                    
 
                     if (!json["faucet_depth"].Equals(null))
                     {
@@ -420,7 +451,14 @@ namespace Access4All.Fragments
                     }
                     
                     faucet_auto_fist = (string)json["faucet_auto_fist"];
+                    if (faucet_auto_fist.ToLower().CompareTo("yes") == 0)
+                        data += "• The faucets can be operated with a closed fist. \n\r\n\r";
+
                     sink_clearance = (string)json["sink_clearance"];
+                    if (sink_clearance.ToLower().CompareTo("yes") == 0)
+                        data += "• There is room for a wheelchair to roll under the sink. \n\r\n\r";
+                    else
+                        data += "• There is not room for a wheelchair to roll under the sink. \n\r\n\r";
 
                     if (!json["sink_clearance_height"].Equals(null))
                     {
@@ -430,7 +468,14 @@ namespace Access4All.Fragments
                     }
                     
                     sink_pipes = (string)json["sink_pipes"];
+                    if (sink_pipes.ToLower().CompareTo("yes") == 0)
+                        data += "• All pipes under the sink are covered to prevent injury or burns. \n\r\n\r";
+
                     soap_dispenser = (string)json["soap_dispenser"];
+                    if (soap_dispenser.ToLower().CompareTo("yes") == 0)
+                        data += "• Height of soap dispenser control is no more than 48” from floor, and can be reached from a chair. \n\r\n\r";
+                    else
+                        data += "• Height of soap dispenser control is more than 48” from floor, and cannot be reached from a chair. \n\r\n\r";
 
                     if (!json["soap_height"].Equals(null))
                     {
@@ -440,6 +485,10 @@ namespace Access4All.Fragments
                     }
                     
                     dry_fist = (string)json["dry_fist"];
+                    if (dry_fist.ToLower().CompareTo("yes") == 0)
+                        data += "• Hand dryer or towel dispensers can be operated automatically or with closed fist. \n\r\n\r";
+                    else
+                        data += "• Hand dryer or towel dispensers cannot be operated automatically or with closed fist. \n\r\n\r";
 
                     if (!json["dry_control_height"].Equals(null))
                     {
@@ -451,6 +500,10 @@ namespace Access4All.Fragments
 
 
                     mirror = (string)json["mirror"];
+                    if (mirror.ToLower().CompareTo("yes") == 0)
+                        data += "• The bottom edge of the lowest mirror is no more than 40” from floor. \n\r\n\r";
+                    else
+                        data += "• The bottom edge of the lowest mirror is more than 40” from floor. \n\r\n\r";
 
                     if (!json["mirror_height"].Equals(null))
                     {
@@ -469,6 +522,11 @@ namespace Access4All.Fragments
                     }
                     
                     trash_receptacles = (string)json["trash_receptacles"];
+                    if (trash_receptacles.ToLower().CompareTo("yes") == 0)
+                        data += "• Trash receptacles are positioned so they do not block the route of the door. \n\r\n\r";
+                    else if(trash_receptacles.ToLower().CompareTo("no") == 0)
+                        data += "• Trash receptacles are positioned so they do block the route of the door. \n\r\n\r";
+
                     hygiene_seat_cover = (string)json["hygiene_seat_cover"];
 
                     if (!json["hygiene_cover_height"].Equals(null))
@@ -480,7 +538,11 @@ namespace Access4All.Fragments
                     
                     lighting = (string)json["lighting"];
                     lighting_type = (string)json["lighting_type"];
+                    if (lighting.ToLower().CompareTo("yes") == 0)
+                        data += "• Lighting level is "+lighting_type+", and is adequate for mobility and reading signs. \n\r\n\r";
+
                     comment = (string)json["comment"];
+
                     
                     //Got all data
                     
@@ -509,7 +571,7 @@ namespace Access4All.Fragments
             {
                 JToken json = jsonArray[i];
 
-                if (((int)json["rest_id"]) == est_id)
+                if (((int)json["est_id"]) == est_id)
                 {
                     public_restroom = (string)json["public_restroom"];
                     this.rest_id = (int)json["restroom_id"];
