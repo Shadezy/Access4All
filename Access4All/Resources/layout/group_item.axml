@@ -8,11 +8,11 @@
 
 	<TextView
 		android:id="@+id/group"
-		android:layout_marginLeft="30dp"
+		android:layout_marginLeft="35dp"
 		android:layout_width = "wrap_content"
-		android:layout_height="75dp"
+		android:layout_height="75sp"
 		android:textColor="@android:color/black"
-		android:textSize="25dp"
+		android:textSize="22sp"
 		/>
 
 </LinearLayout>

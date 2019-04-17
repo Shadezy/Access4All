@@ -3,16 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.Graphics;
 using Android.OS;
-using Android.Runtime;
-using Android.Text;
-using Android.Text.Style;
-using Android.Util;
 using Android.Views;
 using Android.Widget;
 using Newtonsoft.Json.Linq;
@@ -20,7 +11,6 @@ using Environment = System.Environment;
 using Xamarin.Essentials;
 using System.Threading.Tasks;
 
-//HTML.FromHtml is deprecated,so it might stop being supported soonish
 
 namespace Access4All.Fragments
 {
@@ -31,7 +21,7 @@ namespace Access4All.Fragments
         string prevView;
         List<Categories> group = new List<Categories>();
         TextView myTextTest;
-        string table; //= "establishment";//change this later cuz parking dont work
+        string table;
         int est_id;
         int rest_id;
         Button mapsButton;
@@ -43,12 +33,7 @@ namespace Access4All.Fragments
             selection = b.GetString("selection");
             prevView = b.GetString("prevView");
             string test = curLocation + " " + selection;
-
-           
-
-           
             base.OnCreate(savedInstanceState);
-            // Create your fragment here
         }
 
         public static detaildepthFragment NewInstance()
@@ -59,7 +44,6 @@ namespace Access4All.Fragments
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            // Use this to return your custom view for this Fragment
             View v = inflater.Inflate(Resource.Layout.detail_layout, null);
             TextView t = (TextView)v.FindViewById(Resource.Id.textView1);
             myTextTest = (TextView)v.FindViewById(Resource.Id.textView1);
@@ -68,12 +52,7 @@ namespace Access4All.Fragments
             mapsButton.Visibility = ViewStates.Invisible;
             mapsButton.Enabled = false;
 
-            /*var htmlCode = "<ul><li>Item 1</li><li>Item 2</li></ul>";
-            var myTextView = FindViewById<TextView>(Resource.Id.myTextView);
-            myTextView.TextFormatted = Android.Text.Html.FromHtml(htmlCode);*/
-
             string unparsedData,parsedData;
-            //SpannableString parsed;
             Bundle b = Arguments;
             curLocation = b.GetString("location");
             selection = b.GetString("selection");
@@ -90,7 +69,7 @@ namespace Access4All.Fragments
             {
                 
                 table = "establishment";
-                unparsedData = GetData("");//getGeneralInformation(curLocation);
+                unparsedData = GetData("");
                 parsedData = parseGeneralInformation(unparsedData, curLocation);
                 t.Text = parsedData;
                 mapsButton.Visibility = ViewStates.Visible;
@@ -105,10 +84,7 @@ namespace Access4All.Fragments
             {
                 table = "parking";
                 unparsedData = GetData(est_id.ToString());
-                //parsed = parseParkingInformation(unparsedData, curLocation);
-                //t.TextFormatted = parsed;
                 parsedData = parseParkingInformation(unparsedData, curLocation);
-                //t.TextFormatted = Html.FromHtml(parsedData);
                 t.Text = parsedData;
             }
 
@@ -181,11 +157,6 @@ namespace Access4All.Fragments
                 parsedData = parseCommunication(unparsedData);
                 t.Text = parsedData;
                 
-            }
-
-            else
-            {
-               
             }
             return v;   
         }
@@ -282,15 +253,13 @@ namespace Access4All.Fragments
             string comment;
 
 
-            for (int i = 0; i < jsonArray.Count; i++)//this should only ever be one, but keep it here in case something goes wrong?
+            for (int i = 0; i < jsonArray.Count; i++)
             {
                 JToken json = jsonArray[i];
 
                 if (((int)json["rest_id"]) == rest_id)
                 {
-                    //data += "---------------------------------------------------------------------- \n\r\n\r";
                     data += "The Restroom in this location has the following information: \n\r\n\r";
-                    //get data - make sure not to cast null or empty values
                     restroom_desc = (string)json["restroom_desc"];
                     if (restroom_desc.ToLower().CompareTo("") != 0)
                     {
@@ -496,8 +465,6 @@ namespace Access4All.Fragments
                     trash_receptacles = (string)json["trash_receptacles"];
                     if (trash_receptacles.ToLower().CompareTo("yes") == 0)
                         data += "• Trash receptacles are positioned so they do not block the route of the door. \n\r\n\r";
-                    else if (trash_receptacles.ToLower().CompareTo("no") == 0)
-                        data += "• Trash receptacles are positioned so they do block the route of the door. \n\r\n\r";
 
                     hygiene_seat_cover = (string)json["hygiene_seat_cover"];
 
@@ -514,10 +481,6 @@ namespace Access4All.Fragments
                         data += "• Lighting level is " + lighting_type + ", and is adequate for mobility and reading signs. \n\r\n\r";
 
                     comment = (string)json["comment"];
-
-
-                    //Got all data
-
                 }
             }
             return data;
@@ -539,7 +502,7 @@ namespace Access4All.Fragments
             string debugValue;
 
 
-            for (int i = 0; i < jsonArray.Count; i++)//this should only ever be one, but keep it here in case something goes wrong?
+            for (int i = 0; i < jsonArray.Count; i++)
             {
                 JToken json = jsonArray[i];
 
@@ -626,7 +589,7 @@ namespace Access4All.Fragments
             string companion_space;
             string comment;
 
-            for (int i = 0; i < jsonArray.Count; i++)//this should only ever be one, but keep it here in case something goes wrong?
+            for (int i = 0; i < jsonArray.Count; i++)
             {
                 JToken json = jsonArray[i];
 
@@ -780,7 +743,7 @@ namespace Access4All.Fragments
             string elevator_depth;
             string comment;
 
-            for (int i = 0; i < jsonArray.Count; i++)//this should only ever be one, but keep it here in case something goes wrong?
+            for (int i = 0; i < jsonArray.Count; i++)
             {
                 JToken json = jsonArray[i];
 
@@ -889,7 +852,7 @@ namespace Access4All.Fragments
             string annual_A4A_review;
             string comment;
 
-            for (int i = 0; i < jsonArray.Count; i++)//this should only ever be one, but keep it here in case something goes wrong?
+            for (int i = 0; i < jsonArray.Count; i++)
             {
                 JToken json = jsonArray[i];
 
@@ -1067,7 +1030,7 @@ namespace Access4All.Fragments
             string comment;
 
 
-            for (int i = 0; i < jsonArray.Count; i++)//this should only ever be one, but keep it here in case something goes wrong?
+            for (int i = 0; i < jsonArray.Count; i++)
             {
                 JToken json = jsonArray[i];
 
@@ -1187,7 +1150,7 @@ namespace Access4All.Fragments
             string comment;
 
 
-            for (int i = 0; i < jsonArray.Count; i++)//this should only ever be one, but keep it here in case something goes wrong?
+            for (int i = 0; i < jsonArray.Count; i++)
             {
                 JToken json = jsonArray[i];
 
@@ -1278,10 +1241,6 @@ namespace Access4All.Fragments
         {
             JArray jsonArray = JArray.Parse(unparsedData);
             string data = "";
-
-            //SpannableString result;
-
-            //int ext_path_id;
             string service_animal;
             string service_animal_location;
             string has_exterior_path;
@@ -1295,7 +1254,7 @@ namespace Access4All.Fragments
             string lighting_type;
             string comment;
 
-            for (int i = 0; i < jsonArray.Count; i++)//this should only ever be one, but keep it here in case something goes wrong?
+            for (int i = 0; i < jsonArray.Count; i++)
             {
                 JToken json = jsonArray[i];
 
@@ -1370,7 +1329,7 @@ namespace Access4All.Fragments
             string reserve_space_obstacles;
             string comment;
 
-            for (int i = 0; i < jsonArray.Count; i++)//this should only ever be one, but keep it here in case something goes wrong?
+            for (int i = 0; i < jsonArray.Count; i++)
             {
                 JToken json = jsonArray[i];
 
@@ -1379,21 +1338,16 @@ namespace Access4All.Fragments
                     park_id = (int)json["park_id"];
                     lot_type = ((string)json["lot_free"]).ToLower();
                     street_metered = ((string)json["street_metered"]).ToLower();
-                    parking_type = ((string)json["parking_type"]).ToLower();//if "other" then ignore
+                    parking_type = ((string)json["parking_type"]).ToLower();
                     total_spaces = ((string)json["total_num_spaces"]).ToLower();
                     reserved_spaces = ((string)json["num_reserved_spaces"]).ToLower();
-                    general_accessible_spaces = ((string)json["num_accessable_space"]).ToLower();//and so it begins
+                    general_accessible_spaces = ((string)json["num_accessable_space"]).ToLower();
                     van_accessible_spaces = ((string)json["num_van_accessible"]).ToLower();
                     reserve_space_sign = ((string)json["reserve_space_sign"]).ToLower();
                     reserve_space_obstacles = ((string)json["reserve_space_obstacles"]).ToLower();
                     comment = ((string)json["comment"]).ToLower();
-
-                    /*
-                     * if (one of those --^ == null)
-                     *     one of those --^ = "";
-                     */
-
-                    if (street_metered.CompareTo("not metered") == 0)//• = alt + 7 on numpad
+                    
+                    if (street_metered.CompareTo("not metered") == 0)
                         street_metered = "free";
 
                     data += "• This establishment has the following types of parking: " + lot_type + " lot, " + street_metered + " street\n\r\n\r";
@@ -1408,7 +1362,7 @@ namespace Access4All.Fragments
                     if (reserve_space_sign.CompareTo("yes") == 0)
                         data += "• " + "Accessible parking spaces have signs that are not obstructed when a vehicle is parked there\n\r\n\r";
 
-                    if (reserve_space_obstacles.CompareTo("no") == 0)//means free of obstacles, bad variable name  ->last team<-
+                    if (reserve_space_obstacles.CompareTo("no") == 0)
                         data += "• Surface is not level, unbroken, firm, slip resistant, or free of obstacles\n\r\n\r";
                     else
                         data += "• Surface is level, unbroken, firm, slip resistant, and free of obstacles\n\r\n\r";
@@ -1457,7 +1411,7 @@ namespace Access4All.Fragments
                         else
                             data += "• Route does not have tactile warnings\n\r\n\r";
 
-                        if (covered.CompareTo("yes") == 0) //no way to determine partially covered
+                        if (covered.CompareTo("yes") == 0) 
                             data += "• Route is covered\n\r\n\r";
                         else
                             data += "• Route is not covered or is partially covered\n\r\n\r";
@@ -1466,8 +1420,7 @@ namespace Access4All.Fragments
                             data += "• Lighting level is " + lighting_type + " in " + lighting_option + "time, and is adequate for mobility and reading signs\n\r\n\r";
                         else
                             data += "• Lighting level is inadequate for mobility and reading signs\n\r\n\r";
-
-                        /**TODO: passenger_loading**/
+                        
                     }
 
                     JArray jsonArray_passenger_loading = JArray.Parse(GetDataTable("passenger_loading", "park_id=" + park_id.ToString()));
@@ -1532,11 +1485,7 @@ namespace Access4All.Fragments
                     }
                 }
             }
-
-            //result = new SpannableString("Parking:\n•this is a test");
-            //result.SetSpan(new BulletSpan(40, Color.Aqua), 10, 22, SpanTypes.ExclusiveExclusive);
-            return data; //+"</ul>";
-            //return result;
+            return data;
         }
 
         private string parseGeneralInformation(string unparsedData, string loc)
@@ -1593,7 +1542,6 @@ namespace Access4All.Fragments
 
         public void OnBackPressed()
         {
-            //Get which object was selected
             Android.Support.V4.App.Fragment fragment = null;
             Bundle args = new Bundle();
             args.PutString("location", curLocation);
@@ -1627,7 +1575,6 @@ namespace Access4All.Fragments
                     }
                     else
                     {
-                        //Console.Out.WriteLine("Response Body: \r\n {0}", content);
                         return content;
                     }
                 }
@@ -1655,7 +1602,6 @@ namespace Access4All.Fragments
                     }
                     else
                     {
-                        //Console.Out.WriteLine("Response Body: \r\n {0}", content);
                         return content;
                     }
                 }

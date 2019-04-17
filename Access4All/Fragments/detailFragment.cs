@@ -25,7 +25,6 @@ namespace Access4All.Fragments
             Bundle b = Arguments;
             curLocation = b.GetString("location");
             prevView = b.GetString("prevView");
-            //Toast.MakeText(MainActivity.activity, curLocation, ToastLength.Short).Show();
             base.OnCreate(savedInstanceState);
             setTempData();
 
@@ -59,28 +58,18 @@ namespace Access4All.Fragments
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            // Use this to return your custom view for this Fragment
             View v = inflater.Inflate(Resource.Layout.categoriesLayout, null);
             ExpandableListView ex = (ExpandableListView)v.FindViewById(Resource.Id.expandableListView1);
             ex.SetAdapter(mAdapter);
-            /*ex.ChildClick += (s, e) =>
-            {
-                Toast.MakeText(MainActivity.activity, "Clicked: " + mAdapter.GetChild(e.GroupPosition, e.ChildPosition).ToString(), ToastLength.Short).Show();
-            };*/
-
-            //ex.Click += HandleSelect;
             ex.SetGroupIndicator(null);
             ex.GroupClick += HandleSelect;
 
             return v;
-
-
-            //return base.OnCreateView(inflater, container, savedInstanceState);
+            
         }
 
         private void HandleSelect(object sender, ExpandableListView.GroupClickEventArgs e)
         {
-            //Get which object was selected
             string value;
             value = mAdapter.GetGroup(e.GroupPosition).ToString();
             Android.Support.V4.App.Fragment fragment = null;
@@ -98,7 +87,6 @@ namespace Access4All.Fragments
 
         public void OnBackPressed()
         {
-            //Get which object was selected
             Android.Support.V4.App.Fragment fragment = null;
             Bundle args = new Bundle();
             args.PutString("location", curLocation);

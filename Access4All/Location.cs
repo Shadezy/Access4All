@@ -14,29 +14,6 @@ namespace Access4All
 {
     public class Location : Java.Lang.Object
     {
-        /*
-        private string est_id;
-        private string name;
-        private string website;
-        private string subtype;
-        private string date;
-        private string street;
-        private string city;
-        private string state;
-        private string zip;
-        private string phone;
-        private string tty;
-        private string contact_fname;
-        private string contact_lname;
-        private string contact_title;
-        private string contact_email;
-        private string user_id;
-        private string cat_id;
-        private string config_id;
-        private string config_comment;
-        */
-
-        //constructor
         public Location()
         {
 
@@ -70,7 +47,6 @@ namespace Access4All
         {
             return name;
         }
-        //getters and setters
 
         public int est_id { get; set; }
         public string name { get; set; }

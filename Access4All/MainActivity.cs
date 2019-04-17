@@ -25,7 +25,6 @@ namespace Access4All
 
         public override void OnBackPressed()
         {
-            // Ignoring stuff about DrawerLayout, etc for demo purposes.
             var currentFragment = SupportFragmentManager.FindFragmentById(Resource.Id.content_frame);
             var listener = currentFragment as IBackButtonListener;
             if (listener != null)

@@ -111,15 +111,10 @@ namespace Access4All.Fragments
             nearMeButton.Click += searchNearMe;
 
             return view;
-
-            //return base.OnCreateView(inflater, container, savedInstanceState);
         }
 
         private void searchNearMe(object sender, EventArgs e)
         {
-            //Going to search for anything within 15 miles. May add functionaility later for a variable amount of miles.
-
-            //ping database
             string data = GetData();
 
             JArray jsonArray = JArray.Parse(data);
@@ -132,11 +127,6 @@ namespace Access4All.Fragments
             for (int i = 0; i < jsonArray.Count; i++)
             {
                 JToken json = jsonArray[i];
-                //string temp = (string)json["name"];
-               // temp = RemoveSpecialCharacters(temp);
-                //temp = temp.Replace(" ", System.String.Empty);
-
-                    //Location stuff - make sure user location permissions were give
                     if (act.CheckSelfPermission(Android.Manifest.Permission.AccessCoarseLocation) == (int)Android.Content.PM.Permission.Granted)
                     {
                         Geocoder coder = new Geocoder(act);
@@ -154,9 +144,9 @@ namespace Access4All.Fragments
 
                         userLocationObtained = true;
                     }
-                    else // if not, display error.
+                    else
                     {
-                    Toast.MakeText(MainActivity.activity, "Cannot Calculate User Location. Please allow for the application to use location permissions.", ToastLength.Long).Show();
+                        Toast.MakeText(MainActivity.activity, "Cannot Calculate User Location. Please allow for the application to use location permissions.", ToastLength.Long).Show();
                     }
             }
 
@@ -173,8 +163,7 @@ namespace Access4All.Fragments
                         searched_Loc.Add(mAddresses.ElementAt(x).Name + ": " + mAddresses.ElementAt(x).Address + " (" + mAddresses.ElementAt(x).Distance.ToString("n2") + " miles)");
                 }
             }
-
-            //Listview stuff
+            
             mTv = act.FindViewById<ListView>(Resource.Id.searchResults);
             ArrayAdapter<string> arrayAdapter = new ArrayAdapter<string>(act, Android.Resource.Layout.SimpleListItem1, searched_Loc);
 
@@ -208,10 +197,6 @@ namespace Access4All.Fragments
             MainActivity act = (MainActivity)this.Activity;
             SearchView searchView = (SearchView)act.FindViewById(Resource.Id.searchView1);
             string input = e.Query;
-
-           // TextView text = (TextView)act.FindViewById(Resource.Id.searchResults);
-
-            //close keyboard and lose focus
             searchView.SetIconifiedByDefault(true);
             searchView.OnActionViewCollapsed();
             searchView.Focusable = false;
@@ -268,7 +253,7 @@ namespace Access4All.Fragments
             
             if (userLocationObtained)
             {
-                //calculat distances
+                //calculate distances
                 CalculateAddressDistance(mAddresses);
                 //sort distances
                 mAddresses.Sort();
@@ -278,8 +263,7 @@ namespace Access4All.Fragments
                     searched_Loc.Add(mAddresses.ElementAt(x).Name + ": " + mAddresses.ElementAt(x).Address + " ("+mAddresses.ElementAt(x).Distance.ToString("n2")+" miles)");
                 }
             }
-
-            //debug
+            
             for(int j = 0; j < searched_Loc.Count; j++)
             {
                 debugMe += searched_Loc[j];
@@ -290,8 +274,7 @@ namespace Access4All.Fragments
             {
                 Toast.MakeText(MainActivity.activity, "No results found", ToastLength.Long).Show();
             }
-
-            //Listview stuff
+            
             mTv = act.FindViewById<ListView>(Resource.Id.searchResults);
             ArrayAdapter<string> arrayAdapter = new ArrayAdapter<string>(act, Android.Resource.Layout.SimpleListItem1, searched_Loc);
 
@@ -305,15 +288,12 @@ namespace Access4All.Fragments
         private void CalculateAddressDistance(List<AddressLocator> mAddresses)
         {
             List<string> res = new List<string>();
-           // double dist;
             float[] results = new float[5];
             
             for (int i = 0; i < mAddresses.Count; i++) {
                 Android.Locations.Location.DistanceBetween(mAddresses.ElementAt(i).Lat, mAddresses.ElementAt(i).Lon, Userposition.Latitude, Userposition.Longitude, results);
                 mAddresses.ElementAt(i).Distance = (float)((double)results.ElementAt(0) / 1609.34); //dist in miles
             }
-
-           // return res;
         }
 
         private async Task getLocation()
@@ -329,7 +309,6 @@ namespace Access4All.Fragments
 
         private void searchByVoice(object sender, EventArgs e)
         {
-            //set up variables
             MainActivity act = (MainActivity)this.Activity;
             SearchView searchView = (SearchView)act.FindViewById(Resource.Id.searchView1);
 
@@ -384,17 +363,11 @@ namespace Access4All.Fragments
                     }
                     else
                     {
-                        //Console.Out.WriteLine("Response Body: \r\n {0}", content);
                         return content;
                     }
                 }
             }
             return "NULL";
-        }
-
-        public void OnClick(View v)
-        {
-            //throw new NotImplementedException();
         }
         public string RemoveSpecialCharacters(string str)
         {

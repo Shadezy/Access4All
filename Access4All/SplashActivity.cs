@@ -1,16 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Android.Support.V7.App;
-using Android.Util;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using System.Net;
@@ -50,18 +44,15 @@ namespace Access4All
         public static List<Location> personal_services_locations = new List<Location>();
         public static List<Location> pet_locations = new List<Location>();
         public static List<Location> restaurant_and_coffee_shop_locations = new List<Location>();
-        //static readonly string TAG = "X:" + typeof(SplashActivity).Name;
         public static bool appState;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            //setTempData();
             if (savedInstanceState != null)
             {
                 appState = savedInstanceState.GetBoolean("appState");
             }
-            //Log.Debug(TAG, "SplashActivity.OnCreate");
 
             Task startupWork = new Task(() => { SimulateStartup(); });
             startupWork.Start();
@@ -77,17 +68,9 @@ namespace Access4All
         }
         
 
-        /*protected override void OnResume()
-        {
-            base.OnResume();
-            
-        }*/
-
         async void SimulateStartup()
         {
-            //Log.Debug(TAG, "Performing some startup work that takes a bit of time.");
             await Task.Delay(500);
-            //Log.Debug(TAG, "Startup work is finished - starting MainActivity.");
             StartActivity(new Intent(Application.Context, typeof(MainActivity)));
         }
 
@@ -99,11 +82,7 @@ namespace Access4All
         private void setData()
         {
             string data = GetData();
-            //Toast.MakeText(this.Activity, data, ToastLength.Short).Show();
             JArray jsonArray = JArray.Parse(data);
-            //Toast.MakeText(this.Activity, jsonArray.ToString(), ToastLength.Short).Show();
-
-            //Console.WriteLine(jsonArray);
 
             //business_locations.Add(new Location());
             //home_and_garden_locations.Add(new Location());
@@ -211,7 +190,6 @@ namespace Access4All
                     }
                     else
                     {
-                        //Console.Out.WriteLine("Response Body: \r\n {0}", content);
                         return content;
                     }
                 }

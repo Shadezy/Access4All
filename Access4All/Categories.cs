@@ -47,13 +47,5 @@ namespace Access4All
                 this.locations = value;
             }
         }
-        public override string ToString()///dont use this
-        {
-            string data = "";
-            for (int i = 0; i < locations.Count; i++)
-                data += locations.ToString() + ", ";
-
-            return data;
-        }
     }
 }
