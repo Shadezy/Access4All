@@ -50,9 +50,6 @@ namespace Access4All.Fragments
                 await getLocation();
                 userLocationObtained = true;
             }
-
-         
-
         }
 
         private void searchByText(object sender, EventArgs e)
@@ -79,9 +76,6 @@ namespace Access4All.Fragments
             searchV.SetIconifiedByDefault(false);
             searchV.OnActionViewExpanded();
             flagSearch = true;
-
-        
-
         } 
         
         public static searchFragment NewInstance()
@@ -214,6 +208,7 @@ namespace Access4All.Fragments
             
             JArray jsonArray = JArray.Parse(data);
             List<string> searched_Loc = new List<string>();
+            List<string> similar_Loc = new List<string>();
 
             string debugMe = "";
             string tempinput = input;
@@ -280,11 +275,48 @@ namespace Access4All.Fragments
 
             if(searched_Loc.Count == 0)
             {
-                Toast.MakeText(MainActivity.activity, "No results found", ToastLength.Long).Show();
+                for (int i = 0; i < jsonArray.Count; i++)
+                {
+                    JToken json = jsonArray[i];
+                    string temp = (string)json["name"];
+                    temp = RemoveSpecialCharacters(temp);
+                    temp = temp.Replace(" ", System.String.Empty);
+
+                    if (tempinput.StartsWith(temp.Substring(0, 2), StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        similar_Loc.Add(((string)json["name"]) + ": " + ((string)json["street"]) + " " + ((string)json["city"]) + " " + ((string)json["state"]));
+                    }
+                }
+                if(similar_Loc.Count == 0)
+                {
+                    for (int i = 0; i < jsonArray.Count; i++)
+                    {
+                        JToken json = jsonArray[i];
+                        string temp = (string)json["name"];
+                        temp = RemoveSpecialCharacters(temp);
+                        temp = temp.Replace(" ", System.String.Empty);
+
+                        if (tempinput.StartsWith(temp.Substring(0, 1), StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            similar_Loc.Add(((string)json["name"]) + ": " + ((string)json["street"]) + " " + ((string)json["city"]) + " " + ((string)json["state"]));
+                        }
+                    }
+                }
+
             }
             
             mTv = act.FindViewById<ListView>(Resource.Id.searchResults);
-            ArrayAdapter<string> arrayAdapter = new ArrayAdapter<string>(act, Android.Resource.Layout.SimpleListItem1, searched_Loc);
+            ArrayAdapter<string> arrayAdapter;
+
+            if (searched_Loc.Count == 0 && similar_Loc.Count == 0)
+            {
+                Toast.MakeText(MainActivity.activity, "There were no results for that Location.", ToastLength.Long).Show();
+                arrayAdapter = new ArrayAdapter<string>(act, Android.Resource.Layout.SimpleListItem1, similar_Loc);
+            }
+            else if (searched_Loc.Count == 0)
+                arrayAdapter = new ArrayAdapter<string>(act, Android.Resource.Layout.SimpleListItem1, similar_Loc);
+            else
+                arrayAdapter = new ArrayAdapter<string>(act, Android.Resource.Layout.SimpleListItem1, searched_Loc);
 
             mTv.Adapter = arrayAdapter;
             mTv.SetFooterDividersEnabled(true);
@@ -384,6 +416,8 @@ namespace Access4All.Fragments
         public string RemoveSpecialCharacters(string str)
         {
             StringBuilder sb = new StringBuilder();
+            if (str.Contains("and"))
+                str = str.Replace("and", "&");
             foreach (char c in str)
             {
                 if ((c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || c == '.' || c == '_')
