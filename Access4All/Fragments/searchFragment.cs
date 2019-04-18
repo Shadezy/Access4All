@@ -24,6 +24,8 @@ using System.Text.RegularExpressions;
 using Android.Locations;
 using System.Threading.Tasks;
 using Plugin.Geolocator;
+using Android.Content.PM;
+using Android.Support.V4.View;
 
 namespace Access4All.Fragments
 {
@@ -116,6 +118,12 @@ namespace Access4All.Fragments
         private void searchNearMe(object sender, EventArgs e)
         {
             string data = GetData();
+            MainActivity MAct = (MainActivity)MainActivity.activity;
+
+            if (MAct.CheckSelfPermission(Android.Manifest.Permission.AccessCoarseLocation) != (int)Permission.Granted)
+            {
+                RequestPermissions(new string[] { Android.Manifest.Permission.AccessCoarseLocation, Android.Manifest.Permission.AccessFineLocation }, 0);
+            }
 
             JArray jsonArray = JArray.Parse(data);
             List<string> searched_Loc = new List<string>();
@@ -320,10 +328,13 @@ namespace Access4All.Fragments
                 searchView.OnActionViewCollapsed();
 
             }
-
+            
             Intent intent = new Intent(RecognizerIntent.ActionRecognizeSpeech);
             try
             {
+
+               /* ViewCompat.SetImportantForAccessibility(, 
+                ViewCompat.ImportantForAccessibilityNo); */
                 //Still not working with Talkback on.
                 intent.PutExtra(RecognizerIntent.ActionRecognizeSpeech, "en-US");
                 intent.PutExtra(RecognizerIntent.ExtraLanguageModel, RecognizerIntent.LanguageModelFreeForm);
@@ -331,7 +342,8 @@ namespace Access4All.Fragments
                 intent.PutExtra(RecognizerIntent.ExtraPrompt, "Say Location Name");
                 intent.PutExtra(RecognizerIntent.ExtraSpeechInputCompleteSilenceLengthMillis, 8000);
                 intent.PutExtra(RecognizerIntent.ActionVoiceSearchHandsFree, true);
-             
+                
+                
                 act.StartActivityForResult(intent, 100);
                 
                 
