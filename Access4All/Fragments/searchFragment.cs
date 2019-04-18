@@ -27,7 +27,7 @@ using Plugin.Geolocator;
 
 namespace Access4All.Fragments
 {
-    public class searchFragment : Fragment, View.IOnClickListener
+    public class searchFragment : Fragment
     {
         ListView mTv;
         bool flagSearch = false;

@@ -158,6 +158,7 @@ namespace Access4All.Fragments
                 t.Text = parsedData;
                 
             }
+            t.SetFocusable(ViewFocusability.FocusableAuto);
             return v;   
         }
 
