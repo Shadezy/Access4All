@@ -282,27 +282,37 @@ namespace Access4All.Fragments
                     temp = RemoveSpecialCharacters(temp);
                     temp = temp.Replace(" ", System.String.Empty);
 
-                    if (tempinput.StartsWith(temp.Substring(0, 2), StringComparison.InvariantCultureIgnoreCase))
+                    if (tempinput.StartsWith(temp.Substring(0, 2), StringComparison.InvariantCultureIgnoreCase) && !userLocationObtained)
                     {
                         similar_Loc.Add(((string)json["name"]) + ": " + ((string)json["street"]) + " " + ((string)json["city"]) + " " + ((string)json["state"]));
                     }
-                }
-                if(similar_Loc.Count == 0)
-                {
-                    for (int i = 0; i < jsonArray.Count; i++)
+                    else if(tempinput.StartsWith(temp.Substring(0, 2), StringComparison.InvariantCultureIgnoreCase) && userLocationObtained)
                     {
-                        JToken json = jsonArray[i];
-                        string temp = (string)json["name"];
-                        temp = RemoveSpecialCharacters(temp);
-                        temp = temp.Replace(" ", System.String.Empty);
+                        Geocoder coder = new Geocoder(act);
+                        IList<Address> address = new List<Address>();
 
-                        if (tempinput.StartsWith(temp.Substring(0, 1), StringComparison.InvariantCultureIgnoreCase))
-                        {
-                            similar_Loc.Add(((string)json["name"]) + ": " + ((string)json["street"]) + " " + ((string)json["city"]) + " " + ((string)json["state"]));
-                        }
+
+                        address = coder.GetFromLocationName(((string)json["street"]) + " " + ((string)json["city"]) + " " + ((string)json["state"]), 5);
+
+                        float lon = (float)address.ElementAt(0).Longitude;
+                        float lat = (float)address.ElementAt(0).Latitude;
+
+                        tempAddress = new AddressLocator((string)json["name"], ((string)json["street"]) + " " + ((string)json["city"]) + " " + ((string)json["state"]), lon, lat);
+                        mAddresses.Add(tempAddress);
                     }
                 }
+                if (userLocationObtained)
+                {
+                    //calculate distances
+                    CalculateAddressDistance(mAddresses);
+                    //sort distances
+                    mAddresses.Sort();
 
+                    for (int x = 0; x < mAddresses.Count; x++)
+                    {
+                        similar_Loc.Add(mAddresses.ElementAt(x).Name + ": " + mAddresses.ElementAt(x).Address + " (" + mAddresses.ElementAt(x).Distance.ToString("n2") + " miles)");
+                    }
+                }
             }
             
             mTv = act.FindViewById<ListView>(Resource.Id.searchResults);
@@ -378,8 +388,6 @@ namespace Access4All.Fragments
                 
                 act.StartActivityForResult(intent, 100);
                 
-                
-
             }catch (ActivityNotFoundException)
             {
                 Toast t = Toast.MakeText(this.Activity, "Your device doesn't support Speech to Text", ToastLength.Short);
