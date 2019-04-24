@@ -44,11 +44,12 @@ namespace Access4All.Fragments
             base.OnCreate(savedInstanceState);
             //Check for user location permissions here to prevent long wait times for search function
             MainActivity act = (MainActivity)this.Activity;
-           // act.SetContentView(Resource.Layout.searchLayout);
+            // act.SetContentView(Resource.Layout.searchLayout);
+
             //Button nearButton = (Button)act.FindViewById(Resource.Id.nearMe);
 
-            //nearButton.Enabled = false;
-
+            //Task startupWork = new Task(() => { SimulateStartup(); });
+            //startupWork.Start();
             //Get user location
             if (act.CheckSelfPermission(Android.Manifest.Permission.AccessCoarseLocation) == (int)Android.Content.PM.Permission.Granted)
             {
@@ -58,7 +59,7 @@ namespace Access4All.Fragments
                // nearButton.Enabled = true;
 
             }
-            
+
         }
 
         private void searchByText(object sender, EventArgs e)
@@ -85,11 +86,13 @@ namespace Access4All.Fragments
             searchV.SetIconifiedByDefault(false);
             searchV.OnActionViewExpanded();
             flagSearch = true;
+
         } 
         
         public static searchFragment NewInstance()
         {
             var searchfrag = new searchFragment { Arguments = new Bundle() };
+
             return searchfrag;
         }
 
@@ -121,10 +124,14 @@ namespace Access4All.Fragments
             else
                 nearMeButton.Enabled = true;
 
-                nearMeButton.Click += searchNearMe;
+            nearMeButton.Enabled = false;
+            nearMeButton.Click += searchNearMe;
+
+
 
             return view;
         }
+        
 
         private void searchNearMe(object sender, EventArgs e)
         {
@@ -189,7 +196,6 @@ namespace Access4All.Fragments
             mTv.Adapter = arrayAdapter;
             mTv.SetFooterDividersEnabled(true);
             mTv.SetHeaderDividersEnabled(true);
-
 
         }
 
@@ -371,7 +377,10 @@ namespace Access4All.Fragments
             var pos = await locateMe.GetPositionAsync(TimeSpan.FromMilliseconds(10000));
 
             Userposition = pos;
-            
+            MainActivity act = (MainActivity)this.Activity;
+
+            Button nearButton = (Button)act.FindViewById(Resource.Id.nearMe);
+            nearButton.Enabled = true;
         }
 
         private void searchByVoice(object sender, EventArgs e)
