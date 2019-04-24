@@ -44,12 +44,21 @@ namespace Access4All.Fragments
             base.OnCreate(savedInstanceState);
             //Check for user location permissions here to prevent long wait times for search function
             MainActivity act = (MainActivity)this.Activity;
+           // act.SetContentView(Resource.Layout.searchLayout);
+            //Button nearButton = (Button)act.FindViewById(Resource.Id.nearMe);
+
+            //nearButton.Enabled = false;
+
             //Get user location
             if (act.CheckSelfPermission(Android.Manifest.Permission.AccessCoarseLocation) == (int)Android.Content.PM.Permission.Granted)
             {
+                
                 await getLocation();
                 userLocationObtained = true;
+               // nearButton.Enabled = true;
+
             }
+            
         }
 
         private void searchByText(object sender, EventArgs e)
@@ -92,7 +101,7 @@ namespace Access4All.Fragments
             Button voiceButton = view.FindViewById<Button>(Resource.Id.voiceSearch);
             Button nearMeButton = view.FindViewById<Button>(Resource.Id.nearMe);
             SearchView searchV = view.FindViewById<SearchView>(Resource.Id.searchView1);
-
+            MainActivity act = (MainActivity)this.Activity;
             mTv = view.FindViewById<ListView>(Resource.Id.searchResults);
 
             //set up listeners
@@ -104,7 +113,15 @@ namespace Access4All.Fragments
 
             mTv.ItemClick += MTv_ItemClick;
 
-            nearMeButton.Click += searchNearMe;
+            if (act.CheckSelfPermission(Android.Manifest.Permission.AccessCoarseLocation) != (int)Android.Content.PM.Permission.Granted)
+            {
+                nearMeButton.Enabled = false;
+                nearMeButton.Text = "Near Me Disabled: Please allow User Location.";
+            }
+            else
+                nearMeButton.Enabled = true;
+
+                nearMeButton.Click += searchNearMe;
 
             return view;
         }
