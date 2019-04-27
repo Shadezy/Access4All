@@ -235,7 +235,7 @@ namespace Access4All.Fragments
 
             string debugMe = "";
             string tempinput = input;
-            
+            string inputBlock = tempinput;
             tempinput = RemoveSpecialCharacters(tempinput);
             tempinput = tempinput.Replace(" ", System.String.Empty);
             
@@ -301,15 +301,21 @@ namespace Access4All.Fragments
                 for (int i = 0; i < jsonArray.Count; i++)
                 {
                     JToken json = jsonArray[i];
+                    bool wordMatch = false;
                     string temp = (string)json["name"];
+                    
+                    string[] outputBlock = temp.Split(" ");
+
                     temp = RemoveSpecialCharacters(temp);
                     temp = temp.Replace(" ", System.String.Empty);
 
-                    if (tempinput.StartsWith(temp.Substring(0, 2), StringComparison.InvariantCultureIgnoreCase) && !userLocationObtained)
+                    wordMatch = InputsMatch(inputBlock,outputBlock);
+
+                    if ((tempinput.StartsWith(temp.Substring(0, 2), StringComparison.InvariantCultureIgnoreCase) || wordMatch) && !userLocationObtained )
                     {
                         similar_Loc.Add(((string)json["name"]) + ": " + ((string)json["street"]) + " " + ((string)json["city"]) + " " + ((string)json["state"]));
                     }
-                    else if(tempinput.StartsWith(temp.Substring(0, 2), StringComparison.InvariantCultureIgnoreCase) && userLocationObtained)
+                    else if((tempinput.StartsWith(temp.Substring(0, 2), StringComparison.InvariantCultureIgnoreCase) || wordMatch) && userLocationObtained)
                     {
                         Geocoder coder = new Geocoder(act);
                         IList<Address> address = new List<Address>();
@@ -356,6 +362,19 @@ namespace Access4All.Fragments
             mTv.SetHeaderDividersEnabled(true);
             
             
+        }
+
+        private bool InputsMatch(string inputBlock, string[] outputBlock)
+        {
+            bool areMatched = false;
+            for(int i = 0; i < outputBlock.Length; i++)
+            {
+                outputBlock[i] = outputBlock[i].ToLower();
+                if (inputBlock.Contains(outputBlock[i]) && outputBlock[i].CompareTo("the") != 0 && outputBlock[i].CompareTo("of") != 0 && outputBlock[i].Length > 1)
+                    areMatched = true;
+            }
+
+            return areMatched;
         }
 
         private void CalculateAddressDistance(List<AddressLocator> mAddresses)
