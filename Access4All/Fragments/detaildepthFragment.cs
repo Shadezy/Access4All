@@ -90,7 +90,7 @@ namespace Access4All.Fragments
 
             else if (selection.CompareTo("Access to transit") == 0)
             {
-               
+                table = "parking"; 
                 unparsedData = GetData(curLocation);
                 parsedData = parseTransitData(unparsedData);
                 t.Text = parsedData;
@@ -299,9 +299,9 @@ namespace Access4All.Fragments
 
                     opens_out = (string)json["opens_out"];
                     if (opens_out.ToLower().CompareTo("yes") == 0)
-                        data += "• Door stall opens away from you.\n\r\n\r";
+                        data += "• Stall door opens away from you.\n\r\n\r";
                     else
-                        data += "• Door stall opens towards you.\n\r\n\r";
+                        data += "• Stall door opens towards you.\n\r\n\r";
 
                     use_fist = (string)json["use_fist"];
                     if (use_fist.ToLower().CompareTo("yes") == 0)
@@ -635,7 +635,7 @@ namespace Access4All.Fragments
                     if (legroom.ToLower().CompareTo("yes") == 0)
                     {
                         data += "• There are tables with legroom for wheelchair users.";
-                        if (num_legroom.ToLower().CompareTo("") != 0)
+                        if (num_legroom.ToLower().CompareTo("") != 0 && num_legroom.CompareTo("0") != 0)
                             data += " (" + num_legroom + ")";
 
                         data += "\n\r\n\r";
@@ -643,18 +643,18 @@ namespace Access4All.Fragments
 
                     }
                     else if (legroom.ToLower().CompareTo("no") == 0)
-                        data += "• There are not tables with legroom for wheelchair users.  \n\r\n\r";
+                        data += "• There are no tables with legroom for wheelchair users.  \n\r\n\r";
                     if (rearranged != null)
                     {
                         if (rearranged.ToLower().CompareTo("yes") == 0)
                         {
                             if (num_table_rearranged.ToLower().CompareTo("all") == 0)
                                 data += "• All tables can be moved or rearranged.  \n\r\n\r";
-                            else if(num_table_rearranged != null && num_chair_rearranged.CompareTo(" ") != 0)
+                            else if(num_table_rearranged != null && num_chair_rearranged.CompareTo(" ") != 0 && num_table_rearranged.CompareTo("0") != 0)
                                 data += "• " + num_table_rearranged + " tables can be moved or rearranged.  \n\r\n\r";
                             if (num_chair_rearranged.ToLower().CompareTo("all") == 0)
                                 data += "• All chairs can be moved or rearranged.  \n\r\n\r";
-                            else if(num_chair_rearranged != null  && num_chair_rearranged.CompareTo(" ") != 0)
+                            else if(num_chair_rearranged != null  && num_chair_rearranged.CompareTo(" ") != 0 && num_chair_rearranged.CompareTo("0") != 0)
                                 data += "• " + num_chair_rearranged + " chairs can be moved or rearranged.  \n\r\n\r";
 
                         }
@@ -1507,23 +1507,29 @@ namespace Access4All.Fragments
                     loc += Environment.NewLine;
                     loc += (((string)json["street"]) +" "+ ((string)json["city"]) +", " +((string)json["state"])+" "+ ((string)json["zip"]) + Environment.NewLine);
                     loc += Environment.NewLine;
-                    loc += "Website: ";
-                    loc += (website + Environment.NewLine);
-                    loc += Environment.NewLine;
-                    loc += "Phone Number: ";
-                    phone = ((string)json["phone"]);
-                    string phoneTrim = "";
-                    if (phone.Length == 12)
+                    if (website.CompareTo("") != 0)
                     {
-                        phoneSplit = phone.Split('-');
-                        for (int x = 0; x < 3; x++)
-                        {
-                            phoneTrim += phoneSplit[x].ToString().Trim();
-                        }
-                        loc += phoneTrim;
+                        loc += "Website: ";
+                        loc += (website + Environment.NewLine);
+                        loc += Environment.NewLine;
                     }
-                    else
-                        loc += phone;
+                    phone = ((string)json["phone"]);
+                    if (phone.CompareTo("") != 0)
+                    {
+                        loc += "Phone Number: ";
+                        string phoneTrim = "";
+                        if (phone.Length == 12)
+                        {
+                            phoneSplit = phone.Split('-');
+                            for (int x = 0; x < 3; x++)
+                            {
+                                phoneTrim += phoneSplit[x].ToString().Trim();
+                            }
+                            loc += phoneTrim;
+                        }
+                        else
+                            loc += phone;
+                    }
                 }
             }
             return loc;
