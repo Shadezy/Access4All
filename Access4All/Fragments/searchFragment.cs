@@ -129,8 +129,14 @@ namespace Access4All.Fragments
 
         private void searchNearMe(object sender, EventArgs e)
         {
-            string data = GetData();
             MainActivity MAct = (MainActivity)MainActivity.activity;
+            MainActivity act = (MainActivity)this.Activity;
+            string data = GetData();
+
+            Button NearMe = (Button)act.FindViewById(Resource.Id.nearMe);
+            NearMe.Enabled = false;
+            NearMe.Text = "Accessing locations near you!";
+            
 
             if (MAct.CheckSelfPermission(Android.Manifest.Permission.AccessCoarseLocation) != (int)Permission.Granted)
             {
@@ -142,7 +148,7 @@ namespace Access4All.Fragments
             List<AddressLocator> mAddresses = new List<AddressLocator>();
             AddressLocator tempAddress;
 
-            MainActivity act = (MainActivity)this.Activity;
+            
 
             for (int i = 0; i < jsonArray.Count; i++)
             {
@@ -190,6 +196,8 @@ namespace Access4All.Fragments
             mTv.Adapter = arrayAdapter;
             mTv.SetFooterDividersEnabled(true);
             mTv.SetHeaderDividersEnabled(true);
+            NearMe.Enabled = true;
+            NearMe.Text = "NEAR ME";
 
         }
 
