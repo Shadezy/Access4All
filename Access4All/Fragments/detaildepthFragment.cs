@@ -1539,13 +1539,124 @@ namespace Access4All.Fragments
 
         private string parseTransitData(string unparsedData)
         {
-            
-            string parsedData = "";
+            JArray jsonArray = JArray.Parse(unparsedData);
+            string data = "";
 
-            return parsedData;
+            int park_id;
+
+            for (int i = 0; i < jsonArray.Count; i++)
+            {
+                JToken json = jsonArray[i];
+
+                if (((int)json["est_id"]) == est_id)
+                {
+                    park_id = (int)json["park_id"];
+
+                    JArray jsonArray_sta_bus = JArray.Parse(GetDataTable("sta_bus", "park_id=" + park_id.ToString()));
+
+                    for (int j = 0; j < jsonArray_sta_bus.Count; j++)
+                    {
+                        JToken json_bus = jsonArray_sta_bus[j];
+
+                        int sta_id = (int)json_bus["sta_id"];
+                        string sta_service_area = ((string)json_bus["sta_service_area"]).ToLower();
+                        string distance = ((string)json_bus["distance"]).ToLower();
+                        string min_width = ((string)json_bus["min_width"]).ToLower();
+                        string route_surface = ((string)json_bus["route_surface"]).ToLower();
+                        string tactile_warning_strips = ((string)json_bus["tactile_warning_strips"]).ToLower();
+                        string curb_cuts = ((string)json_bus["curb_cuts"]).ToLower();
+                        string lighting = ((string)json_bus["lighting"]).ToLower();
+                        string lighting_option = ((string)json_bus["lighting_option"]).ToLower();
+                        string lighting_type = ((string)json_bus["lighting_type"]).ToLower();
+                        string shelter_bench = ((string)json_bus["shelter_bench"]).ToLower();
+                        string comment = ((string)json_bus["comment"]).ToLower();
+                        string recommendations = ((string)json_bus["recommendations"]).ToLower();
+
+                        if (sta_service_area.CompareTo("yes") == 0)
+                            data += "• Establishment is located within the STA Service Area for paratransit\n\r\n\r";
+                        else
+                            return "Establishment is not located within the STA Service Area for paratransit\n\r\n\r";
+
+                        data += "• Distance from nearest bus stop to wheelchair accessible entrance is " + distance + " feet\n\r\n\r";
+
+                        if (min_width.CompareTo("yes") == 0)
+                            data += "• Route is at least 44 inches wide\n\r\n\r";
+                        else
+                            data += "• Route is not at least 44 inches wide\n\r\n\r";
+
+                        if (route_surface.CompareTo("yes") == 0)
+                            data += "• Surface is level, firm, slip resistant, free of obstacles\n\r\n\r";
+                        else
+                            data += "• Surface is not level, firm, slip resistant, or free of obstacles\n\r\n\r";
+
+                        if (tactile_warning_strips.CompareTo("yes") == 0)
+                            data += "• Route has tactile warning strips\n\r\n\r";
+                        else
+                            data += "• Route does not have tactile warning strips\n\r\n\r";
+
+                        if (shelter_bench.CompareTo("yes") == 0)
+                            data += "• Route has a shelter or a bench\n\r\n\r";
+                        else
+                            data += "• Route does not have a shelter or bench\n\r\n\r";
+
+                        if (lighting.CompareTo("yes") == 0)
+                            data += "• Lighting level is " + lighting_type + " in " + lighting_option + "time\n\r\n\r";
+                        else
+                            data += "• Lighting level is inadequate\n\r\n\r";
+
+                        JArray jsonArray_sta_route = JArray.Parse(GetDataTable("sta_route", "sta_bus_id=" + sta_id.ToString()));
+
+                        data += "\n\r\n\rRoute(s): ";
+
+                        for (int k = 0; k < jsonArray_sta_route.Count; k++)
+                        {
+                            JToken json_route = jsonArray_sta_route[k];
+
+                            data += ((string)json_route["route_num"]).ToLower() + ", ";
+
+                        }
+                        data = data.Substring(0, data.Length - 2);
+                        data += "\n\r\n\rStop Number: ";
+
+                        for (int k = 0; k < jsonArray_sta_route.Count; k++)
+                        {
+                            JToken json_route = jsonArray_sta_route[k];
+
+                            //this took way longer than it should have
+                            int north_bound_stop = int.Parse((string)json_route["north_bound_stop"]);
+                            int south_bound_stop = int.Parse((string)json_route["south_bound_stop"]);
+                            int east_bound_stop = int.Parse((string)json_route["east_bound_stop"]);
+                            int west_bound_stop = int.Parse((string)json_route["west_bound_stop"]);
+                            string ns_bounds = "";
+                            string ew_bounds = "";
+
+                            if (north_bound_stop != 0)
+                                ns_bounds += north_bound_stop + " Northbound";
+                            if (south_bound_stop != 0 && north_bound_stop != 0)
+                                ns_bounds += "/";
+                            if (south_bound_stop != 0)
+                                ns_bounds += south_bound_stop + "Southbound";
+
+                            if (east_bound_stop != 0)
+                                ew_bounds += east_bound_stop + " Eastbound";
+                            if (west_bound_stop != 0 && east_bound_stop != 0)
+                                ew_bounds += "/";
+                            if (west_bound_stop != 0)
+                                ew_bounds += west_bound_stop + " Westbound";
+
+                            if (ns_bounds.Length != 0)
+                                ns_bounds += "\n\r";
+
+                            if (ew_bounds.Length != 0)
+                                ew_bounds += "\n\r";
+
+                            data += ns_bounds + ew_bounds;
+                        }
+                    }
+                }
+            }
+            return data;
         }
-
-        
 
         public void OnBackPressed()
         {
