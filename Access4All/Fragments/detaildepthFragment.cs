@@ -190,11 +190,11 @@ namespace Access4All.Fragments
 
                 location1 = locations?.FirstOrDefault();
             }
-            catch (FeatureNotSupportedException fnsEx)
+            catch (FeatureNotSupportedException)
             {
                 Toast.MakeText(MainActivity.activity, "Feature not supported on this device", ToastLength.Long).Show();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Toast.MakeText(MainActivity.activity, "Error parsing location", ToastLength.Long).Show();
             }
