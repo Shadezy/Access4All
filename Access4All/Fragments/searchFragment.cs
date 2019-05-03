@@ -66,7 +66,6 @@ namespace Access4All.Fragments
             //Get activity and the searchView. Set Listener on it
             MainActivity act = (MainActivity)this.Activity;
             SearchView searchV = (SearchView) act.FindViewById(Resource.Id.searchView1);
-            //searchV.SetOnClickListener(this);
 
             //loses focus on search view if it already given focus before ((allows for backout without querying and pressing the button again))
             if (flagSearch)
@@ -133,10 +132,8 @@ namespace Access4All.Fragments
             MainActivity act = (MainActivity)this.Activity;
             string data = GetData();
 
-            Button NearMe = (Button)act.FindViewById(Resource.Id.nearMe);
-            NearMe.Enabled = false;
-            NearMe.Text = "Accessing locations near you!";
-            
+            Button nearButton = (Button)act.FindViewById(Resource.Id.nearMe);
+            nearButton.Enabled = false;
 
             if (MAct.CheckSelfPermission(Android.Manifest.Permission.AccessCoarseLocation) != (int)Permission.Granted)
             {
@@ -196,8 +193,8 @@ namespace Access4All.Fragments
             mTv.Adapter = arrayAdapter;
             mTv.SetFooterDividersEnabled(true);
             mTv.SetHeaderDividersEnabled(true);
-            NearMe.Enabled = true;
-            NearMe.Text = "NEAR ME";
+            nearButton.Enabled = true;
+      
 
         }
 
@@ -392,15 +389,17 @@ namespace Access4All.Fragments
 
         private async Task getLocation()
         {
+            
+           
             var locateMe = CrossGeolocator.Current;
             locateMe.DesiredAccuracy = 100;
             
             var pos = await locateMe.GetPositionAsync(TimeSpan.FromMilliseconds(10000));
-
-            Userposition = pos;
             MainActivity act = (MainActivity)this.Activity;
 
             Button nearButton = (Button)act.FindViewById(Resource.Id.nearMe);
+            Userposition = pos;
+            
             nearButton.Enabled = true;
         }
 
