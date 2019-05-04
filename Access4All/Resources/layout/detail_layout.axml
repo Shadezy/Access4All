@@ -30,7 +30,7 @@
 		android:id="@+id/mapsButton"
 		android:layout_width="fill_parent"
 		android:layout_height="100dp"
-		android:text="Open location in maps"
+		android:text="Open location address in maps"
 		android:textSize = "20sp"
 		android:textAlignment="center"
 		android:enabled="false"

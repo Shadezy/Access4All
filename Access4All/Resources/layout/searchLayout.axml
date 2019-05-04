@@ -10,9 +10,9 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_weight="0"
-		android:queryHint="Search here..."
+		android:queryHint="Enter Location Name Here"
 		android:id="@+id/searchView1"
-		android:contentDescription="Search box"
+		android:contentDescription="Search Query box"
 		android:importantForAccessibility="yes">
 	</SearchView>
 	<View
@@ -29,7 +29,7 @@
 		android:layout_height="100dp"
 		android:layout_alignParentLeft="true"
 		android:layout_toLeftOf="@+id/centerShim"
-		android:contentDescription="Voice Search"
+		android:contentDescription="Search Location names by Voice"
 		android:layout_alignParentBottom="true"
 		/>
 	<Button
@@ -47,7 +47,7 @@
 		android:layout_width="match_parent"
 		android:layout_height="100dp"
 		android:layout_alignParentRight="true"
-		android:contentDescription="text search"
+		android:contentDescription="Search Location names by Text"
 		android:layout_toRightOf="@+id/centerShim"
 		android:layout_alignParentBottom="true"
 		

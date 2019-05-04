@@ -308,7 +308,7 @@ namespace Access4All.Fragments
                     temp = RemoveSpecialCharacters(temp);
                     temp = temp.Replace(" ", System.String.Empty);
 
-                    wordMatch = InputsMatch(inputBlock,outputBlock);
+                    wordMatch = InputsMatch(inputBlock.ToLower(),outputBlock);
 
                     if ((tempinput.StartsWith(temp.Substring(0, 2), StringComparison.InvariantCultureIgnoreCase) || wordMatch) && !userLocationObtained )
                     {

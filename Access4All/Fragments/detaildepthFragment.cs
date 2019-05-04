@@ -1447,7 +1447,6 @@ namespace Access4All.Fragments
                 if (((string)json["name"]).Equals(loc))
                 {
                     string phone;
-                    string [] phoneSplit;
                     website = ((string)json["website"]); 
                     loc += Environment.NewLine;
                     loc += (((string)json["street"]) +" "+ ((string)json["city"]) +", " +((string)json["state"])+" "+ ((string)json["zip"]) + Environment.NewLine);
@@ -1459,18 +1458,16 @@ namespace Access4All.Fragments
                         loc += Environment.NewLine;
                     }
                     phone = ((string)json["phone"]);
+                    string phoneExpand;
                     if (phone.CompareTo("") != 0)
                     {
                         loc += "Phone Number: ";
-                        string phoneTrim = "";
-                        if (phone.Length == 12)
+                        
+                        if (phone.Length == 10)
                         {
-                            phoneSplit = phone.Split('-');
-                            for (int x = 0; x < 3; x++)
-                            {
-                                phoneTrim += phoneSplit[x].ToString().Trim();
-                            }
-                            loc += phoneTrim;
+                            long phoneNum = long.Parse(phone);
+                            phoneExpand = string.Format("{0: ###-###-####}", phoneNum);
+                            loc += phoneExpand;
                         }
                         else
                             loc += phone;
