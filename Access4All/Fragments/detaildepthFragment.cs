@@ -200,7 +200,6 @@ namespace Access4All.Fragments
             }
             var location = new Xamarin.Essentials.Location(location1.Latitude, location1.Longitude);
             var options = new MapLaunchOptions { Name = name };
-            Toast.MakeText(MainActivity.activity, name, ToastLength.Long).Show();
             await Map.OpenAsync(location, options);
         }
 
