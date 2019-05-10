@@ -10,7 +10,7 @@ using Newtonsoft.Json.Linq;
 using Environment = System.Environment;
 using Xamarin.Essentials;
 using System.Threading.Tasks;
-
+using Android.Text.Util;
 
 namespace Access4All.Fragments
 {
@@ -25,6 +25,7 @@ namespace Access4All.Fragments
         int est_id;
         int rest_id;
         Button mapsButton;
+        LinearLayout LINLAY;
 
         public override void OnCreate(Bundle savedInstanceState)
         {
@@ -33,6 +34,10 @@ namespace Access4All.Fragments
             selection = b.GetString("selection");
             prevView = b.GetString("prevView");
             string test = curLocation + " " + selection;
+            MainActivity act = (MainActivity)this.Activity;
+            
+            
+
             base.OnCreate(savedInstanceState);
         }
 
@@ -48,7 +53,8 @@ namespace Access4All.Fragments
             TextView t = (TextView)v.FindViewById(Resource.Id.textView1);
             myTextTest = (TextView)v.FindViewById(Resource.Id.textView1);
             mapsButton = v.FindViewById<Button>(Resource.Id.mapsButton);
-            
+            this.LINLAY = v.FindViewById<LinearLayout>(Resource.Id.LinLayout1);
+
             mapsButton.Visibility = ViewStates.Invisible;
             mapsButton.Enabled = false;
 
@@ -1438,7 +1444,7 @@ namespace Access4All.Fragments
         {
             JArray jsonArray = JArray.Parse(unparsedData);
             string text = loc + Environment.NewLine;
-            
+            MainActivity act = (MainActivity)this.Activity;
             string website;
             for (int i = 0; i < jsonArray.Count; i++)
             {
@@ -1457,20 +1463,34 @@ namespace Access4All.Fragments
                         loc += (website + Environment.NewLine);
                         loc += Environment.NewLine;
                     }
+                    TextView textView = new TextView(act);
+                    LinearLayout.LayoutParams paramss = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WrapContent, LinearLayout.LayoutParams.WrapContent);
+                    textView.LayoutParameters = paramss;
+                    string PhoneText = "";
                     phone = ((string)json["phone"]);
                     string phoneExpand;
                     if (phone.CompareTo("") != 0)
                     {
-                        loc += "Phone Number: ";
+                        PhoneText += "Phone Number: ";
                         
                         if (phone.Length == 10)
                         {
                             long phoneNum = long.Parse(phone);
                             phoneExpand = string.Format("{0: ###-###-####}", phoneNum);
-                            loc += phoneExpand;
+                            PhoneText += phoneExpand;
+                            
                         }
                         else
-                            loc += phone;
+                            PhoneText += phone;
+                        
+                        textView.Text = PhoneText;
+                        // textView.SetTextAppearance("?android:attr/textApperanceLarge");
+                        Linkify.AddLinks(textView, MatchOptions.PhoneNumbers);
+                        textView.LinksClickable=true;
+                        textView.SetMinHeight(55);
+                        textView.SetMinWidth(55);
+                        
+                        LINLAY.AddView(textView);
                     }
                 }
             }
