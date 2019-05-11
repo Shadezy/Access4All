@@ -1472,25 +1472,33 @@ namespace Access4All.Fragments
                     if (phone.CompareTo("") != 0)
                     {
                         PhoneText += "Phone Number: ";
-                        
+                        loc += "Phone Number: ";
                         if (phone.Length == 10)
                         {
                             long phoneNum = long.Parse(phone);
                             phoneExpand = string.Format("{0: ###-###-####}", phoneNum);
                             PhoneText += phoneExpand;
-                            
+                            loc += phoneExpand;
+
                         }
                         else
+                        {
                             PhoneText += phone;
-                        
+                            loc += phone;
+                        }
+
+
+                        /* - This feels like a waste of time. May revisit during the weekend.
                         textView.Text = PhoneText;
                         // textView.SetTextAppearance("?android:attr/textApperanceLarge");
                         Linkify.AddLinks(textView, MatchOptions.PhoneNumbers);
                         textView.LinksClickable=true;
                         textView.SetMinHeight(55);
                         textView.SetMinWidth(55);
-                        
+                        textView.SetTextSize(Android.Util.ComplexUnitType.Sp, 25);
+                        textView.SetTextColor(Android.Graphics.Color.Black);
                         LINLAY.AddView(textView);
+                        */
                     }
                 }
             }
