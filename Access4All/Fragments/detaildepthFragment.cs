@@ -11,6 +11,7 @@ using Environment = System.Environment;
 using Xamarin.Essentials;
 using System.Threading.Tasks;
 using Android.Text.Util;
+using Android.Content;
 
 namespace Access4All.Fragments
 {
@@ -25,7 +26,10 @@ namespace Access4All.Fragments
         int est_id;
         int rest_id;
         Button mapsButton;
-        LinearLayout LINLAY;
+        Button phoneButton;
+        Button websiteButton;
+        String PHONE;
+        String WEBSITE;
 
         public override void OnCreate(Bundle savedInstanceState)
         {
@@ -53,10 +57,18 @@ namespace Access4All.Fragments
             TextView t = (TextView)v.FindViewById(Resource.Id.textView1);
             myTextTest = (TextView)v.FindViewById(Resource.Id.textView1);
             mapsButton = v.FindViewById<Button>(Resource.Id.mapsButton);
-            this.LINLAY = v.FindViewById<LinearLayout>(Resource.Id.LinLayout1);
-
+            phoneButton = v.FindViewById<Button>(Resource.Id.phoneButton);
+            websiteButton = v.FindViewById<Button>(Resource.Id.websiteButton);
+            
+            
             mapsButton.Visibility = ViewStates.Invisible;
             mapsButton.Enabled = false;
+
+            phoneButton.Visibility = ViewStates.Invisible;
+            phoneButton.Enabled = false;
+
+            websiteButton.Visibility = ViewStates.Invisible;
+            websiteButton.Enabled = false;
 
             string unparsedData,parsedData;
             Bundle b = Arguments;
@@ -83,6 +95,17 @@ namespace Access4All.Fragments
                 mapsButton.Click += async delegate
                 {
                     await getGeolocationAsync(unparsedData);
+                };
+                phoneButton.Click += delegate {
+                    var uri = Android.Net.Uri.Parse("tel:"+PHONE);
+                    var intent = new Intent(Intent.ActionDial, uri);
+                    StartActivity(intent);
+                };
+                websiteButton.Click += delegate
+                {
+                    var uri = Android.Net.Uri.Parse(WEBSITE);
+                    var intent = new Intent(Intent.ActionView, uri);
+                    StartActivity(intent);
                 };
             }
 
@@ -1459,15 +1482,23 @@ namespace Access4All.Fragments
                     loc += Environment.NewLine;
                     if (website.CompareTo("") != 0)
                     {
+                        if (website.StartsWith("http://www."))
+                            WEBSITE = website;
+                        else if (website.StartsWith("www."))
+                            WEBSITE = "http://" + website;
+                        else
+                            WEBSITE = "http://www." + website;
+                        websiteButton.Visibility = ViewStates.Visible;
+                        websiteButton.Enabled = true;
                         loc += "Website: ";
                         loc += (website + Environment.NewLine);
                         loc += Environment.NewLine;
                     }
-                    TextView textView = new TextView(act);
-                    LinearLayout.LayoutParams paramss = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WrapContent, LinearLayout.LayoutParams.WrapContent);
-                    textView.LayoutParameters = paramss;
+                    
+                    
                     string PhoneText = "";
                     phone = ((string)json["phone"]);
+                    
                     string phoneExpand;
                     if (phone.CompareTo("") != 0)
                     {
@@ -1475,7 +1506,10 @@ namespace Access4All.Fragments
                         loc += "Phone Number: ";
                         if (phone.Length == 10)
                         {
+                            PHONE = phone;
                             long phoneNum = long.Parse(phone);
+                            phoneButton.Visibility = ViewStates.Visible;
+                            phoneButton.Enabled = true;
                             phoneExpand = string.Format("{0: ###-###-####}", phoneNum);
                             PhoneText += phoneExpand;
                             loc += phoneExpand;
@@ -1483,6 +1517,9 @@ namespace Access4All.Fragments
                         }
                         else
                         {
+                            phoneButton.Visibility = ViewStates.Visible;
+                            phoneButton.Enabled = true;
+                            PHONE = convertPhone(phone);
                             PhoneText += phone;
                             loc += phone;
                         }
@@ -1499,13 +1536,25 @@ namespace Access4All.Fragments
                         textView.SetTextColor(Android.Graphics.Color.Black);
                         LINLAY.AddView(textView);
                         */
+                        
+
+     
                     }
                 }
             }
             return loc;
         }
 
-       
+        private string convertPhone(string phone)
+        {
+            string [] temp = phone.Split("-");
+            string res = "";
+            for(int i = 0; i<temp.Length; i++)
+            {
+                res += temp[i];
+            }
+            return res;
+        }
 
         private string parseTransitData(string unparsedData)
         {
