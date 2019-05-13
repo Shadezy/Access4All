@@ -304,7 +304,7 @@ namespace Access4All.Fragments
                         if (debugValue != null && debugValue.ToLower().CompareTo("n/a") != 0 && debugValue.ToLower().CompareTo("") != 0)
                         {
                             lbs_force = (int)json["lbs_force"];
-                            data += "requiring " + lbs_force + " lbs or less force to open. \n\r\n\r";
+                            data += " Requiring " + lbs_force + " lbs or less force to open. \n\r\n\r";
                         }
                         else
                             data += "\n\r\n\r";
@@ -312,9 +312,9 @@ namespace Access4All.Fragments
 
                     clearing = (string)json["clearance"];
                     if (clearing.ToLower().CompareTo("yes") == 0)
-                        data += "• Door has at least 32” clearance when open 90 degrees\n\r\n\r";
+                        data += "• Door has at least 32” clearance when open 90 degrees. \n\r\n\r";
                     else
-                        data += "• Door does not have at least 32” clearance when open 90 degrees\n\r\n\r";
+                        data += "• Door does not have at least 32” clearance when open 90 degrees. \n\r\n\r";
 
                     if (!json["opening"].Equals(null))
                     {
