@@ -293,6 +293,8 @@ namespace Access4All.Fragments
                     restroom_desc = (string)json["restroom_desc"];
                     if (restroom_desc.ToLower().CompareTo("") != 0)
                     {
+                        if (restroom_desc.ToLower().Equals("unisex"))
+                            restroom_desc = "unisex/family";
                         data += "• This restroom is " + restroom_desc + "\n\r\n\r";
                     }
                     easy_open = (string)json["easy_open"];
@@ -333,20 +335,29 @@ namespace Access4All.Fragments
                         data += "• Doors, handles, and levers can be operated with a closed fist. \n\r\n\r";
                     //Not sure what to say with turn around, width and depth
                     can_turn_around = (string)json["can_turn_around"];
+                    if(can_turn_around.ToLower().Equals("yes"))
+                    {
+                        data += "• The stall or room is large enough for a wheelchair or walker to turn around with at least 60 inches wide and 56 inches deep.\n\r\n\r";
+                    }
 
                     if (!json["turn_width"].Equals(null))
                     {
                         debugValue = (string)json["turn_width"];
                         if (debugValue != null && debugValue.ToLower().CompareTo("n/a") != 0 && debugValue.ToLower().CompareTo("") != 0)
+                        {
                             turn_width = (double)json["turn_width"];
+                            data += "• Actual width: " + turn_width + " inches\n\r\n\r";
+                        }
                     }
                     if (!json["turn_depth"].Equals(null))
                     {
                         debugValue = (string)json["turn_depth"];
                         if (debugValue != null && debugValue.ToLower().CompareTo("n/a") != 0 && debugValue.ToLower().CompareTo("") != 0)
+                        {
                             turn_depth = (double)json["turn_depth"];
+                            data += "• Actual depth: " + turn_depth+ " inches\n\r\n\r";
+                        }
                     }
-                    //read above
 
                     close_chair_inside = (string)json["close_chair_inside"];
                     if (close_chair_inside.ToLower().CompareTo("yes") == 0)
@@ -355,8 +366,6 @@ namespace Access4All.Fragments
                     grab_bars = (string)json["grab_bars"];
                     if (grab_bars.ToLower().CompareTo("yes") == 0)
                         data += "• Grab bars are easily reachable behind toilet and on side wall nearest toilet. \n\r\n\r";
-                    //slight issue here. In most the db entries, when seat_height_req is yes, it gives 0.0 inches. Made it 17 as it 
-                    // was the only entry there besides 0.0
                     seat_height_req = (string)json["seat_height_req"];
                     if (seat_height_req.ToLower().CompareTo("yes") == 0)
                         data += "• Height of toilet seat is at least 17” from the floor. \n\r\n\r";
@@ -368,19 +377,23 @@ namespace Access4All.Fragments
                         if (debugValue != null && debugValue.ToLower().CompareTo("n/a") != 0 && debugValue.ToLower().CompareTo("") != 0)
                             seat_height = (double)json["seat_height"];
                     }
-                    //see above comment
+                    //seat heigh req covers this section
 
                     flush_auto_fist = (string)json["flush_auto_fist"];
                     if (flush_auto_fist.ToLower().CompareTo("yes") == 0)
                         data += "• Toilet flushes automatically or can be flushed with a closed fist. \n\r\n\r";
-                    //all inputs for ambulatory_accessible are either null or empty so skipping for now
                     ambulatory_accessible = (string)json["ambulatory_accessible"];
-                    //all barheight is 0.0 for now so skipping atm
+                    if(ambulatory_accessible.ToLower().Equals("yes"))
+                    {
+                        data += "• At least one stall is abulatory accessible.\n\r\n\r";
+                    }
                     if (!json["bar_height"].Equals(null))
                     {
                         debugValue = (string)json["bar_height"];
                         if (debugValue != null && debugValue.ToLower().CompareTo("n/a") != 0 && debugValue.ToLower().CompareTo("") != 0)
+                        {
                             bar_height = (double)json["bar_height"];
+                        }
                     }
 
                     coat_hook = (string)json["coat_hook"];
@@ -391,10 +404,18 @@ namespace Access4All.Fragments
                     {
                         debugValue = (string)json["hook_height"];
                         if (debugValue != null && debugValue.ToLower().CompareTo("n/a") != 0 && debugValue.ToLower().CompareTo("") != 0)
+                        {
                             hook_height = (double)json["hook_height"];
+                            if(hook_height<=48 && hook_height>=35)
+                            data += "• The coat hook is between 35 inches and 48 inches from the floor. \n\r\n\r";
+                        }
                     }
 
                     sink = (string)json["sink"];
+                    if(sink.ToLower().Equals("yes"))
+                    {
+                        data += "• The height of the sink/countertop is 34 inches or less from the front edge of the sink counter. \n\r\n\r";
+                    }
 
                     if (!json["sink_height"].Equals(null))
                     {
@@ -404,6 +425,10 @@ namespace Access4All.Fragments
                     }
 
                     faucet = (string)json["faucet"];
+                    if(faucet.ToLower().Equals("yes"))
+                    {
+                        data += "• The faucet control is 17 inches or less from the front edge of the sink counter. \n\r\n\r";
+                    }
 
 
                     if (!json["faucet_depth"].Equals(null))
@@ -451,7 +476,11 @@ namespace Access4All.Fragments
                     {
                         debugValue = (string)json["dry_control_height"];
                         if (debugValue != null && debugValue.ToLower().CompareTo("n/a") != 0 && debugValue.ToLower().CompareTo("") != 0)
+                        {
                             dry_control_height = (int)json["dry_control_height"];
+                            if(dry_control_height<=48)
+                                data += "• Controls for hand dryer or towel dispenser are 48 inches or less from the floor. \n\r\n\r";
+                        }
                     }
 
 
@@ -468,6 +497,10 @@ namespace Access4All.Fragments
                     }
 
                     shelves = (string)json["shelves"];
+                    if(shelves.ToLower().Equals("yes"))
+                    {
+                        data += "• Shelves are a maximum of 48 inches from the floor. \n\r\n\r";
+                    }
 
                     if (!json["shelf_height"].Equals(null))
                     {
@@ -481,6 +514,10 @@ namespace Access4All.Fragments
                         data += "• Trash receptacles are positioned so they do not block the route of the door. \n\r\n\r";
 
                     hygiene_seat_cover = (string)json["hygiene_seat_cover"];
+                    if(hygiene_seat_cover.ToLower().Equals("yes"))
+                    {
+                        data += "• Feminine hygiene products and toilet seat cover dispensers are 48 inches or less from the floor. \n\r\n\r";
+                    }
 
                     if (!json["hygiene_cover_height"].Equals(null))
                     {
@@ -555,13 +592,17 @@ namespace Access4All.Fragments
                     {
                         data += "• The number of restrooms designated family, unisex, or assisted use is " + designated_number + "\n\r\n\r";
                     }
+                    if(num_wheelchair_sign != -1)
+                    {
+                        data += "• The number of restrooms with a wheelchair sign is "+ num_wheelchair_sign + ". \n\r\n\r";
+                    }
                     if(sign_accessible != null && sign_accessible.ToLower().CompareTo("yes")==0)
                     {
                         data += "• This restroom has"+ num_wheelchair_sign +" ‘wheelchair accessible’ sign(s)" + "\n\r\n\r";
                     }
                     if(sign_location != null && sign_location.ToLower().CompareTo("yes")==0)
                     {
-                        data += "• " + comment + "\n\r\n\r";
+                        data += "• Signage is on latch sign of door between 48 and 60 inches of floor\n\r\n\r";
                     }
                     if(key_needed != null && key_needed.ToLower().CompareTo("yes")==0)
                     {
@@ -570,6 +611,10 @@ namespace Access4All.Fragments
                     if (key_needed != null && key_needed.ToLower().CompareTo("no") == 0)
                     {
                         data += "• Users do not need to ask someone for a key to use the restroom" + "\n\r\n\r";
+                    }
+                    if(comment.Length>0)
+                    {
+                        data += "• " + comment + ". \n\r\n\r";
                     }
                 }
             }
@@ -707,7 +752,10 @@ namespace Access4All.Fragments
                             }
 
                         }
-
+                        if(quiet_table != null && quiet_table.ToLower().Equals("yes"))
+                        {
+                            data += "• There is a quiet table, room or area available on request. \n\r\n\r";
+                        }
 
                         if (comment.CompareTo("") != 0)
                         {
@@ -991,6 +1039,10 @@ namespace Access4All.Fragments
                     if(senior_discount.ToLower().CompareTo("yes")==0)
                     {
                         data += "• The establishment offers a senior discount, beginning at age " + senior_age + "\n\r\n\r";
+                    }
+                    if(annual_A4A_review.ToLower().Equals("yes"))
+                    {
+                        data += "• Management has agreed to annual A4A reviews. \n\r\n\r";
                     }
                     if(comment.CompareTo("")!=0)
                     {
