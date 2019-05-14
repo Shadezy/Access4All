@@ -612,7 +612,7 @@ namespace Access4All.Fragments
                     {
                         data += "• Users do not need to ask someone for a key to use the restroom" + "\n\r\n\r";
                     }
-                    if(comment.Length>0)
+                    if(comment != null)
                     {
                         data += "• " + comment + ". \n\r\n\r";
                     }
@@ -1444,7 +1444,7 @@ namespace Access4All.Fragments
 
                         if (lighting.CompareTo("yes") == 0)
                             data += "• Lighting level is " + lighting_type + " in " + lighting_option + "time, and is adequate for mobility and reading signs\n\r\n\r";
-
+                        if(comment_route.Length >0)
                             data += "• " + comment_route;
                     }
 
