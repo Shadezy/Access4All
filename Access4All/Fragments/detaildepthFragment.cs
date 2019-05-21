@@ -17,19 +17,19 @@ namespace Access4All.Fragments
 {
     public class detaildepthFragment : Android.Support.V4.App.Fragment, MainActivity.IBackButtonListener
     {
-        string curLocation;
-        string selection;
-        string prevView;
+        string curLocation = "";
+        string selection = "";
+        string prevView = "";
         List<Categories> group = new List<Categories>();
-        TextView myTextTest;
-        string table;
-        int est_id;
-        int rest_id;
-        Button mapsButton;
-        Button phoneButton;
-        Button websiteButton;
-        String PHONE;
-        String WEBSITE;
+        TextView myTextTest = null;
+        string table = "";
+        int est_id = 0;
+        int rest_id = 0;
+        Button mapsButton = null;
+        Button phoneButton = null;
+        Button websiteButton = null;
+        String PHONE = "";
+        String WEBSITE = "";
 
         public override void OnCreate(Bundle savedInstanceState)
         {
@@ -240,47 +240,47 @@ namespace Access4All.Fragments
 
             string debugValue;
 
-            string restroom_desc;
-            string easy_open;
-            int? lbs_force;
-            string clearing;
-            double? opening;
-            string opens_out;
-            string use_fist;
-            string can_turn_around;
-            double? turn_width;
-            double? turn_depth;
-            string close_chair_inside;
-            string grab_bars;
-            string seat_height_req;
-            double? seat_height;
-            string flush_auto_fist;
-            string ambulatory_accessible;
-            double? bar_height;
-            string coat_hook;
-            double? hook_height;
-            string sink;
-            double? sink_height;
-            string faucet;
-            double? faucet_depth;
-            string faucet_auto_fist;
-            string sink_clearance;
-            double? sink_clearance_height;
-            string sink_pipes;
-            string soap_dispenser;
-            double? soap_height;
-            string dry_fist;
-            int? dry_control_height;
-            string mirror;
-            double? mirror_height;
-            string shelves;
-            double? shelf_height;
-            string trash_receptacles;
-            string hygiene_seat_cover;
-            double? hygiene_cover_height;
-            string lighting;
-            string lighting_type;
-            string comment;
+            string restroom_desc = "";
+            string easy_open = "";
+            int? lbs_force = 0;
+            string clearing = "";
+            double? opening = 0;
+            string opens_out = "";
+            string use_fist = "";
+            string can_turn_around = "";
+            double? turn_width = 0;
+            double? turn_depth = 0;
+            string close_chair_inside = "";
+            string grab_bars = "";
+            string seat_height_req = "";
+            double? seat_height = 0;
+            string flush_auto_fist = "";
+            string ambulatory_accessible = "";
+            double? bar_height = 0;
+            string coat_hook = "";
+            double? hook_height = 0;
+            string sink = "";
+            double? sink_height = 0;
+            string faucet = "";
+            double? faucet_depth = 0;
+            string faucet_auto_fist = "";
+            string sink_clearance = "";
+            double? sink_clearance_height = 0;
+            string sink_pipes = "";
+            string soap_dispenser = "";
+            double? soap_height = 0;
+            string dry_fist = "";
+            int? dry_control_height = 0;
+            string mirror = "";
+            double? mirror_height = 0;
+            string shelves = "";
+            double? shelf_height = 0;
+            string trash_receptacles = "";
+            string hygiene_seat_cover = "";
+            double? hygiene_cover_height = 0;
+            string lighting = "";
+            string lighting_type = "";
+            string comment = "";
 
 
             for (int i = 0; i < jsonArray.Count; i++)
@@ -542,15 +542,15 @@ namespace Access4All.Fragments
             JArray jsonArray = JArray.Parse(unparsedData);
             string data = "";
 
-            string public_restroom;
+            string public_restroom = "";
             int? total_num = -1;
             int? designated_number = -1;
             int? num_wheelchair_sign = -1;
-            string sign_accessible;
-            string sign_location;
-            string key_needed;
-            string comment;
-            string debugValue;
+            string sign_accessible = "";
+            string sign_location = "";
+            string key_needed = "";
+            string comment = "";
+            string debugValue = "";
 
 
             for (int i = 0; i < jsonArray.Count; i++)
@@ -626,27 +626,27 @@ namespace Access4All.Fragments
             JArray jsonArray = JArray.Parse(unparsedData);
             string data = "";
 
-            int seating_id;
-            string seating_no_step;
-            string table_aisles;
-            string legroom;
-            string num_legroom; // some entries are empty and parsing int will break
-            string rearranged;
-            string num_table_rearranged; // string because it can be "all" in database
-            string num_chair_rearranged; //same as above
-            string round_tables;
-            int num_round_tables;
-            string lighting;
-            string lighting_option;
-            string lighting_type;
-            string adjustible_lighting;
-            string low_visual_slim;
-            string quiet_table;
-            string low_sound;
-            string designated_space;
-            int num_desig_space;
-            string companion_space;
-            string comment;
+            int seating_id = 0;
+            string seating_no_step = "";
+            string table_aisles = "";
+            string legroom = "";
+            string num_legroom = ""; // some entries are empty and parsing int will break
+            string rearranged = "";
+            string num_table_rearranged = ""; // string because it can be "all" in database
+            string num_chair_rearranged = ""; //same as above
+            string round_tables = "";
+            int num_round_tables = 0;
+            string lighting = "";
+            string lighting_option = "";
+            string lighting_type = "";
+            string adjustible_lighting = "";
+            string low_visual_slim = "";
+            string quiet_table = "";
+            string low_sound = "";
+            string designated_space = "";
+            int num_desig_space = 0;
+            string companion_space = "";
+            string comment = "";
 
             for (int i = 0; i < jsonArray.Count; i++)
             {
@@ -774,20 +774,20 @@ namespace Access4All.Fragments
             JArray jsonArray = JArray.Parse(unparsedData);
             string data = "";
 
-            string is_elevator;
-            string location;
-            string works;
-            string no_assist;
-            string button_height;
-            string outside_btn_height;
-            string inside_btn_height;
-            string button_use_fist;
-            string braille;
-            string audible_tones;
-            string lighting;
-            string lighting_type;
-            string elevator_depth;
-            string comment;
+            string is_elevator = "";
+            string location = "";
+            string works = "";
+            string no_assist = "";
+            string button_height = "";
+            string outside_btn_height = "";
+            string inside_btn_height = "";
+            string button_use_fist = "";
+            string braille = "";
+            string audible_tones = "";
+            string lighting = "";
+            string lighting_type = "";
+            string elevator_depth = "";
+            string comment = "";
 
             for (int i = 0; i < jsonArray.Count; i++)
             {
@@ -859,44 +859,44 @@ namespace Access4All.Fragments
             JArray jsonArray = JArray.Parse(unparsedData);
             string data = "";
 
-            string public_phone;
-            string phone_clearance;
-            string num_phone;
-            string tty;
-            string staff_tty;
-            string assisted_listening;
-            string assisted_listen_type;
-            string assisted_listen_receiver;
-            string listening_signage;
-            string staff_listening;
-            string acoustics;
-            string acoustics_level;
-            string alt_comm_methods;
-            string alt_comm_type;
-            string staff_ASL;
-            string captioning_default;
-            string theater_captioning;
-            string theater_capt_type;
-            string auditory_info_visual;
-            string visual_info_auditory;
-            string website_text_reader;
-            string alt_contact;
-            string alt_contact_type;
-            string shopping_assist;
-            string assist_service;
-            string assist_fee;
-            string store_scooter;
-            string scooter_fee;
-            string scooter_location;
-            string restaurant_allergies;
-            string staff_disable_trained;
-            string staff_disable_trained_desc;
-            string items_reach;
-            string service_alt_manner;
-            string senior_discount;
-            string senior_age;
-            string annual_A4A_review;
-            string comment;
+            string public_phone = "";
+            string phone_clearance = "";
+            string num_phone = "";
+            string tty = "";
+            string staff_tty = "";
+            string assisted_listening = "";
+            string assisted_listen_type = "";
+            string assisted_listen_receiver = "";
+            string listening_signage = "";
+            string staff_listening = "";
+            string acoustics = "";
+            string acoustics_level = "";
+            string alt_comm_methods = "";
+            string alt_comm_type = "";
+            string staff_ASL = "";
+            string captioning_default = "";
+            string theater_captioning = "";
+            string theater_capt_type = "";
+            string auditory_info_visual = "";
+            string visual_info_auditory = "";
+            string website_text_reader = "";
+            string alt_contact = "";
+            string alt_contact_type = "";
+            string shopping_assist = "";
+            string assist_service = "";
+            string assist_fee = "";
+            string store_scooter = "";
+            string scooter_fee = "";
+            string scooter_location = "";
+            string restaurant_allergies = "";
+            string staff_disable_trained = "";
+            string staff_disable_trained_desc = "";
+            string items_reach = "";
+            string service_alt_manner = "";
+            string senior_discount = "";
+            string senior_age = "";
+            string annual_A4A_review = "";
+            string comment = "";
 
             for (int i = 0; i < jsonArray.Count; i++)
             {
@@ -1059,25 +1059,25 @@ namespace Access4All.Fragments
             JArray jsonArray = JArray.Parse(unparsedData);
             string data = "";
 
-            int interior_id;
-            string int_door_open_clearance;
-            double int_opening_measurement;
-            string int_door_easy_open;
-            double int_door_open_force;
-            string int_door_use_with_fist;
-            string five_second_close;
-            string hallway_width;
-            double narrowest_width;
-            string wheelchair_turnaround;
-            string hallway_obstacles;
-            string hallway_clear;
-            string lighting;
-            string lighting_type;
-            string service_counter;
-            double counter_height;
-            double writing_surface_height;
-            string drinking_fountain;
-            string comment;
+            int interior_id = 0;
+            string int_door_open_clearance = "";
+            double int_opening_measurement = 0;
+            string int_door_easy_open = "";
+            double int_door_open_force = 0;
+            string int_door_use_with_fist = "";
+            string five_second_close = "";
+            string hallway_width = "";
+            double narrowest_width = 0;
+            string wheelchair_turnaround = "";
+            string hallway_obstacles = "";
+            string hallway_clear = "";
+            string lighting = "";
+            string lighting_type = "";
+            string service_counter = "";
+            double counter_height = 0;
+            double writing_surface_height = 0;
+            string drinking_fountain = "";
+            string comment = "";
 
 
             for (int i = 0; i < jsonArray.Count; i++)
@@ -1176,28 +1176,28 @@ namespace Access4All.Fragments
             JArray jsonArray = JArray.Parse(unparsedData);
             string data = "";
 
-            int main_ent_id;
-            int total_num_public_entrances;
-            string main_ent_accessible;
-            string alt_ent_accessible;
-            string accessable_signage;
-            string ground_level;
-            string threshold_level;
-            string threshold_beveled;
-            double beveled_height;
-            string door_action;
-            double opening_measurement;
-            string door_open_clearance;
-            double door_open_force;
-            string door_easy_open;
-            string door_use_with_fist;
-            string lighting_type;
-            string door_auto_open;
-            string second_door_inside;
-            string min_dist_between_doors;
-            string lighting;
-            string lighting_option;
-            string comment;
+            int main_ent_id = 0;
+            int total_num_public_entrances = 0;
+            string main_ent_accessible = "";
+            string alt_ent_accessible = "";
+            string accessable_signage = "";
+            string ground_level = "";
+            string threshold_level = "";
+            string threshold_beveled = "";
+            double beveled_height = 0;
+            string door_action = "";
+            double opening_measurement = 0;
+            string door_open_clearance = "";
+            double door_open_force = 0;
+            string door_easy_open = "";
+            string door_use_with_fist = "";
+            string lighting_type = "";
+            string door_auto_open = "";
+            string second_door_inside = "";
+            string min_dist_between_doors = "";
+            string lighting = "";
+            string lighting_option = "";
+            string comment = "";
 
 
             for (int i = 0; i < jsonArray.Count; i++)
@@ -1279,18 +1279,18 @@ namespace Access4All.Fragments
         {
             JArray jsonArray = JArray.Parse(unparsedData);
             string data = "";
-            string service_animal;
-            string service_animal_location;
-            string has_exterior_path;
-            string min_width;
-            string pathway_surface;
-            string pathway_curbs;
-            string tactile_warning;
-            string slope;
-            string lighting;
-            string lighting_option;
-            string lighting_type;
-            string comment;
+            string service_animal = "";
+            string service_animal_location = "";
+            string has_exterior_path = "";
+            string min_width = "";
+            string pathway_surface = "";
+            string pathway_curbs = "";
+            string tactile_warning = "";
+            string slope = "";
+            string lighting = "";
+            string lighting_option = "";
+            string lighting_type = "";
+            string comment = "";
 
             for (int i = 0; i < jsonArray.Count; i++)
             {
@@ -1355,17 +1355,17 @@ namespace Access4All.Fragments
             string data = "";
             
 
-            int park_id;
-            string lot_type;
-            string street_metered;
-            string parking_type;
-            string total_spaces;
-            string reserved_spaces;
-            string general_accessible_spaces;
-            string van_accessible_spaces;
-            string reserve_space_sign;
-            string reserve_space_obstacles;
-            string comment;
+            int park_id = 0;
+            string lot_type = "";
+            string street_metered = "";
+            string parking_type = "";
+            string total_spaces = "";
+            string reserved_spaces = "";
+            string general_accessible_spaces = "";
+            string van_accessible_spaces = "";
+            string reserve_space_sign = "";
+            string reserve_space_obstacles = "";
+            string comment = "";
 
             for (int i = 0; i < jsonArray.Count; i++)
             {
@@ -1506,14 +1506,14 @@ namespace Access4All.Fragments
             JArray jsonArray = JArray.Parse(unparsedData);
             string text = loc + Environment.NewLine;
             MainActivity act = (MainActivity)this.Activity;
-            string website;
+            string website = "";
             for (int i = 0; i < jsonArray.Count; i++)
             {
                 JToken json = jsonArray[i];
 
                 if (((string)json["name"]).Equals(loc))
                 {
-                    string phone;
+                    string phone = "";
                     website = ((string)json["website"]); 
                     loc += Environment.NewLine;
                     loc += (((string)json["street"]) +" "+ ((string)json["city"]) +", " +((string)json["state"])+" "+ ((string)json["zip"]) + Environment.NewLine);
@@ -1537,7 +1537,7 @@ namespace Access4All.Fragments
                     string PhoneText = "";
                     phone = ((string)json["phone"]);
                     
-                    string phoneExpand;
+                    string phoneExpand = "";
                     if (phone.CompareTo("") != 0)
                     {
                         PhoneText += "Phone Number: ";
@@ -1599,7 +1599,7 @@ namespace Access4All.Fragments
             JArray jsonArray = JArray.Parse(unparsedData);
             string data = "";
 
-            int park_id;
+            int park_id = 0;
 
             for (int i = 0; i < jsonArray.Count; i++)
             {

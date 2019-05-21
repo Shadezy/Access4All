@@ -15,9 +15,9 @@ namespace Access4All
 {
     class catAdapter : BaseExpandableListAdapter
     {
-        Activity activity;
-        List<Categories> categories;
-        private categoriesFragment categoriesFragment;
+        Activity activity = null;
+        List<Categories> categories = null;
+        private categoriesFragment categoriesFragment = null;
 
         public catAdapter(Activity activity, List<Categories> categories)
         {

@@ -10,6 +10,7 @@ using Newtonsoft.Json.Linq;
 using System.Net;
 using System.IO;
 using Xamarin.Essentials;
+using Android.Widget;
 
 namespace Access4All
 {
@@ -44,10 +45,11 @@ namespace Access4All
         public static List<Location> personal_services_locations = new List<Location>();
         public static List<Location> pet_locations = new List<Location>();
         public static List<Location> restaurant_and_coffee_shop_locations = new List<Location>();
-        public static bool appState;
+        public static bool appState = false;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
+
             base.OnCreate(savedInstanceState);
             if (savedInstanceState != null)
             {
@@ -83,13 +85,6 @@ namespace Access4All
         {
             string data = GetData();
             JArray jsonArray = JArray.Parse(data);
-
-            //business_locations.Add(new Location());
-            //home_and_garden_locations.Add(new Location());
-            //nightlife_locations.Add(new Location());
-            //personal_services_locations.Add(new Location());
-            //pet_locations.Add(new Location());
-            //restaurant_and_coffee_shop_locations.Add(new Location());
 
             for (int i = 0; i < jsonArray.Count; i++)
             {
@@ -177,23 +172,28 @@ namespace Access4All
             request.ContentType = "application/json";
             request.Method = "GET";
 
-            using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
+            try
             {
-                if (response.StatusCode != HttpStatusCode.OK)
-                    Console.Out.WriteLine("Error fetching data. Server returned status code: {0}", response.StatusCode);
-                using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+                using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
                 {
-                    var content = reader.ReadToEnd();
-                    if (string.IsNullOrWhiteSpace(content))
+                    if (response.StatusCode != HttpStatusCode.OK)
+                        Console.Out.WriteLine("Error fetching data. Server returned status code: {0}", response.StatusCode);
+                    using (StreamReader reader = new StreamReader(response.GetResponseStream()))
                     {
-                        Console.Out.WriteLine("Response contained empty body...");
-                    }
-                    else
-                    {
-                        return content;
+                        var content = reader.ReadToEnd();
+                        if (string.IsNullOrWhiteSpace(content))
+                        {
+                            Console.Out.WriteLine("Response contained empty body...");
+                        }
+                        else
+                        {
+                            return content;
+                        }
                     }
                 }
             }
+            catch (Exception e)
+            { }
             return "NULL";
         }
     }

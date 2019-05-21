@@ -15,10 +15,10 @@ namespace Access4All.Fragments
 {
     public class detailFragment : Android.Support.V4.App.Fragment, MainActivity.IBackButtonListener
     {
-        detailAdapter mAdapter;
+        detailAdapter mAdapter = null;
         List<Details> group = new List<Details>();
-        string curLocation;
-        string prevView;
+        string curLocation = "";
+        string prevView = "";
 
         public override void OnCreate(Bundle savedInstanceState)
         {
@@ -70,7 +70,7 @@ namespace Access4All.Fragments
 
         private void HandleSelect(object sender, ExpandableListView.GroupClickEventArgs e)
         {
-            string value;
+            string value = "";
             value = mAdapter.GetGroup(e.GroupPosition).ToString();
             Android.Support.V4.App.Fragment fragment = null;
             Bundle args = new Bundle();

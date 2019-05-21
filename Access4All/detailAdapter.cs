@@ -14,9 +14,9 @@ namespace Access4All
 {
     class detailAdapter : BaseExpandableListAdapter
     {
-        Activity activity;
-        List<Details> details;
-        private detailFragment detailFragment;
+        Activity activity = null;
+        List<Details> details = null;
+        private detailFragment detailFragment = null;
 
         public detailAdapter(Activity activity, List<Details> details)
         {

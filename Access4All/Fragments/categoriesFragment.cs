@@ -11,7 +11,7 @@ namespace Access4All.Fragments
 {
     public class categoriesFragment : Android.Support.V4.App.Fragment
     {
-        catAdapter mAdapter;
+        catAdapter mAdapter = null;
         List<Categories> group = new List<Categories>();
 
         public override void OnCreate(Bundle savedInstanceState)
@@ -66,7 +66,7 @@ namespace Access4All.Fragments
 
         private void HandleSelect(object sender, ExpandableListView.ChildClickEventArgs e)
         {
-            string value;
+            string value = "";
             value = mAdapter.GetChild(e.GroupPosition, e.ChildPosition).ToString();
             Android.Support.V4.App.Fragment fragment = null;
             Bundle args = new Bundle();

@@ -14,11 +14,12 @@ namespace Access4All
 {
     class AddressLocator : IComparable<AddressLocator>
     {
-        string name;
-        string address;
-        float lon;
-        float lat;
-        float distance;
+        string name = "";
+        string address = "";
+        float lon = 0;
+        float lat = 0;
+        float distance = 0;
+
         public AddressLocator(string name, string address, float lon, float lat)
         {
             this.name = name;

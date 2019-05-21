@@ -15,8 +15,8 @@ namespace Access4All
 {
     class Categories
     {
-        public string title;
-        public List<Location> locations;
+        public string title = "";
+        public List<Location> locations = null;
 
         public Categories(string title, List<Location> locations)
         {

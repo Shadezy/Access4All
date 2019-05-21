@@ -16,7 +16,7 @@ namespace Access4All
     {
 
 
-        private string infoTitle;
+        private string infoTitle = "";
 
         public Details(string infoTitle)
         {

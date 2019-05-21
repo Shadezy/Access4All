@@ -31,10 +31,10 @@ namespace Access4All.Fragments
 {
     public class searchFragment : Fragment
     {
-        ListView mTv;
+        ListView mTv = null;
         bool flagSearch = false;
         bool userLocationObtained = false;
-        Plugin.Geolocator.Abstractions.Position Userposition;
+        Plugin.Geolocator.Abstractions.Position Userposition = null;
 
 
         public override async void OnCreate(Bundle savedInstanceState)
@@ -200,8 +200,8 @@ namespace Access4All.Fragments
 
         private void MTv_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
-            string location;
-            string name;
+            string location = "";
+            string name = "";
             location = (string)mTv.GetItemAtPosition(e.Position);
             string[] stringArray = location.Split(": ");
             name = stringArray[0];
